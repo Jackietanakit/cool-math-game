@@ -19,4 +19,6 @@ public class CombatManager : MonoBehaviour
     {
         Instance = this;
     }
+
+    
 }

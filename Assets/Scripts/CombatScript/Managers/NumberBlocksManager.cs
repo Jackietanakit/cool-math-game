@@ -33,6 +33,7 @@ public class NumberBlocksManager : MonoBehaviour
         NumberBlock numberBlock = Instantiate(NumberBlockPrefab, NumberBlockContainer, true);
         PutNumberBlockIntoContainer(numberBlock);
         numberBlock.Initialize(number);
+        numberBlock.SetOriginalPosition();
         numberBlocks.Add(numberBlock);
     }
 
@@ -47,7 +48,11 @@ public class NumberBlocksManager : MonoBehaviour
     public void PutNumberBlockIntoContainer(NumberBlock numberBlock)
     {
         numberBlock.transform.SetParent(NumberBlockContainer, true);
-        numberBlock.transform.localPosition = new Vector2((0.055f - numberBlock.RectPosition.anchoredPosition.x) + numberBlocksInContainer * 0.09f, 0.15f);
+        numberBlock.transform.localPosition = new Vector2(
+            (0.055f - numberBlock.RectPosition.anchoredPosition.x)
+                + numberBlocksInContainer * 0.09f,
+            0.15f
+        );
         numberBlocksInContainer++;
     }
 
@@ -56,4 +61,10 @@ public class NumberBlocksManager : MonoBehaviour
         numberBlocksInContainer--;
     }
 
+    public bool CheckIfInZone(Block block)
+    {
+        return false;
+    }
+
+    public void AddNumberToZone(Block block) { }
 }
