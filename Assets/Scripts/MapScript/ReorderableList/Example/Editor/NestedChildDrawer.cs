@@ -1,17 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 namespace Map
 {
     [CustomPropertyDrawer(typeof(NestedExample.NestedChildCustomDrawer))]
     public class NestedChildDrawer : PropertyDrawer
     {
-
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-
             Rect r1 = position;
             r1.width = 20;
 
@@ -21,7 +19,11 @@ namespace Map
             EditorGUI.BeginProperty(position, label, property);
 
             EditorGUI.PropertyField(r1, property.FindPropertyRelative("myBool"), GUIContent.none);
-            EditorGUI.PropertyField(r2, property.FindPropertyRelative("myGameObject"), GUIContent.none);
+            EditorGUI.PropertyField(
+                r2,
+                property.FindPropertyRelative("myGameObject"),
+                GUIContent.none
+            );
 
             EditorGUI.EndProperty();
         }

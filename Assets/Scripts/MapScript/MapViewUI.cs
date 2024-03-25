@@ -10,36 +10,53 @@ namespace Map
     {
         [Header("UI Map Settings")]
         [Tooltip("ScrollRect that will be used for orientations: Left To Right, Right To Left")]
-        [SerializeField] private ScrollRect scrollRectHorizontal;
+        [SerializeField]
+        private ScrollRect scrollRectHorizontal;
+
         [Tooltip("ScrollRect that will be used for orientations: Top To Bottom, Bottom To Top")]
-        [SerializeField] private ScrollRect scrollRectVertical;
-        [Tooltip("Multiplier to compensate for larger distances in UI pixels on the canvas compared to distances in world units")]
-        [SerializeField] private float unitsToPixelsMultiplier  = 10f;
+        [SerializeField]
+        private ScrollRect scrollRectVertical;
+
+        [Tooltip(
+            "Multiplier to compensate for larger distances in UI pixels on the canvas compared to distances in world units"
+        )]
+        [SerializeField]
+        private float unitsToPixelsMultiplier = 10f;
+
         [Tooltip("Padding of the first and last rows of nodes from the sides of the scroll rect")]
-        [SerializeField] private float padding;
+        [SerializeField]
+        private float padding;
+
         [Tooltip("Padding of the background from the sides of the scroll rect")]
-        [SerializeField] private Vector2 backgroundPadding;
+        [SerializeField]
+        private Vector2 backgroundPadding;
+
         [Tooltip("Pixels per Unit multiplier for the background image")]
-        [SerializeField] private float backgroundPPUMultiplier = 1;
+        [SerializeField]
+        private float backgroundPPUMultiplier = 1;
+
         [Tooltip("Prefab of the UI line between the nodes (uses scripts from Unity UI Extensions)")]
-        [SerializeField] private UILineRenderer uiLinePrefab;
+        [SerializeField]
+        private UILineRenderer uiLinePrefab;
 
         protected override void ClearMap()
         {
             scrollRectHorizontal.gameObject.SetActive(false);
             scrollRectVertical.gameObject.SetActive(false);
 
-            foreach (var scrollRect in new []{scrollRectHorizontal, scrollRectVertical})
+            foreach (var scrollRect in new[] { scrollRectHorizontal, scrollRectVertical })
             foreach (Transform t in scrollRect.content)
                 Destroy(t.gameObject);
-            
+
             MapNodes.Clear();
             lineConnections.Clear();
         }
 
         private ScrollRect GetScrollRectForMap()
         {
-            return orientation == MapOrientation.LeftToRight || orientation == MapOrientation.RightToLeft
+            return
+                orientation == MapOrientation.LeftToRight
+                || orientation == MapOrientation.RightToLeft
                 ? scrollRectHorizontal
                 : scrollRectVertical;
         }
@@ -48,19 +65,19 @@ namespace Map
         {
             var scrollRect = GetScrollRectForMap();
             scrollRect.gameObject.SetActive(true);
-            
+
             firstParent = new GameObject("OuterMapParent");
             firstParent.transform.SetParent(scrollRect.content);
             firstParent.transform.localScale = Vector3.one;
             var fprt = firstParent.AddComponent<RectTransform>();
             Stretch(fprt);
-            
+
             mapParent = new GameObject("MapParentWithAScroll");
             mapParent.transform.SetParent(firstParent.transform);
             mapParent.transform.localScale = Vector3.one;
             var mprt = mapParent.AddComponent<RectTransform>();
             Stretch(mprt);
-            
+
             SetMapLength();
             ScrollToOrigin();
         }
@@ -69,8 +86,12 @@ namespace Map
         {
             var rt = GetScrollRectForMap().content;
             var sizeDelta = rt.sizeDelta;
-            var length = padding + Map.DistanceBetweenFirstAndLastLayers() * unitsToPixelsMultiplier;
-            if (orientation == MapOrientation.LeftToRight || orientation == MapOrientation.RightToLeft)
+            var length =
+                padding + Map.DistanceBetweenFirstAndLastLayers() * unitsToPixelsMultiplier;
+            if (
+                orientation == MapOrientation.LeftToRight
+                || orientation == MapOrientation.RightToLeft
+            )
                 sizeDelta.x = length;
             else
                 sizeDelta.y = length;
@@ -119,22 +140,23 @@ namespace Map
 
         private Vector2 GetNodePosition(Node node)
         {
-            var length = padding + Map.DistanceBetweenFirstAndLastLayers() * unitsToPixelsMultiplier;
-            
+            var length =
+                padding + Map.DistanceBetweenFirstAndLastLayers() * unitsToPixelsMultiplier;
+
             switch (orientation)
             {
                 case MapOrientation.BottomToTop:
-                    return new Vector2(-backgroundPadding.x / 2f, (padding - length) / 2f) +
-                           node.position * unitsToPixelsMultiplier;
+                    return new Vector2(-backgroundPadding.x / 2f, (padding - length) / 2f)
+                        + node.position * unitsToPixelsMultiplier;
                 case MapOrientation.TopToBottom:
-                    return new Vector2(backgroundPadding.x / 2f, (length - padding) / 2f) -
-                           node.position * unitsToPixelsMultiplier;
+                    return new Vector2(backgroundPadding.x / 2f, (length - padding) / 2f)
+                        - node.position * unitsToPixelsMultiplier;
                 case MapOrientation.RightToLeft:
-                    return new Vector2((length - padding) / 2f, backgroundPadding.y / 2f) -
-                           Flip(node.position) * unitsToPixelsMultiplier;
+                    return new Vector2((length - padding) / 2f, backgroundPadding.y / 2f)
+                        - Flip(node.position) * unitsToPixelsMultiplier;
                 case MapOrientation.LeftToRight:
-                    return new Vector2((padding - length) / 2f, -backgroundPadding.y / 2f) +
-                           Flip(node.position) * unitsToPixelsMultiplier;
+                    return new Vector2((padding - length) / 2f, -backgroundPadding.y / 2f)
+                        + Flip(node.position) * unitsToPixelsMultiplier;
                 default:
                     return Vector2.zero;
             }
@@ -156,7 +178,7 @@ namespace Map
             Stretch(rt);
             rt.SetAsFirstSibling();
             rt.sizeDelta = backgroundPadding;
-            
+
             var image = backgroundObject.AddComponent<Image>();
             image.color = backgroundColor;
             image.type = Image.Type.Sliced;
@@ -166,38 +188,53 @@ namespace Map
 
         protected override void AddLineConnection(MapNode from, MapNode to)
         {
-            if (uiLinePrefab == null) return;
-            
+            if (uiLinePrefab == null)
+                return;
+
             var lineRenderer = Instantiate(uiLinePrefab, mapParent.transform);
             lineRenderer.transform.SetAsFirstSibling();
             var fromRT = from.transform as RectTransform;
             var toRT = to.transform as RectTransform;
-            var fromPoint = fromRT.anchoredPosition +
-                            (toRT.anchoredPosition - fromRT.anchoredPosition).normalized * offsetFromNodes;
+            var fromPoint =
+                fromRT.anchoredPosition
+                + (toRT.anchoredPosition - fromRT.anchoredPosition).normalized * offsetFromNodes;
 
-            var toPoint = toRT.anchoredPosition +
-                          (fromRT.anchoredPosition - toRT.anchoredPosition).normalized * offsetFromNodes;
+            var toPoint =
+                toRT.anchoredPosition
+                + (fromRT.anchoredPosition - toRT.anchoredPosition).normalized * offsetFromNodes;
 
             // drawing lines in local space:
-            lineRenderer.transform.position = from.transform.position +
-                                              (Vector3) (toRT.anchoredPosition - fromRT.anchoredPosition).normalized *
-                                              offsetFromNodes;
+            lineRenderer.transform.position =
+                from.transform.position
+                + (Vector3)(toRT.anchoredPosition - fromRT.anchoredPosition).normalized
+                    * offsetFromNodes;
 
             // line renderer with 2 points only does not handle transparency properly:
             var list = new List<Vector2>();
             for (var i = 0; i < linePointsCount; i++)
             {
-                list.Add(Vector3.Lerp(Vector3.zero, toPoint - fromPoint +
-                                                    2 * (fromRT.anchoredPosition - toRT.anchoredPosition).normalized *
-                                                    offsetFromNodes, (float) i / (linePointsCount - 1)));
+                list.Add(
+                    Vector3.Lerp(
+                        Vector3.zero,
+                        toPoint
+                            - fromPoint
+                            + 2
+                                * (fromRT.anchoredPosition - toRT.anchoredPosition).normalized
+                                * offsetFromNodes,
+                        (float)i / (linePointsCount - 1)
+                    )
+                );
             }
-            
-            Debug.Log("From: " + fromPoint + " to: " + toPoint + " last point: " + list[list.Count - 1]);
+
+            Debug.Log(
+                "From: " + fromPoint + " to: " + toPoint + " last point: " + list[list.Count - 1]
+            );
 
             lineRenderer.Points = list.ToArray();
 
             var dottedLine = lineRenderer.GetComponent<DottedLineRenderer>();
-            if (dottedLine != null) dottedLine.ScaleMaterial();
+            if (dottedLine != null)
+                dottedLine.ScaleMaterial();
 
             lineConnections.Add(new LineConnection(null, lineRenderer, from, to));
         }

@@ -1,13 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Malee;
+using UnityEngine;
 
 namespace Map
 {
     public class NameOverride : MonoBehaviour
     {
-
         public string nameOverride = "Car";
         public string nestedNameOverride = "Car Part";
 
@@ -20,7 +19,6 @@ namespace Map
         [System.Serializable]
         public class ExampleChild
         {
-
             [Reorderable(null, "Car Part", null)]
             public StringList nested;
         }
@@ -28,24 +26,17 @@ namespace Map
         [System.Serializable]
         public class DynamicExampleChild
         {
-
             [Reorderable]
             public StringList nested;
         }
 
         [System.Serializable]
-        public class ExampleChildList : ReorderableArray<ExampleChild>
-        {
-        }
+        public class ExampleChildList : ReorderableArray<ExampleChild> { }
 
         [System.Serializable]
-        public class DynamicExampleChildList : ReorderableArray<DynamicExampleChild>
-        {
-        }
+        public class DynamicExampleChildList : ReorderableArray<DynamicExampleChild> { }
 
         [System.Serializable]
-        public class StringList : ReorderableArray<string>
-        {
-        }
+        public class StringList : ReorderableArray<string> { }
     }
 }

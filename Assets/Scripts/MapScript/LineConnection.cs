@@ -7,7 +7,7 @@ namespace Map
     public class LineConnection
     {
         public LineRenderer lr;
-        public UILineRenderer uilr; 
+        public UILineRenderer uilr;
         public MapNode from;
         public MapNode to;
 
@@ -34,7 +34,8 @@ namespace Map
                 lr.colorGradient = gradient;
             }
 
-            if (uilr != null) uilr.color = color;
+            if (uilr != null)
+                uilr.color = color;
         }
     }
 }

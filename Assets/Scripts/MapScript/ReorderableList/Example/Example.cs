@@ -1,13 +1,12 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Malee;
+using UnityEngine;
 
 namespace Map
 {
     public class Example : MonoBehaviour
     {
-
         public List<ExampleChild> list1;
 
         [Reorderable]
@@ -25,7 +24,6 @@ namespace Map
         [System.Serializable]
         public class ExampleChild
         {
-
             public string name;
             public float value;
             public ExampleEnum myEnum;
@@ -43,18 +41,12 @@ namespace Map
         }
 
         [System.Serializable]
-        public class ExampleChildList : ReorderableArray<ExampleChild>
-        {
-        }
+        public class ExampleChildList : ReorderableArray<ExampleChild> { }
 
         [System.Serializable]
-        public class StringList : ReorderableArray<string>
-        {
-        }
+        public class StringList : ReorderableArray<string> { }
 
         [System.Serializable]
-        public class VectorList : ReorderableArray<Vector4>
-        {
-        }
+        public class VectorList : ReorderableArray<Vector4> { }
     }
 }

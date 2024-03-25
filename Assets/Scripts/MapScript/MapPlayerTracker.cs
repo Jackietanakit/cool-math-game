@@ -23,7 +23,8 @@ namespace Map
 
         public void SelectNode(MapNode mapNode)
         {
-            if (Locked) return;
+            if (Locked)
+                return;
 
             // Debug.Log("Selected node: " + mapNode.Node.point);
 
@@ -40,7 +41,10 @@ namespace Map
                 var currentPoint = mapManager.CurrentMap.path[mapManager.CurrentMap.path.Count - 1];
                 var currentNode = mapManager.CurrentMap.GetNode(currentPoint);
 
-                if (currentNode != null && currentNode.outgoing.Any(point => point.Equals(mapNode.Node.point)))
+                if (
+                    currentNode != null
+                    && currentNode.outgoing.Any(point => point.Equals(mapNode.Node.point))
+                )
                     SendPlayerToNode(mapNode);
                 else
                     PlayWarningThatNodeCannotBeAccessed();
@@ -62,9 +66,14 @@ namespace Map
         private static void EnterNode(MapNode mapNode)
         {
             // we have access to blueprint name here as well
-            Debug.Log("Entering node: " + mapNode.Node.blueprintName + " of type: " + mapNode.Node.nodeType);
+            Debug.Log(
+                "Entering node: "
+                    + mapNode.Node.blueprintName
+                    + " of type: "
+                    + mapNode.Node.nodeType
+            );
             // load appropriate scene with context based on nodeType:
-            // or show appropriate GUI over the map: 
+            // or show appropriate GUI over the map:
             // if you choose to show GUI in some of these cases, do not forget to set "Locked" in MapPlayerTracker back to false
             switch (mapNode.Node.nodeType)
             {
