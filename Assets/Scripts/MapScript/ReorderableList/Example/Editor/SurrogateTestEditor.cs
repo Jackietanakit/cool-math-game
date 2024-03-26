@@ -1,21 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
 using Malee.Editor;
+using UnityEditor;
+using UnityEngine;
 
 namespace Map
 {
     [CustomEditor(typeof(SurrogateTest))]
     public class SurrogateTestEditor : Editor
     {
-
         private ReorderableList list;
         private SerializedProperty myClassArray;
 
         private void OnEnable()
         {
-
             //custom list with more complex surrogate functionalty
 
             list = new ReorderableList(serializedObject.FindProperty("objects"));
@@ -29,8 +27,9 @@ namespace Map
 
         public override void OnInspectorGUI()
         {
-
-            GUILayout.Label("Drag a GameObject onto the lists. Even though the list type is not a GameObject!");
+            GUILayout.Label(
+                "Drag a GameObject onto the lists. Even though the list type is not a GameObject!"
+            );
 
             serializedObject.Update();
 
@@ -40,9 +39,12 @@ namespace Map
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void AppendObject(SerializedProperty element, Object objectReference, ReorderableList list)
+        private void AppendObject(
+            SerializedProperty element,
+            Object objectReference,
+            ReorderableList list
+        )
         {
-
             //we can do more with a custom surrogate delegate :)
 
             element.FindPropertyRelative("gameObject").objectReferenceValue = objectReference;

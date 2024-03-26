@@ -9,10 +9,17 @@ namespace Map
         private static MapConfig config;
 
         private static readonly List<NodeType> RandomNodes = new List<NodeType>
-        {NodeType.Mystery, NodeType.Store, NodeType.Treasure, NodeType.MinorEnemy, NodeType.RestSite};
+        {
+            NodeType.Mystery,
+            NodeType.Store,
+            NodeType.Treasure,
+            NodeType.MinorEnemy,
+            NodeType.RestSite
+        };
 
         private static List<float> layerDistances;
         private static List<List<Point>> paths;
+
         // ALL nodes by layer:
         private static readonly List<List<Node>> nodes = new List<List<Node>>();
 
@@ -41,10 +48,17 @@ namespace Map
             RemoveCrossConnections();
 
             // select all the nodes with connections:
-            var nodesList = nodes.SelectMany(n => n).Where(n => n.incoming.Count > 0 || n.outgoing.Count > 0).ToList();
+            var nodesList = nodes
+                .SelectMany(n => n)
+                .Where(n => n.incoming.Count > 0 || n.outgoing.Count > 0)
+                .ToList();
 
             // pick a random name of the boss level for this map:
-            var bossNodeName = config.nodeBlueprints.Where(b => b.nodeType == NodeType.Boss).ToList().Random().name;
+            var bossNodeName = config
+                .nodeBlueprints.Where(b => b.nodeType == NodeType.Boss)
+                .ToList()
+                .Random()
+                .name;
             return new Map(conf.name, bossNodeName, nodesList, new List<Point>());
         }
 
@@ -57,7 +71,8 @@ namespace Map
 
         private static float GetDistanceToLayer(int layerIndex)
         {
-            if (layerIndex < 0 || layerIndex > layerDistances.Count) return 0f;
+            if (layerIndex < 0 || layerIndex > layerDistances.Count)
+                return 0f;
 
             return layerDistances.Take(layerIndex + 1).Sum();
         }
@@ -72,11 +87,19 @@ namespace Map
 
             for (var i = 0; i < config.GridWidth; i++)
             {
-                var nodeType = Random.Range(0f, 1f) < layer.randomizeNodes ? GetRandomNode() : layer.nodeType;
-                var blueprintName = config.nodeBlueprints.Where(b => b.nodeType == nodeType).ToList().Random().name;
+                var nodeType =
+                    Random.Range(0f, 1f) < layer.randomizeNodes ? GetRandomNode() : layer.nodeType;
+                var blueprintName = config
+                    .nodeBlueprints.Where(b => b.nodeType == nodeType)
+                    .ToList()
+                    .Random()
+                    .name;
                 var node = new Node(nodeType, blueprintName, new Point(i, layerIndex))
                 {
-                    position = new Vector2(-offset + i * layer.nodesApartDistance, GetDistanceToLayer(layerIndex))
+                    position = new Vector2(
+                        -offset + i * layer.nodesApartDistance,
+                        GetDistanceToLayer(layerIndex)
+                    )
                 };
                 nodesOnThisLayer.Add(node);
             }
@@ -90,9 +113,8 @@ namespace Map
             {
                 var list = nodes[index];
                 var layer = config.layers[index];
-                var distToNextLayer = index + 1 >= layerDistances.Count
-                    ? 0f
-                    : layerDistances[index + 1];
+                var distToNextLayer =
+                    index + 1 >= layerDistances.Count ? 0f : layerDistances[index + 1];
                 var distToPreviousLayer = layerDistances[index];
 
                 foreach (var node in list)
@@ -101,7 +123,8 @@ namespace Map
                     var yRnd = Random.Range(-1f, 1f);
 
                     var x = xRnd * layer.nodesApartDistance / 2f;
-                    var y = yRnd < 0 ? distToPreviousLayer * yRnd / 2f : distToNextLayer * yRnd / 2f;
+                    var y =
+                        yRnd < 0 ? distToPreviousLayer * yRnd / 2f : distToNextLayer * yRnd / 2f;
 
                     node.position += new Vector2(x, y) * layer.randomizePosition;
                 }
@@ -125,61 +148,69 @@ namespace Map
         private static void RemoveCrossConnections()
         {
             for (var i = 0; i < config.GridWidth - 1; ++i)
-                for (var j = 0; j < config.layers.Count - 1; ++j)
+            for (var j = 0; j < config.layers.Count - 1; ++j)
+            {
+                var node = GetNode(new Point(i, j));
+                if (node == null || node.HasNoConnections())
+                    continue;
+                var right = GetNode(new Point(i + 1, j));
+                if (right == null || right.HasNoConnections())
+                    continue;
+                var top = GetNode(new Point(i, j + 1));
+                if (top == null || top.HasNoConnections())
+                    continue;
+                var topRight = GetNode(new Point(i + 1, j + 1));
+                if (topRight == null || topRight.HasNoConnections())
+                    continue;
+
+                // Debug.Log("Inspecting node for connections: " + node.point);
+                if (!node.outgoing.Any(element => element.Equals(topRight.point)))
+                    continue;
+                if (!right.outgoing.Any(element => element.Equals(top.point)))
+                    continue;
+
+                // Debug.Log("Found a cross node: " + node.point);
+
+                // we managed to find a cross node:
+                // 1) add direct connections:
+                node.AddOutgoing(top.point);
+                top.AddIncoming(node.point);
+
+                right.AddOutgoing(topRight.point);
+                topRight.AddIncoming(right.point);
+
+                var rnd = Random.Range(0f, 1f);
+                if (rnd < 0.2f)
                 {
-                    var node = GetNode(new Point(i, j));
-                    if (node == null || node.HasNoConnections()) continue;
-                    var right = GetNode(new Point(i + 1, j));
-                    if (right == null || right.HasNoConnections()) continue;
-                    var top = GetNode(new Point(i, j + 1));
-                    if (top == null || top.HasNoConnections()) continue;
-                    var topRight = GetNode(new Point(i + 1, j + 1));
-                    if (topRight == null || topRight.HasNoConnections()) continue;
-
-                    // Debug.Log("Inspecting node for connections: " + node.point);
-                    if (!node.outgoing.Any(element => element.Equals(topRight.point))) continue;
-                    if (!right.outgoing.Any(element => element.Equals(top.point))) continue;
-
-                    // Debug.Log("Found a cross node: " + node.point);
-
-                    // we managed to find a cross node:
-                    // 1) add direct connections:
-                    node.AddOutgoing(top.point);
-                    top.AddIncoming(node.point);
-
-                    right.AddOutgoing(topRight.point);
-                    topRight.AddIncoming(right.point);
-
-                    var rnd = Random.Range(0f, 1f);
-                    if (rnd < 0.2f)
-                    {
-                        // remove both cross connections:
-                        // a) 
-                        node.RemoveOutgoing(topRight.point);
-                        topRight.RemoveIncoming(node.point);
-                        // b) 
-                        right.RemoveOutgoing(top.point);
-                        top.RemoveIncoming(right.point);
-                    }
-                    else if (rnd < 0.6f)
-                    {
-                        // a) 
-                        node.RemoveOutgoing(topRight.point);
-                        topRight.RemoveIncoming(node.point);
-                    }
-                    else
-                    {
-                        // b) 
-                        right.RemoveOutgoing(top.point);
-                        top.RemoveIncoming(right.point);
-                    }
+                    // remove both cross connections:
+                    // a)
+                    node.RemoveOutgoing(topRight.point);
+                    topRight.RemoveIncoming(node.point);
+                    // b)
+                    right.RemoveOutgoing(top.point);
+                    top.RemoveIncoming(right.point);
                 }
+                else if (rnd < 0.6f)
+                {
+                    // a)
+                    node.RemoveOutgoing(topRight.point);
+                    topRight.RemoveIncoming(node.point);
+                }
+                else
+                {
+                    // b)
+                    right.RemoveOutgoing(top.point);
+                    top.RemoveIncoming(right.point);
+                }
+            }
         }
 
         private static Node GetNode(Point p)
         {
-            if (p.y >= nodes.Count) return null;
-            if (p.x >= nodes[p.y].Count) return null;
+            if (p.y >= nodes.Count)
+                return null;
+            if (p.x >= nodes[p.y].Count)
+                return null;
 
             return nodes[p.y][p.x];
         }
@@ -214,7 +245,8 @@ namespace Map
             var preBossXs = candidateXs.Take(numOfPreBossNodes);
             var preBossPoints = (from x in preBossXs select new Point(x, finalNode.y - 1)).ToList();
 
-            int numOfPaths = Mathf.Max(numOfStartingNodes, numOfPreBossNodes) + Mathf.Max(0, config.extraPaths);
+            int numOfPaths =
+                Mathf.Max(numOfStartingNodes, numOfPreBossNodes) + Mathf.Max(0, config.extraPaths);
             for (int i = 0; i < numOfPaths; ++i)
             {
                 Point startNode = startingPoints[i % numOfStartingNodes];

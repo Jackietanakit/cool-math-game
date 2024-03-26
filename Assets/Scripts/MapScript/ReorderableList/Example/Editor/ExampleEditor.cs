@@ -1,8 +1,8 @@
-using UnityEngine;
-using UnityEditor;
+using System;
 using System.Collections;
 using Malee.Editor;
-using System;
+using UnityEditor;
+using UnityEngine;
 
 namespace Map
 {
@@ -10,14 +10,12 @@ namespace Map
     [CustomEditor(typeof(Example))]
     public class ExampleEditor : Editor
     {
-
         private ReorderableList list1;
         private SerializedProperty list2;
         private ReorderableList list3;
 
         void OnEnable()
         {
-
             list1 = new ReorderableList(serializedObject.FindProperty("list1"));
             list1.elementNameProperty = "myEnum";
 
@@ -29,13 +27,11 @@ namespace Map
 
         private string GetList3ElementName(SerializedProperty element)
         {
-
             return element.propertyPath;
         }
 
         public override void OnInspectorGUI()
         {
-
             serializedObject.Update();
 
             //draw the list using GUILayout, you can of course specify your own position and label

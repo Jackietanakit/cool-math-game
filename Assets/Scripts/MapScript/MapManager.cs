@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Map
 {
@@ -46,10 +46,14 @@ namespace Map
 
         public void SaveMap()
         {
-            if (CurrentMap == null) return;
+            if (CurrentMap == null)
+                return;
 
-            var json = JsonConvert.SerializeObject(CurrentMap, Formatting.Indented,
-                new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore});
+            var json = JsonConvert.SerializeObject(
+                CurrentMap,
+                Formatting.Indented,
+                new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }
+            );
             PlayerPrefs.SetString("Map", json);
             PlayerPrefs.Save();
         }

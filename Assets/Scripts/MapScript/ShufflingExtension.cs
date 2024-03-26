@@ -6,9 +6,8 @@ namespace Map
 {
     public static class ShufflingExtension
     {
-
         // not my code!!!!!
-        // got it here: http://stackoverflow.com/questions/273313/randomize-a-listt/1262619#1262619 
+        // got it here: http://stackoverflow.com/questions/273313/randomize-a-listt/1262619#1262619
         private static System.Random rng = new System.Random();
 
         public static void Shuffle<T>(this IList<T> list)
@@ -36,7 +35,8 @@ namespace Map
 
         public static List<T> GetRandomElements<T>(this List<T> list, int elementsCount)
         {
-            return list.OrderBy(arg => Guid.NewGuid()).Take(list.Count < elementsCount ? list.Count : elementsCount)
+            return list.OrderBy(arg => Guid.NewGuid())
+                .Take(list.Count < elementsCount ? list.Count : elementsCount)
                 .ToList();
         }
     }
