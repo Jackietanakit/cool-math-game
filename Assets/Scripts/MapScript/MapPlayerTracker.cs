@@ -78,18 +78,26 @@ namespace Map
             switch (mapNode.Node.nodeType)
             {
                 case NodeType.MinorEnemy:
+                    Debug.Log("Minor Enemy");
+                    ScenesManager.Instance.LoadScene(ScenesManager.Scene.CombatScene);
                     break;
                 case NodeType.EliteEnemy:
+                    Debug.Log("Elite Enemy");
                     break;
                 case NodeType.RestSite:
+                    Debug.Log("Rest Site");
                     break;
                 case NodeType.Treasure:
+                    Debug.Log("Treasure");
                     break;
                 case NodeType.Store:
+                    Debug.Log("Store");
                     break;
                 case NodeType.Boss:
+                    Debug.Log("Boss");
                     break;
                 case NodeType.Mystery:
+                    Debug.Log("Mystery");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
