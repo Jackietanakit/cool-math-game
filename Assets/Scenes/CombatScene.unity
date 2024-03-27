@@ -131,7 +131,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 83158000}
+  - component: {fileID: 83158002}
   - component: {fileID: 83158001}
   m_Layer: 0
   m_Name: OperatorContainer
@@ -140,21 +140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &83158000
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 83157999}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.31, y: 0.01, z: 0.24868473}
-  m_LocalScale: {x: 9.2154665, y: 1.5064772, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1994177895}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &83158001
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -208,6 +193,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!224 &83158002
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83157999}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.24868473}
+  m_LocalScale: {x: 9.25, y: 1.25, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1994177895}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 0.3211, y: 0.01}
+  m_SizeDelta: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &365038858
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,9 +244,60 @@ Transform:
   - {fileID: 1566449420}
   - {fileID: 1018735173}
   - {fileID: 1305929831}
+  - {fileID: 449838535}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &449838534
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 449838535}
+  - component: {fileID: 449838536}
+  m_Layer: 0
+  m_Name: OperatorManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &449838535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449838534}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.139021, y: -3.2557087, z: -0.04814264}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 365038859}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &449838536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449838534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75ac0ce05f0a9da4385f04de3d4f28cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OperatorBlockContainer: {fileID: 83158002}
+  OperatorBlockPrefab: {fileID: 496409980060070397, guid: 32b25f40b775f6341838309c27d03b59,
+    type: 3}
+  operatorBlocks: []
+  operatorBlocksInContainer: 0
+  maxoperatorBlocksInContainer: 10
 --- !u!1 &496102814
 GameObject:
   m_ObjectHideFlags: 0
@@ -1054,6 +1110,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1556470987}
   - component: {fileID: 1556470988}
+  - component: {fileID: 1556470990}
+  - component: {fileID: 1556470989}
   m_Layer: 0
   m_Name: NumbersContainer
   m_TagString: Untagged
@@ -1070,7 +1128,7 @@ RectTransform:
   m_GameObject: {fileID: 1556470986}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.24868473}
-  m_LocalScale: {x: 9.281376, y: 1.2844793, z: 1}
+  m_LocalScale: {x: 9.25, y: 1.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1994177895}
@@ -1078,7 +1136,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0.29, y: 1.69}
+  m_AnchoredPosition: {x: 0.3211, y: 1.6722}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &1556470988
@@ -1134,6 +1192,49 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!61 &1556470989
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556470986}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &1556470990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556470986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04b909a002e2684894fd833bfd4d06d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxCollider: {fileID: 1556470989}
+  AcceptNumbers: 1
+  AcceptOperators: 0
+  MaxNumberBlocks: 10
+  MaxOperatorBlock: 0
 --- !u!1 &1566449419
 GameObject:
   m_ObjectHideFlags: 0
@@ -1180,6 +1281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NumberBlockContainer: {fileID: 1556470987}
   AnswerContainer: {fileID: 1253482987}
+  NumberBlockZone: {fileID: 0}
   NumberBlockPrefab: {fileID: 2274200782080394792, guid: b2b673031509bbd4b905c29651895433,
     type: 3}
   numberBlocksInContainer: 0
@@ -1248,7 +1350,7 @@ Transform:
   - {fileID: 2139993895}
   - {fileID: 1556470987}
   - {fileID: 1494351907}
-  - {fileID: 83158000}
+  - {fileID: 83158002}
   - {fileID: 1139450343}
   - {fileID: 1253482988}
   m_Father: {fileID: 0}

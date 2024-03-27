@@ -8,11 +8,16 @@ public class NumberBlock : Block
     public int number;
     public TextMeshPro textMesh;
 
+    public bool isInContainer;
+
+    //TO DO : Have an extra effect on using the number block
+
     public void Initialize(int number)
     {
         SetNumber(number);
         normalScale = transform.localScale;
         SetOrderInLayer(2);
+        this.tag = "NumberBlock";
     }
 
     public void SetNumber(int number)
@@ -28,9 +33,9 @@ public class NumberBlock : Block
 
     public override void SetOrderInLayer(int orderinLayer)
     {
-        this.orderInLayer = orderinLayer;
-        spriteRenderer.sortingOrder = orderinLayer + 1;
+        base.SetOrderInLayer(orderinLayer);
         textMesh.sortingOrder = orderinLayer + 2;
-        BorderOnHover.GetComponent<SpriteRenderer>().sortingOrder = orderinLayer;
     }
+
+    //TO DO Find all information about the number, such as multiples, isprime?, etc
 }

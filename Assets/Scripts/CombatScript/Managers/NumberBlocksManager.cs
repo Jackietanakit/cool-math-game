@@ -9,6 +9,8 @@ public class NumberBlocksManager : MonoBehaviour
 
     public GameObject AnswerContainer; //Will spawn the answer number blocks
 
+    public NumberBlockZone NumberBlockZone;
+
     public NumberBlock NumberBlockPrefab;
 
     public int numberBlocksInContainer = 0;
@@ -37,7 +39,7 @@ public class NumberBlocksManager : MonoBehaviour
         numberBlocks.Add(numberBlock);
     }
 
-    public void CreateManyNumberBlocks(int[] numbers)
+    public void CreateManyNumberBlocks(List<int> numbers)
     {
         foreach (int number in numbers)
         {

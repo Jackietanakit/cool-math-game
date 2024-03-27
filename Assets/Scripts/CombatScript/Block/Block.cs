@@ -20,9 +20,14 @@ public class Block : MonoBehaviour
 
     public bool hasGhost = false;
 
+    void Start()
+    {
+        this.tag = "Block";
+    }
+
     void Update()
     {
-        // if mouse hover on the number block, the number block will be bigger
+        // if mouse hover on the block, the block will be bigger
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (
             boxCollider.OverlapPoint(mousePosition)
@@ -37,7 +42,7 @@ public class Block : MonoBehaviour
             BorderOnHover.SetActive(false);
         }
 
-        //if mouse drag on the number block, the number block will be moved to the mouse position, however, there are still a ghost number block at the original position
+        //if mouse drag on the block, the block will be moved to the mouse position, however, there are still a ghost number block at the original position
         if (
             isSelected
             || (
