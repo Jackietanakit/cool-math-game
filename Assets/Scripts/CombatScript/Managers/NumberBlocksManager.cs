@@ -5,11 +5,12 @@ using UnityEngine;
 public class NumberBlocksManager : MonoBehaviour
 {
     public static NumberBlocksManager Instance;
-    public RectTransform NumberBlockContainer; //Parent of all number blocks
 
     public GameObject AnswerContainer; //Will spawn the answer number blocks
 
     public NumberBlockZone NumberBlockZone;
+
+    public AnswerZone AnswerZone;
 
     public NumberBlock NumberBlockPrefab;
 
@@ -23,18 +24,13 @@ public class NumberBlocksManager : MonoBehaviour
         Instance = this;
     }
 
-    void AddNumberBlock(NumberBlock numberBlock)
-    {
-        numberBlocks.Add(numberBlock);
-    }
-
     //using container to set the position of the number block
     public void CreateNumberBlockAtContainer(int number)
     {
         // instantiate the number to be a child of the container
-        NumberBlock numberBlock = Instantiate(NumberBlockPrefab, NumberBlockContainer, true);
-        PutNumberBlockIntoContainer(numberBlock);
-        numberBlock.Initialize(number);
+        NumberBlock numberBlock = Instantiate(NumberBlockPrefab, NumberBlockZone.transform, true);
+        NumberBlockZone.AddBlockToZone(numberBlock);
+        numberBlock.Initialize(number, NumberBlockZone);
         numberBlock.SetOriginalPosition();
         numberBlocks.Add(numberBlock);
     }
@@ -47,26 +43,17 @@ public class NumberBlocksManager : MonoBehaviour
         }
     }
 
-    public void PutNumberBlockIntoContainer(NumberBlock numberBlock)
+    public void CreateAnswerNumberBlock(int number)
     {
-        numberBlock.transform.SetParent(NumberBlockContainer, true);
-        numberBlock.transform.localPosition = new Vector2(
-            (0.055f - numberBlock.RectPosition.anchoredPosition.x)
-                + numberBlocksInContainer * 0.09f,
-            0.15f
-        );
-        numberBlocksInContainer++;
+        if (AnswerZone.numbers.Count == 1)
+        {
+            return;
+        }
+        Debug.Log("Creating answer number block");
+        NumberBlock numberBlock = Instantiate(NumberBlockPrefab, AnswerContainer.transform, true);
+        AnswerZone.AddBlockToZone(numberBlock);
+        numberBlock.Initialize(number, AnswerZone);
+        numberBlock.SetOriginalPosition();
+        numberBlocks.Add(numberBlock);
     }
-
-    public void RemoveNumberBlockFromContainer(NumberBlock numberBlock)
-    {
-        numberBlocksInContainer--;
-    }
-
-    public bool CheckIfInZone(Block block)
-    {
-        return false;
-    }
-
-    public void AddNumberToZone(Block block) { }
 }

@@ -15,6 +15,10 @@ public class Block : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public BoxCollider2D boxCollider;
 
+    public Zone zone;
+
+    public bool isInContainer;
+
     public bool isSelected = false;
     public int orderInLayer = 2;
 
@@ -22,6 +26,7 @@ public class Block : MonoBehaviour
 
     void Start()
     {
+        normalScale = transform.lossyScale;
         this.tag = "Block";
     }
 
@@ -38,7 +43,8 @@ public class Block : MonoBehaviour
         }
         else
         {
-            transform.localScale = normalScale;
+            //set local scale according to lossy scale factor divided by parent lossy scale factor
+            SetScale(normalScale);
             BorderOnHover.SetActive(false);
         }
 
@@ -65,40 +71,66 @@ public class Block : MonoBehaviour
                 GhostBlock = ghostBlock;
             }
             hasGhost = true;
-            transform.position = mousePosition;
+            SetPosition(mousePosition);
         }
         //if mouse release the number block, the number block will be destroyed
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && isSelected)
         {
             SetOrderInLayer(2);
             CombatManager.Instance.hasDraggedSomething = false;
             isSelected = false;
+            Zone newzone = CombatManager.Instance.GetZoneUnderMouse();
 
             //if the number block is in another zone, the number block will be destroyed and the number will be added to the zone, else the block will be put back to the original position
-            if (NumberBlocksManager.Instance.CheckIfInZone(this))
+            if (
+                newzone != null
+                && !(newzone == zone)
+                && newzone.CanAccept(this)
+                && newzone is not AnswerZone
+            )
             {
-                NumberBlocksManager.Instance.AddNumberToZone(this);
-                Destroy(gameObject);
+                //Put it in the zone
+                return;
             }
             else
             {
-                transform.position = OriginalPosition;
-                hasGhost = false;
-                //destroy the ghost block
-                Destroy(GhostBlock);
+                Debug.Log("Put back to original position");
+                PutBackToOriginalPosition();
             }
         }
     }
 
     public void SetOriginalPosition()
     {
-        OriginalPosition = transform.position;
+        OriginalPosition = transform.localPosition;
+    }
+
+    public void SetOriginalPosition(Vector2 position)
+    {
+        OriginalPosition = position;
+    }
+
+    public void PutBackToOriginalPosition()
+    {
+        hasGhost = false;
+        SetLocalPosition(OriginalPosition);
+        Destroy(GhostBlock);
     }
 
     public void OnHover()
     {
-        transform.localScale = normalScale * 1.2f;
+        SetScale(normalScale * 1.2f);
         BorderOnHover.SetActive(true);
+    }
+
+    public void SetLocalPosition(Vector2 position)
+    {
+        transform.localPosition = position;
+    }
+
+    public void SetPosition(Vector2 position)
+    {
+        transform.position = position;
     }
 
     public virtual void SetOrderInLayer(int orderinLayer)
@@ -106,5 +138,15 @@ public class Block : MonoBehaviour
         this.orderInLayer = orderinLayer;
         spriteRenderer.sortingOrder = orderinLayer + 1;
         BorderOnHover.GetComponent<SpriteRenderer>().sortingOrder = orderinLayer;
+    }
+
+    public void SetScale(Vector2 scale)
+    {
+        transform.localScale = scale / zone.transform.lossyScale;
+    }
+
+    public void RemoveBlock()
+    {
+        Destroy(gameObject);
     }
 }

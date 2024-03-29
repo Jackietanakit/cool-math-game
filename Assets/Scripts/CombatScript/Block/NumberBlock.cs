@@ -8,14 +8,13 @@ public class NumberBlock : Block
     public int number;
     public TextMeshPro textMesh;
 
-    public bool isInContainer;
-
     //TO DO : Have an extra effect on using the number block
 
-    public void Initialize(int number)
+    public void Initialize(int number, Zone zone)
     {
+        this.zone = zone;
         SetNumber(number);
-        normalScale = transform.localScale;
+        normalScale = transform.lossyScale;
         SetOrderInLayer(2);
         this.tag = "NumberBlock";
     }

@@ -8,6 +8,8 @@ public class CombatManager : MonoBehaviour
 
     public bool hasDraggedSomething;
 
+    public List<Zone> zones;
+
     void Start()
     {
         NumberBlocksManager.Instance.CreateManyNumberBlocks(
@@ -31,23 +33,26 @@ public class CombatManager : MonoBehaviour
 
     public Block GetBlockUnderMouse()
     {
-        foreach (NumberBlock numberBlock in NumberBlocksManager.Instance.numberBlocks)
+        RaycastHit2D hit = Physics2D.Raycast(
+            Camera.main.ScreenToWorldPoint(Input.mousePosition),
+            Vector2.zero
+        );
+        if (hit.collider != null)
         {
-            //if block is selected
-            if (numberBlock.isSelected)
+            return hit.collider.GetComponent<Block>();
+        }
+        return null;
+    }
+
+    public Zone GetZoneUnderMouse()
+    {
+        foreach (Zone zone in zones)
+        {
+            if (zone.IsInZone(GetBlockUnderMouse()))
             {
-                return numberBlock;
+                return zone;
             }
         }
-
-        foreach (OperatorBlock operatorBlock in OperatorBlockManager.Instance.operatorBlocks)
-        {
-            if (operatorBlock.isSelected)
-            {
-                return operatorBlock;
-            }
-        }
-
         return null;
     }
 }

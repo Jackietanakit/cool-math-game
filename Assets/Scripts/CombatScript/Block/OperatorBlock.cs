@@ -13,15 +13,17 @@ public class OperatorBlock : Block
     public NumberBlock numberBlockB;
 
     public Operation operation;
+
     public string Name { get; set; }
 
     public string description { get; set; }
 
-    public void Initialize(OperationName name)
+    public void Initialize(OperationName name, Zone zone)
     {
+        this.zone = zone;
         SetOrderInLayer(2);
         setOperation(name);
-        normalScale = transform.localScale;
+        normalScale = transform.lossyScale;
         this.tag = "OperatorBlock";
     }
 
@@ -32,14 +34,20 @@ public class OperatorBlock : Block
 
     public void SetNumberBlockA(NumberBlock numberBlock)
     {
-        this.numberBlockA = numberBlock;
-        SetValueA(numberBlock.GetNumber());
+        if (numberBlock != null)
+        {
+            this.numberBlockA = numberBlock;
+            SetValueA(numberBlock.GetNumber());
+        }
     }
 
     public void SetNumberBlockB(NumberBlock numberBlock)
     {
-        this.numberBlockB = numberBlock;
-        SetValueB(numberBlock.GetNumber());
+        if (numberBlock != null)
+        {
+            this.numberBlockB = numberBlock;
+            SetValueB(numberBlock.GetNumber());
+        }
     }
 
     //remove block
@@ -114,7 +122,8 @@ public class OperatorBlock : Block
 public enum OperatorType
 {
     Binary,
-    Unary
+    UnaryLeft, // Unary that only accept number a
+    UnaryRight, // Unary that only accept number b
 }
 
 // all of the operator functions
@@ -225,12 +234,12 @@ public class SqrtOperation : Operation
 {
     public SqrtOperation()
     {
-        operatorType = OperatorType.Unary;
+        operatorType = OperatorType.UnaryRight;
     }
 
     public override int Calculate()
     {
-        return (int)Mathf.Sqrt(a);
+        return (int)Mathf.Sqrt(b);
     }
 }
 
@@ -239,7 +248,7 @@ public class FactorialOperation : Operation
 {
     public FactorialOperation()
     {
-        operatorType = OperatorType.Unary;
+        operatorType = OperatorType.UnaryLeft;
     }
 
     public override int Calculate()

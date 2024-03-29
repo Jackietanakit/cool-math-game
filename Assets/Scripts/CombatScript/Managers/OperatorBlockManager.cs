@@ -7,39 +7,18 @@ public class OperatorBlockManager : MonoBehaviour
     public static OperatorBlockManager Instance;
 
     public RectTransform OperatorBlockContainer;
+    public OperatorBlockZone OperatorBlockZone;
     public OperatorBlock OperatorBlockPrefab;
-
-    public List<OperatorBlock> operatorBlocks;
 
     public int operatorBlocksInContainer = 0;
 
     public int maxoperatorBlocksInContainer = 10;
 
+    public List<OperatorBlock> operatorBlocks = new List<OperatorBlock>();
+
     void Awake()
     {
         Instance = this;
-    }
-
-    public void AddOperatorBlock(OperatorBlock operatorBlock)
-    {
-        operatorBlocks.Add(operatorBlock);
-    }
-
-    public void RemoveOperatorBlock(OperatorBlock operatorBlock)
-    {
-        operatorBlocks.Remove(operatorBlock);
-    }
-
-    public OperatorBlock GetOperatorBlock(string name)
-    {
-        foreach (OperatorBlock operatorBlock in operatorBlocks)
-        {
-            if (operatorBlock.Name == name)
-            {
-                return operatorBlock;
-            }
-        }
-        return null;
     }
 
     public void CreateOperatorBlockAtContainer(OperationName name)
@@ -49,8 +28,8 @@ public class OperatorBlockManager : MonoBehaviour
             OperatorBlockContainer,
             true
         );
-        PutOperatorBlockIntoContainer(operatorBlock);
-        operatorBlock.Initialize(name);
+        OperatorBlockZone.AddBlockToZone(operatorBlock);
+        operatorBlock.Initialize(name, OperatorBlockZone);
         operatorBlock.SetOriginalPosition();
         operatorBlocks.Add(operatorBlock);
     }
@@ -61,16 +40,5 @@ public class OperatorBlockManager : MonoBehaviour
         {
             CreateOperatorBlockAtContainer(name);
         }
-    }
-
-    private void PutOperatorBlockIntoContainer(OperatorBlock operatorBlock)
-    {
-        operatorBlock.transform.SetParent(OperatorBlockContainer, true);
-        operatorBlock.transform.localPosition = new Vector2(
-            (0.055f - operatorBlock.RectPosition.anchoredPosition.x)
-                + operatorBlocksInContainer * 0.09f,
-            0.15f
-        );
-        operatorBlocksInContainer++;
     }
 }
