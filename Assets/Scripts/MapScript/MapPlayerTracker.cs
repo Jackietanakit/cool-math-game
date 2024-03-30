@@ -53,7 +53,7 @@ namespace Map
 
         private void SendPlayerToNode(MapNode mapNode)
         {
-            Locked = lockAfterSelecting;
+            Locked = false;
             mapManager.CurrentMap.path.Add(mapNode.Node.point);
             mapManager.SaveMap();
             view.SetAttainableNodes();
@@ -86,9 +86,11 @@ namespace Map
                     break;
                 case NodeType.RestSite:
                     Debug.Log("Rest Site");
+                    ScenesManager.Instance.LoadScene(ScenesManager.Scene.RestScene);
                     break;
                 case NodeType.Treasure:
                     Debug.Log("Treasure");
+                    ScenesManager.Instance.LoadScene(ScenesManager.Scene.TreasureScene);
                     break;
                 case NodeType.Store:
                     Debug.Log("Store");

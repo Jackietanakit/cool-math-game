@@ -10,7 +10,6 @@ namespace Map
 
         private static readonly List<NodeType> RandomNodes = new List<NodeType>
         {
-            NodeType.Mystery,
             NodeType.Store,
             NodeType.Treasure,
             NodeType.MinorEnemy,
