@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OperatorBlock : Block
@@ -22,7 +20,7 @@ public class OperatorBlock : Block
     {
         this.zone = zone;
         SetOrderInLayer(2);
-        setOperation(name);
+        SetOperation(name);
         normalScale = transform.lossyScale;
         this.tag = "OperatorBlock";
     }
@@ -34,82 +32,42 @@ public class OperatorBlock : Block
 
     public void SetNumberBlockA(NumberBlock numberBlock)
     {
-        if (numberBlock != null)
-        {
-            this.numberBlockA = numberBlock;
-            SetValueA(numberBlock.GetNumber());
-        }
+        SetNumberBlock(ref numberBlockA, numberBlock, SetValueA);
     }
 
     public void SetNumberBlockB(NumberBlock numberBlock)
     {
-        if (numberBlock != null)
+        SetNumberBlock(ref numberBlockB, numberBlock, SetValueB);
+    }
+
+    private void SetNumberBlock(ref NumberBlock block, NumberBlock newBlock, System.Action<int> setValueAction)
+    {
+        if (newBlock != null)
         {
-            this.numberBlockB = numberBlock;
-            SetValueB(numberBlock.GetNumber());
+            block = newBlock;
+            setValueAction(block.GetNumber());
         }
     }
 
-    //remove block
-    public void RemoveNumberBlockA()
+    private void SetValueA(int value)
     {
-        this.numberBlockA = null;
+        operation.a = value;
     }
 
-    public void RemoveNumberBlockB()
+    private void SetValueB(int value)
     {
-        this.numberBlockB = null;
+        operation.b = value;
     }
 
-    public void SetValueA(int a)
-    {
-        this.operation.a = a;
-    }
-
-    public void SetValueB(int b)
-    {
-        this.operation.b = b;
-    }
-
-    public int calculate()
+    public int Calculate()
     {
         return operation.Calculate();
     }
 
-    public void setOperation(OperationName name)
+    private void SetOperation(OperationName name)
     {
-        switch (name)
-        {
-            case OperationName.Add:
-                operation = new AddOperation();
-                //load sprite
-                OperatorSprite.sprite = Resources.Load<Sprite>("Operators/Add");
-                break;
-            case OperationName.Subtract:
-                operation = new SubtractOperation();
-                OperatorSprite.sprite = Resources.Load<Sprite>("Operators/Subtract");
-                break;
-            case OperationName.Multiply:
-                operation = new MultiplyOperation();
-                OperatorSprite.sprite = Resources.Load<Sprite>("Operators/Multiply");
-                break;
-            case OperationName.Divide:
-                operation = new DivideOperation();
-                OperatorSprite.sprite = Resources.Load<Sprite>("Operators/Divide");
-                break;
-            case OperationName.Modulo:
-                operation = new ModuloOperation();
-                break;
-            case OperationName.Power:
-                operation = new PowerOperation();
-                break;
-            case OperationName.Sqrt:
-                operation = new SqrtOperation();
-                break;
-            case OperationName.Factorial:
-                operation = new FactorialOperation();
-                break;
-        }
+        operation = OperatorCalculation.CreateOperation(name);
+        OperatorSprite.sprite = Resources.Load<Sprite>("Operators/" + name.ToString());
     }
 
     public override void SetOrderInLayer(int orderinLayer)
@@ -117,13 +75,6 @@ public class OperatorBlock : Block
         base.SetOrderInLayer(orderinLayer);
         OperatorSprite.sortingOrder = orderinLayer + 2;
     }
-}
-
-public enum OperatorType
-{
-    Binary,
-    UnaryLeft, // Unary that only accept number a
-    UnaryRight, // Unary that only accept number b
 }
 
 // all of the operator functions
@@ -139,139 +90,4 @@ public enum OperationName
     Power,
     Sqrt,
     Factorial
-}
-
-public abstract class Operation
-{
-    public OperatorType operatorType;
-    public int a;
-    public int b;
-
-    //function calculate can take 1 or 2 numbers and calculate the result, it is avirtual function, so it can be overriden by the child class
-    public abstract int Calculate();
-}
-
-public class AddOperation : Operation
-{
-    //on creating a new add operation, set the operator type to binary
-    public AddOperation()
-    {
-        operatorType = OperatorType.Binary;
-    }
-
-    public override int Calculate()
-    {
-        return a + b;
-    }
-}
-
-public class SubtractOperation : Operation
-{
-    public SubtractOperation()
-    {
-        operatorType = OperatorType.Binary;
-    }
-
-    public override int Calculate()
-    {
-        return a - b;
-    }
-}
-
-public class MultiplyOperation : Operation
-{
-    public MultiplyOperation()
-    {
-        operatorType = OperatorType.Binary;
-    }
-
-    public override int Calculate()
-    {
-        return a * b;
-    }
-}
-
-public class DivideOperation : Operation
-{
-    public DivideOperation()
-    {
-        operatorType = OperatorType.Binary;
-    }
-
-    public override int Calculate()
-    {
-        return a / b;
-    }
-}
-
-public class ModuloOperation : Operation
-{
-    public ModuloOperation()
-    {
-        operatorType = OperatorType.Binary;
-    }
-
-    public override int Calculate()
-    {
-        return a % b;
-    }
-}
-
-public class PowerOperation : Operation
-{
-    public PowerOperation()
-    {
-        operatorType = OperatorType.Binary;
-    }
-
-    public override int Calculate()
-    {
-        return (int)Mathf.Pow(a, b);
-    }
-}
-
-public class SqrtOperation : Operation
-{
-    public SqrtOperation()
-    {
-        operatorType = OperatorType.UnaryRight;
-    }
-
-    public override int Calculate()
-    {
-        return (int)Mathf.Sqrt(b);
-    }
-}
-
-//factorial
-public class FactorialOperation : Operation
-{
-    public FactorialOperation()
-    {
-        operatorType = OperatorType.UnaryLeft;
-    }
-
-    public override int Calculate()
-    {
-        int result = 1;
-        for (int i = 1; i <= a; i++)
-        {
-            result *= i;
-        }
-        return result;
-    }
-}
-
-// concatenate numbers
-public class ConcatenateOperation : Operation
-{
-    public ConcatenateOperation()
-    {
-        operatorType = OperatorType.Binary;
-    }
-
-    public override int Calculate()
-    {
-        return int.Parse(a.ToString() + b.ToString());
-    }
 }
