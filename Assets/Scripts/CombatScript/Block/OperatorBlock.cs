@@ -261,3 +261,17 @@ public class FactorialOperation : Operation
         return result;
     }
 }
+
+// concatenate numbers
+public class ConcatenateOperation : Operation
+{
+    public ConcatenateOperation()
+    {
+        operatorType = OperatorType.Binary;
+    }
+
+    public override int Calculate()
+    {
+        return int.Parse(a.ToString() + b.ToString());
+    }
+}

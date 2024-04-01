@@ -20,42 +20,7 @@ public class CalculationManager : MonoBehaviour
 
     void Update()
     {
-        //if operator is binary then wait for 2 number blocks, if unaryleft then wait for number a ,and vise versa
-        if (GetOperatorBlock() != null)
-        {
-            OperatorBlock operatorBlock = GetOperatorBlock();
-            operatorBlock.SetNumberBlockA(GetNumberBlockA());
-            operatorBlock.SetNumberBlockB(GetNumberBlockB());
-
-            if (GetOperatorBlock().GetOperatorType() == OperatorType.Binary)
-            {
-                if (GetNumberBlockA() != null && GetNumberBlockB() != null)
-                {
-                    Debug.Log("Calculation");
-                    //calculate the result
-                    int result = GetOperatorBlock().operation.Calculate();
-                    Debug.Log(result);
-                    NumberBlocksManager.Instance.CreateAnswerNumberBlock(result);
-                    //remove the number blocks
-                    GetNumberBlockA().RemoveBlock();
-                    GetNumberBlockB().RemoveBlock();
-                    GetOperatorBlock().RemoveBlock();
-
-                    CombatManager.Instance.hasDraggedSomething = false;
-                    numberBlockA.ResetNumber();
-                    numberBlockB.ResetNumber();
-                    this.operatorBlock.ResetOperator();
-                }
-            }
-            // else if (GetOperatorBlock().GetOperatorType() == OperatorType.UnaryLeft)
-            // {
-            //     if (GetNumberBlockA() != null) { }
-            // }
-            // else if (GetOperatorBlock().GetOperatorType() == OperatorType.UnaryRight)
-            // {
-            //     if (GetNumberBlockB() != null) { }
-            // }
-        }
+        SetNumberInOperator();
     }
 
     public NumberBlock GetNumberBlockA()
@@ -71,5 +36,90 @@ public class CalculationManager : MonoBehaviour
     public OperatorBlock GetOperatorBlock()
     {
         return operatorBlock.operators.Count == 1 ? operatorBlock.operators[0] : null;
+    }
+
+    public bool IsValidEquation()
+    {
+        //check binary,unaryleft,unaryright
+        if (GetOperatorBlock() != null)
+        {
+            if (GetOperatorBlock().GetOperatorType() == OperatorType.Binary)
+            {
+                if (GetNumberBlockA() != null && GetNumberBlockB() != null)
+                {
+                    return true;
+                }
+            }
+            //unaryleft
+            else if (GetOperatorBlock().GetOperatorType() == OperatorType.UnaryLeft)
+            {
+                if (GetNumberBlockA() != null && GetNumberBlockB() == null)
+                {
+                    return true;
+                }
+            }
+            //unaryright
+            else if (GetOperatorBlock().GetOperatorType() == OperatorType.UnaryRight)
+            {
+                if (GetNumberBlockB() != null && GetNumberBlockA() == null)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void SetNumberInOperator()
+    {
+        //check for case for binary, unaryleft, unaryright and use setNumberBlock in the operator
+        if (GetOperatorBlock() != null && IsValidEquation())
+        {
+            OperatorBlock operatorBlock = GetOperatorBlock();
+            if (operatorBlock.operation.operatorType == OperatorType.Binary)
+            {
+                operatorBlock.SetNumberBlockA(GetNumberBlockA());
+                operatorBlock.SetNumberBlockB(GetNumberBlockB());
+            }
+            else if (operatorBlock.operation.operatorType == OperatorType.UnaryLeft)
+            {
+                operatorBlock.SetNumberBlockA(GetNumberBlockA());
+            }
+            else if (operatorBlock.operation.operatorType == OperatorType.UnaryRight)
+            {
+                operatorBlock.SetNumberBlockB(GetNumberBlockB());
+            }
+        }
+    }
+
+    public void Calculate()
+    {
+        if (IsValidEquation())
+        {
+            //calculate the result
+            int result = GetOperatorBlock().operation.Calculate();
+            NumberBlocksManager.Instance.CreateAnswerNumberBlock(result);
+
+            //remove the number blocks
+
+            if (GetNumberBlockA() != null)
+            {
+                GetNumberBlockA().RemoveBlock();
+                numberBlockA.ResetNumber();
+            }
+
+            if (GetNumberBlockB() != null)
+            {
+                GetNumberBlockB().RemoveBlock();
+                numberBlockB.ResetNumber();
+            }
+            if (GetOperatorBlock() != null)
+            {
+                GetOperatorBlock().RemoveBlock();
+                this.operatorBlock.ResetOperator();
+            }
+
+            CombatManager.Instance.hasDraggedSomething = false;
+        }
     }
 }
