@@ -9,7 +9,6 @@ public class CalculationOperatorZone : Zone
         // if the number is in the zone then add the number to the list
         if (Input.GetMouseButtonUp(0) && operators.Count == 0 && !operators.Contains(operatorBlock))
         {
-            Debug.Log("IN");
             //Put the number block into the zone
             MoveBlockToThisZone(operatorBlock);
             operatorBlock.isInContainer = false;

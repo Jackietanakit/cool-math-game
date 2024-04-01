@@ -6,7 +6,6 @@ public class NumberBlockZone : Zone
 {
     public override void OnNumberBlockStay(NumberBlock numberBlock)
     {
-        Debug.Log(!numbers.Contains(numberBlock));
         // if the number is not in container and the mouse stop left click then put the number block into the container
         if (
             !numberBlock.isInContainer
