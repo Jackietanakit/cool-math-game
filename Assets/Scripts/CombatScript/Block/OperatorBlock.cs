@@ -14,7 +14,7 @@ public class OperatorBlock : Block
 
     public string Name { get; set; }
 
-    public string description { get; set; }
+    public string Description { get; set; }
 
     public void Initialize(OperationName name, Zone zone)
     {
@@ -40,7 +40,11 @@ public class OperatorBlock : Block
         SetNumberBlock(ref numberBlockB, numberBlock, SetValueB);
     }
 
-    private void SetNumberBlock(ref NumberBlock block, NumberBlock newBlock, System.Action<int> setValueAction)
+    private void SetNumberBlock(
+        ref NumberBlock block,
+        NumberBlock newBlock,
+        System.Action<int> setValueAction
+    )
     {
         if (newBlock != null)
         {
@@ -75,19 +79,4 @@ public class OperatorBlock : Block
         base.SetOrderInLayer(orderinLayer);
         OperatorSprite.sortingOrder = orderinLayer + 2;
     }
-}
-
-// all of the operator functions
-
-//operation name enum
-public enum OperationName
-{
-    Add,
-    Subtract,
-    Multiply,
-    Divide,
-    Modulo,
-    Power,
-    Sqrt,
-    Factorial
 }

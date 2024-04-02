@@ -26,6 +26,8 @@ public class CombatManager : MonoBehaviour
         );
     }
 
+    private List<OperationCard> operationCards = new List<OperationCard>();
+
     void Awake()
     {
         Instance = this;

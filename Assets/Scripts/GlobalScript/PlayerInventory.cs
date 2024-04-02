@@ -9,7 +9,7 @@ public class PlayerInventory : MonoBehaviour
     public int currentHealth;
     public int money;
 
-    public List<Operation> opeartions = new List<Operation>();
+    public List<OperationCard> opeartionCards = new List<OperationCard>();
     public List<Artifact> artifacts = new List<Artifact>();
 
     private string saveFilePath;
@@ -21,15 +21,15 @@ public class PlayerInventory : MonoBehaviour
         LoadInventory();
     }
 
-    public void AddCard(Operation card)
+    public void AddCard(OperationCard card)
     {
-        opeartions.Add(card);
+        opeartionCards.Add(card);
         SaveInventory();
     }
 
-    public void RemoveCard(Operation card)
+    public void RemoveCard(OperationCard card)
     {
-        opeartions.Remove(card);
+        opeartionCards.Remove(card);
         SaveInventory();
     }
 
@@ -59,37 +59,4 @@ public class PlayerInventory : MonoBehaviour
             JsonConvert.PopulateObject(json, this);
         }
     }
-}
-
-[System.Serializable]
-public class Card
-{
-    public string name;
-    public CardType type;
-    public int damage;
-    public int blockAmount;
-    public string effect;
-}
-
-public enum CardType
-{
-    Attack,
-    Defense,
-    Utility
-}
-
-[System.Serializable]
-public class Artifact
-{
-    public string name;
-    public ArtifactType type;
-    public string bonus;
-    public string effect;
-}
-
-public enum ArtifactType
-{
-    Passive,
-    Active,
-    Consumable
 }
