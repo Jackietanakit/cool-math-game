@@ -6,9 +6,9 @@ using UnityEngine;
 public class GameDataLoader : MonoBehaviour
 {
     public static GameDataLoader instance;
-    public List<OperationCard> operationCards = new List<OperationCard>();
-    public List<Artifact> artifacts = new List<Artifact>();
-    AllData allData = new AllData(null, null);
+    List<OperationCard> operationCards = new List<OperationCard>();
+    List<Artifact> artifacts = new List<Artifact>();
+    public AllStaticData allStaticData = new AllStaticData(null, null);
 
     private void Awake()
     {
@@ -21,12 +21,35 @@ public class GameDataLoader : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        LoadGameData();
     }
 
-    public void Start()
+    private void LoadGameData()
     {
-        InitializeData(); // Initialize operation data when the game starts
-        SaveGameData(); // Save the data to a JSON file
+        string filePath = Path.Combine(Application.persistentDataPath, "GameData.json");
+
+        if (File.Exists(filePath))
+        {
+            string jsonData = File.ReadAllText(filePath);
+            allStaticData = JsonConvert.DeserializeObject<AllStaticData>(jsonData);
+            Debug.Log("Game data loaded successfully.");
+        }
+        else
+        {
+            Debug.LogError("Game data file not found!");
+
+            SaveGameData();
+        }
+    }
+
+    private void SaveGameData()
+    {
+        InitializeData();
+        string filePath = Path.Combine(Application.persistentDataPath, "GameData.json");
+        string jsonData = JsonConvert.SerializeObject(allStaticData, Formatting.Indented);
+        File.WriteAllText(filePath, jsonData);
+        Debug.Log("Data saved to: " + filePath);
     }
 
     private void InitializeData()
@@ -47,16 +70,8 @@ public class GameDataLoader : MonoBehaviour
 
         artifacts.Add(new Artifact(1, "Artifact 1", "Change all number 1 to number 3", 1));
 
-        allData = new AllData(operationCards, artifacts);
+        allStaticData = new AllStaticData(operationCards, artifacts);
 
         Debug.Log("Data initialized.");
-    }
-
-    private void SaveGameData()
-    {
-        string filePath = Path.Combine(Application.persistentDataPath, "operationInfo.json");
-        string jsonData = JsonConvert.SerializeObject(allData, Formatting.Indented);
-        File.WriteAllText(filePath, jsonData);
-        Debug.Log("Data saved to: " + filePath);
     }
 }

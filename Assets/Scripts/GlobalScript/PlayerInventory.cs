@@ -9,27 +9,39 @@ public class PlayerInventory : MonoBehaviour
     public int currentHealth;
     public int money;
 
-    public List<OperationCard> opeartionCards = new List<OperationCard>();
+    public List<OperationCard> operationCards = new List<OperationCard>();
     public List<Artifact> artifacts = new List<Artifact>();
 
     private string saveFilePath;
+    private cardManager cardInstance;
 
     private void Start()
     {
+        cardInstance = new cardManager(); // Create an instance of cardManager
         currentHealth = maxHealth;
         saveFilePath = Path.Combine(Application.persistentDataPath, "inventory.json");
         LoadInventory();
     }
 
-    public void AddCard(OperationCard card)
+    public void createNewPlayerInventory()
     {
-        opeartionCards.Add(card);
+        // Clear all data
+        operationCards.Clear();
+        artifacts.Clear();
+
+        // Add initial cards
+        operationCards = cardInstance.createInitialDeck();
+    }
+
+    public void AddOperationCard(OperationCard card)
+    {
+        operationCards.Add(card);
         SaveInventory();
     }
 
-    public void RemoveCard(OperationCard card)
+    public void RemoveOperationCard(OperationCard card)
     {
-        opeartionCards.Remove(card);
+        operationCards.Remove(card);
         SaveInventory();
     }
 

@@ -1,9 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public PlayerInventory _playerInventory;
 
     private void Awake()
     {
@@ -20,6 +20,17 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _playerInventory = gameObject.AddComponent<PlayerInventory>();
+        InitializePlayerInventory(); // Initialize the player's inventory
+    }
+
+    private void InitializePlayerInventory()
+    {
+        PlayerInventory playerInventory = FindObjectOfType<PlayerInventory>();
+
+        if (playerInventory == null)
+        {
+            playerInventory = gameObject.AddComponent<PlayerInventory>(); // Create the PlayerInventory component if not already present
+        }
+        playerInventory.createNewPlayerInventory(); // Reset the player's inventory
     }
 }
