@@ -56,4 +56,28 @@ public class NumberBlocksManager : MonoBehaviour
         numberBlock.SetOriginalPosition();
         numberBlocks.Add(numberBlock);
     }
+
+    public List<int> GenerateStartingRandomFairNumbers()
+    {
+        // Generate 9 numbers , 3 numbers has to be low, 3 has to be high the rest can be any number (low is 1-4, high 6-9)
+        List<int> numbers = new List<int>();
+        for (int i = 0; i < 3; i++)
+        {
+            numbers.Add(Random.Range(1, 5));
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            numbers.Add(Random.Range(6, 10));
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            numbers.Add(Random.Range(1, 10));
+        }
+        return numbers;
+    }
+
+    public int GenerateRandomNumber()
+    {
+        return Random.Range(1, 10);
+    }
 }

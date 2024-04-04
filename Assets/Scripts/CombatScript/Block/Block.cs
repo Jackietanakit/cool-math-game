@@ -98,6 +98,11 @@ public class Block : MonoBehaviour
                 PutBackToOriginalPosition();
             }
         }
+        if (hasGhost && !isSelected)
+        {
+            Debug.Log("Put back to original position");
+            PutBackToOriginalPosition();
+        }
     }
 
     public void SetOriginalPosition()

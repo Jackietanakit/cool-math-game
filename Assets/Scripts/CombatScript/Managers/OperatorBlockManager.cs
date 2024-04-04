@@ -41,4 +41,9 @@ public class OperatorBlockManager : MonoBehaviour
             CreateOperatorBlockAtContainer(name);
         }
     }
+
+    public OperationName GenerateRandomOperator()
+    {
+        return (OperationName)Random.Range(0, 4);
+    }
 }

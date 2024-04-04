@@ -100,7 +100,7 @@ public class CalculationManager : MonoBehaviour
             int result = GetOperatorBlock().operation.Calculate();
             NumberBlocksManager.Instance.CreateAnswerNumberBlock(result);
 
-            //remove the number blocks
+            //remove the number blocks also from the manager
 
             if (GetNumberBlockA() != null)
             {
@@ -119,7 +119,7 @@ public class CalculationManager : MonoBehaviour
                 this.operatorBlock.ResetOperator();
             }
 
-            CombatManager.Instance.hasDraggedSomething = false;
+            //remove the number blocks in manager
         }
     }
 }

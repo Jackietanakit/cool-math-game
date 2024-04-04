@@ -5,6 +5,8 @@ using UnityEngine;
 public class CombatManager : MonoBehaviour
 {
     public static CombatManager Instance;
+    public NumberBlockZone NumberBlockZone;
+    public OperatorBlockZone OperatorBlockZone;
 
     public bool hasDraggedSomething;
 
@@ -13,15 +15,19 @@ public class CombatManager : MonoBehaviour
     void Start()
     {
         NumberBlocksManager.Instance.CreateManyNumberBlocks(
-            new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 }
+            NumberBlocksManager.Instance.GenerateStartingRandomFairNumbers()
         );
         OperatorBlockManager.Instance.CreateManyOperators(
             new List<OperationName>
             {
                 OperationName.Add,
+                OperationName.Add,
+                OperationName.Add,
+                OperationName.Subtract,
                 OperationName.Subtract,
                 OperationName.Multiply,
-                OperationName.Divide
+                OperationName.Multiply,
+                OperationName.Divide,
             }
         );
     }
@@ -54,5 +60,26 @@ public class CombatManager : MonoBehaviour
             }
         }
         return null;
+    }
+
+    public void NextTurn()
+    {
+        // Generate random numbers until 9 blocks
+        while (NumberBlockZone.numbers.Count < 9)
+        {
+            NumberBlocksManager.Instance.CreateNumberBlockAtContainer(
+                NumberBlocksManager.Instance.GenerateRandomNumber()
+            );
+        }
+
+        //generate 3 more operators or until reach 9 operators
+        int i = 0;
+        while (OperatorBlockZone.operators.Count < 9 && i < 3)
+        {
+            OperatorBlockManager.Instance.CreateOperatorBlockAtContainer(
+                OperatorBlockManager.Instance.GenerateRandomOperator()
+            );
+            i++;
+        }
     }
 }
