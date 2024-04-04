@@ -8,7 +8,6 @@ public class OperationCard
     public OperationName operationName;
     public string description;
     public AdditionalEffect additionalEffect;
-    public Sprite sprite;
 
     public OperationCard(
         OperationName operationName,
@@ -19,8 +18,6 @@ public class OperationCard
         this.operationName = operationName;
         this.description = description;
         this.additionalEffect = additionalEffect;
-        this.sprite = Resources.Load<Sprite>("Operators/" + operationName.ToString());
-        ;
     }
 }
 

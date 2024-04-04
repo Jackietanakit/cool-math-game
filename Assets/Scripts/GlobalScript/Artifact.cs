@@ -5,15 +5,17 @@ using UnityEngine;
 [System.Serializable]
 public class Artifact
 {
+    public int id;
     public string name;
-    public ArtifactType type;
+    public string description;
     public string bonus;
-    public string effect;
-}
+    public int effectId;
 
-public enum ArtifactType
-{
-    Passive,
-    Active,
-    Consumable
+    public Artifact(int id, string name, string bonus, int effectId)
+    {
+        this.id = id;
+        this.name = name;
+        this.bonus = bonus;
+        this.effectId = effectId;
+    }
 }
