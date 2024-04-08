@@ -16,9 +16,11 @@ public abstract class Zone : MonoBehaviour
     public int MaxNumberBlocks;
     public int MaxOperatorBlock;
 
+    public GameObject HighlightObject = null;
+
     //Ontrigger block collide into the zone
 
-    void Update()
+    public virtual void Update()
     {
         //check if the block is in the zone
         if (boxCollider.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
@@ -32,26 +34,17 @@ public abstract class Zone : MonoBehaviour
                     OnNumberBlockStay(numberBlock);
                 }
             }
-
-            if (block is OperatorBlock && AcceptOperators)
-            {
-                OperatorBlock operatorBlock = (OperatorBlock)block;
-                if (operatorBlock != null)
-                {
-                    OnOperatorBlockStay(operatorBlock);
-                }
-            }
+        }
+        else
+        {
+            if (HighlightObject != null)
+                HighlightObject.SetActive(false);
         }
     }
 
     public virtual void OnNumberBlockStay(NumberBlock numberBlock)
     {
         Debug.Log("NumberBlock Stay");
-    }
-
-    public virtual void OnOperatorBlockStay(OperatorBlock operatorBlock)
-    {
-        Debug.Log("OperatorBlock Stay");
     }
 
     public bool IsInZone(Block block)
@@ -75,7 +68,7 @@ public abstract class Zone : MonoBehaviour
         }
     }
 
-    public virtual void AddBlockToZone(Block block)
+    public virtual void AddBlockToZone(NumberBlock block)
     {
         if (!CanAccept(block))
         {
@@ -85,10 +78,7 @@ public abstract class Zone : MonoBehaviour
         {
             numbers.Add((NumberBlock)block);
         }
-        else if (block is OperatorBlock)
-        {
-            operators.Add((OperatorBlock)block);
-        }
+
         //move parent to this zone
         block.transform.SetParent(this.transform);
 
@@ -107,7 +97,7 @@ public abstract class Zone : MonoBehaviour
         }
     }
 
-    public virtual void MoveBlockToThisZone(Block block)
+    public virtual void MoveBlockToThisZone(NumberBlock block)
     {
         if (CanAccept(block))
         {

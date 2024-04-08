@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
-public class CalculationNumberZone : Zone
+public class DamageZone : Zone
 {
     public override void OnNumberBlockStay(NumberBlock numberBlock)
     {
@@ -25,7 +24,7 @@ public class CalculationNumberZone : Zone
     {
         base.AddBlockToZone(block);
         //but the block into the center
-        block.SetOriginalPosition(new Vector2(0.15f, 0.15f));
+        block.SetOriginalPosition(new Vector2(0.125f, 0.125f));
     }
 
     public void ResetNumber()

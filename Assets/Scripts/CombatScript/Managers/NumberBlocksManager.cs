@@ -18,6 +18,7 @@ public class NumberBlocksManager : MonoBehaviour
 
     public int maxNumberBlockInContainer = 10;
     public List<NumberBlock> numberBlocks = new List<NumberBlock>();
+    public int numberSpawnPerTurn = 4;
 
     void Awake()
     {
@@ -57,19 +58,53 @@ public class NumberBlocksManager : MonoBehaviour
         numberBlocks.Add(numberBlock);
     }
 
-    public List<int> GenerateStartingRandomFairNumbers()
+    public void RemoveNumberBlockFromList(NumberBlock numberBlock)
+    {
+        numberBlocks.Remove(numberBlock);
+    }
+
+    public void RemoveNumberBlock(NumberBlock numberBlock)
+    {
+        // Remove the number block from the container
+        RemoveNumberBlockFromList(numberBlock);
+        numberBlock.RemoveBlock();
+        numberBlocksInContainer--;
+    }
+
+    public void RemoveAllNumberBlocks()
+    {
+        // Remove all number blocks from the container, use for loop as it removes the number from the list
+        for (int i = numberBlocks.Count - 1; i >= 0; i--)
+        {
+            RemoveNumberBlock(numberBlocks[i]);
+        }
+
+        numberBlocks.Clear();
+        numberBlocksInContainer = 0;
+        NumberBlockZone.numbers.Clear();
+    }
+
+    public void NextTurn()
+    {
+        RemoveAllNumberBlocks();
+        CreateManyNumberBlocks(GenerateStartingRandomFairNumbers(numberSpawnPerTurn));
+    }
+
+    public List<int> GenerateStartingRandomFairNumbers(int amount)
     {
         // Generate 9 numbers , 3 numbers has to be low, 3 has to be high the rest can be any number (low is 1-4, high 6-9)
         List<int> numbers = new List<int>();
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < amount / 3; i++)
         {
             numbers.Add(Random.Range(1, 5));
+            amount--;
         }
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < amount / 3; i++)
         {
             numbers.Add(Random.Range(6, 10));
+            amount--;
         }
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < amount; i++)
         {
             numbers.Add(Random.Range(1, 10));
         }

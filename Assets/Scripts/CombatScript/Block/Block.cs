@@ -15,8 +15,6 @@ public class Block : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public BoxCollider2D boxCollider;
 
-    public Zone zone;
-
     public bool isInContainer;
 
     public bool isSelected = false;
@@ -30,7 +28,7 @@ public class Block : MonoBehaviour
         this.tag = "Block";
     }
 
-    void Update()
+    public virtual void Update()
     {
         // if mouse hover on the block, the block will be bigger
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -46,62 +44,6 @@ public class Block : MonoBehaviour
             //set local scale according to lossy scale factor divided by parent lossy scale factor
             SetScale(normalScale);
             BorderOnHover.SetActive(false);
-        }
-
-        //if mouse drag on the block, the block will be moved to the mouse position, however, there are still a ghost number block at the original position
-        if (
-            isSelected
-            || (
-                Input.GetMouseButton(0)
-                && boxCollider.OverlapPoint(mousePosition)
-                && (CombatManager.Instance.hasDraggedSomething == false)
-            )
-        )
-        {
-            SetOrderInLayer(4);
-            isSelected = true;
-            CombatManager.Instance.hasDraggedSomething = true;
-            if (!hasGhost)
-            {
-                GameObject ghostBlock = Instantiate(
-                    GhostBlockPrefab,
-                    transform.position,
-                    Quaternion.identity
-                );
-                GhostBlock = ghostBlock;
-            }
-            hasGhost = true;
-            SetPosition(mousePosition);
-        }
-        //if mouse release the number block, the number block will be destroyed
-        if (Input.GetMouseButtonUp(0) && isSelected)
-        {
-            SetOrderInLayer(2);
-            CombatManager.Instance.hasDraggedSomething = false;
-            isSelected = false;
-            Zone newzone = CombatManager.Instance.GetZoneUnderMouse();
-
-            //if the number block is in another zone, the number block will be destroyed and the number will be added to the zone, else the block will be put back to the original position
-            if (
-                newzone != null
-                && !(newzone == zone)
-                && newzone.CanAccept(this)
-                && newzone is not AnswerZone
-            )
-            {
-                //Put it in the zone
-                return;
-            }
-            else
-            {
-                Debug.Log("Put back to original position");
-                PutBackToOriginalPosition();
-            }
-        }
-        if (hasGhost && !isSelected)
-        {
-            Debug.Log("Put back to original position");
-            PutBackToOriginalPosition();
         }
     }
 
@@ -145,12 +87,9 @@ public class Block : MonoBehaviour
         BorderOnHover.GetComponent<SpriteRenderer>().sortingOrder = orderinLayer;
     }
 
-    public void SetScale(Vector2 scale)
-    {
-        transform.localScale = scale / zone.transform.lossyScale;
-    }
+    public virtual void SetScale(Vector2 scale) { }
 
-    public void RemoveBlock()
+    public virtual void RemoveBlock()
     {
         Destroy(gameObject);
     }

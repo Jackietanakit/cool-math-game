@@ -6,35 +6,53 @@ public class CombatManager : MonoBehaviour
 {
     public static CombatManager Instance;
     public NumberBlockZone NumberBlockZone;
-    public OperatorBlockZone OperatorBlockZone;
+
+    public Enemy enemyPrefab;
+
+    public GameObject EnemyContainer; //The parent of the enemies
+
+    public DamageZone damageZone;
 
     public bool hasDraggedSomething;
+
+    public List<Enemy> enemies = new List<Enemy>();
+
+    public List<Transform> enemiesPossiblePositions;
 
     public List<Zone> zones;
 
     void Start()
     {
         NumberBlocksManager.Instance.CreateManyNumberBlocks(
-            NumberBlocksManager.Instance.GenerateStartingRandomFairNumbers()
+            NumberBlocksManager.Instance.GenerateStartingRandomFairNumbers(
+                NumberBlocksManager.Instance.numberSpawnPerTurn
+            )
         );
         OperatorBlockManager.Instance.CreateManyOperators(
             new List<OperationName>
             {
                 OperationName.Add,
-                OperationName.Add,
-                OperationName.Add,
                 OperationName.Subtract,
-                OperationName.Subtract,
-                OperationName.Multiply,
                 OperationName.Multiply,
                 OperationName.Divide,
             }
         );
+
+        CreateEnemy();
     }
 
     void Awake()
     {
         Instance = this;
+    }
+
+    public void CreateEnemy()
+    {
+        //Instantiate enemy at position 0
+        Enemy enemy = Instantiate(enemyPrefab, enemiesPossiblePositions[0], true);
+        enemy.transform.localPosition = new Vector3(0, 0.5f, 0);
+        enemy.Initialize(10, 70, new List<Enemy.Requirement> { Enemy.Requirement.Exact });
+        enemies.Add(enemy);
     }
 
     public Block GetBlockUnderMouse()
@@ -62,24 +80,31 @@ public class CombatManager : MonoBehaviour
         return null;
     }
 
+    public void DealDamage()
+    {
+        if (damageZone.numbers.Count != 0)
+        {
+            NumberBlock numberBlock = damageZone.numbers[0];
+            int damage = numberBlock.number;
+            NumberBlocksManager.Instance.RemoveNumberBlockFromList(numberBlock);
+            numberBlock.RemoveBlock();
+            damageZone.ResetNumber();
+            //Damage Enemy at the closest distance to the player, using enemies
+            enemies[0].TakeDamage(damage);
+            //
+            Debug.Log("Dealing " + damage + " damage");
+
+            NextTurn();
+        }
+        else
+        {
+            Debug.Log("No Number in zone");
+        }
+    }
+
     public void NextTurn()
     {
-        // Generate random numbers until 9 blocks
-        while (NumberBlockZone.numbers.Count < 9)
-        {
-            NumberBlocksManager.Instance.CreateNumberBlockAtContainer(
-                NumberBlocksManager.Instance.GenerateRandomNumber()
-            );
-        }
-
-        //generate 3 more operators or until reach 9 operators
-        int i = 0;
-        while (OperatorBlockZone.operators.Count < 9 && i < 3)
-        {
-            OperatorBlockManager.Instance.CreateOperatorBlockAtContainer(
-                OperatorBlockManager.Instance.GenerateRandomOperator()
-            );
-            i++;
-        }
+        NumberBlocksManager.Instance.NextTurn();
+        CalculationManager.Instance.ClearAll();
     }
 }

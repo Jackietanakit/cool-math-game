@@ -6,13 +6,15 @@ public class OperatorBlockManager : MonoBehaviour
 {
     public static OperatorBlockManager Instance;
 
-    public RectTransform OperatorBlockContainer;
-    public OperatorBlockZone OperatorBlockZone;
+    public List<Transform> OperatorBlockPosition;
     public OperatorBlock OperatorBlockPrefab;
+
+    public OperatorBlock SelectedOperatorBlock;
+    public SpriteRenderer SelectedSpriteRenderer;
 
     public int operatorBlocksInContainer = 0;
 
-    public int maxoperatorBlocksInContainer = 10;
+    public int maxoperatorBlocksInContainer = 5;
 
     public List<OperatorBlock> operatorBlocks = new List<OperatorBlock>();
 
@@ -23,15 +25,16 @@ public class OperatorBlockManager : MonoBehaviour
 
     public void CreateOperatorBlockAtContainer(OperationName name)
     {
+        //spawn operator at the postions
         OperatorBlock operatorBlock = Instantiate(
             OperatorBlockPrefab,
-            OperatorBlockContainer,
-            true
+            OperatorBlockPosition[operatorBlocksInContainer]
         );
-        OperatorBlockZone.AddBlockToZone(operatorBlock);
-        operatorBlock.Initialize(name, OperatorBlockZone);
-        operatorBlock.SetOriginalPosition();
-        operatorBlocks.Add(operatorBlock);
+
+        operatorBlock.Initialize(name, OperatorBlockPosition[operatorBlocksInContainer]);
+        //set position
+        operatorBlock.SetLocalPosition(new Vector3(0.15f, 0.15f, 0));
+        operatorBlocksInContainer++;
     }
 
     public void CreateManyOperators(List<OperationName> names)
@@ -42,8 +45,10 @@ public class OperatorBlockManager : MonoBehaviour
         }
     }
 
-    public OperationName GenerateRandomOperator()
+    public void SelectOperator(OperatorBlock operatorBlock)
     {
-        return (OperationName)Random.Range(0, 4);
+        SelectedOperatorBlock = operatorBlock;
+        SelectedSpriteRenderer.sprite = operatorBlock.OperatorSprite.sprite;
+        CalculationManager.Instance.Operator = operatorBlock;
     }
 }
