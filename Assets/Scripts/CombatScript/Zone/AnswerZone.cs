@@ -9,12 +9,12 @@ public class AnswerZone : Zone
         return;
     }
 
-    public override void AddBlockToZone(Block block)
+    public override void AddBlockToZone(NumberBlock block)
     {
         base.AddBlockToZone(block);
         //but the block into the center
-        block.SetOriginalPosition(new Vector2(0.15f, 0.15f));
-        block.SetLocalPosition(new Vector2(0.15f, 0.15f));
+        block.SetOriginalPosition(new Vector2(0.125f, 0.125f));
+        block.SetLocalPosition(new Vector2(0.125f, 0.125f));
         block.isInContainer = false;
     }
 }

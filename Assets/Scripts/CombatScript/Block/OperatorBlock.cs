@@ -7,6 +7,8 @@ public class OperatorBlock : Block
     */
     public SpriteRenderer OperatorSprite;
 
+    public Transform ParentTransform;
+
     public NumberBlock numberBlockA;
     public NumberBlock numberBlockB;
 
@@ -16,13 +18,26 @@ public class OperatorBlock : Block
 
     public string Description { get; set; }
 
-    public void Initialize(OperationName name, Zone zone)
+    public override void Update()
     {
-        this.zone = zone;
+        base.Update();
+        //On Click call OperatorBlockManager
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (Input.GetMouseButtonUp(0) && boxCollider.OverlapPoint(mousePosition))
+        {
+            Debug.Log("Click on" + this.name);
+            OperatorBlockManager.Instance.SelectOperator(this);
+        }
+    }
+
+    public void Initialize(OperationName name, Transform parent)
+    {
+        ParentTransform = parent;
         SetOrderInLayer(2);
         SetOperation(name);
         normalScale = transform.lossyScale;
         this.tag = "OperatorBlock";
+        this.name = "OperatorBlock" + name;
     }
 
     public OperatorType GetOperatorType()
@@ -78,5 +93,10 @@ public class OperatorBlock : Block
     {
         base.SetOrderInLayer(orderinLayer);
         OperatorSprite.sortingOrder = orderinLayer + 2;
+    }
+
+    public override void SetScale(Vector2 scale)
+    {
+        transform.localScale = scale / ParentTransform.transform.lossyScale;
     }
 }

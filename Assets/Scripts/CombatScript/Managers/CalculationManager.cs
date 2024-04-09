@@ -6,7 +6,7 @@ using UnityEngine;
 public class CalculationManager : MonoBehaviour
 {
     public CalculationNumberZone numberBlockA;
-    public CalculationOperatorZone operatorBlock;
+    public OperatorBlock Operator;
     public CalculationNumberZone numberBlockB;
 
     public AnswerZone AnswerZone;
@@ -33,17 +33,18 @@ public class CalculationManager : MonoBehaviour
         return numberBlockB.numbers.Count == 1 ? numberBlockB.numbers[0] : null;
     }
 
-    public OperatorBlock GetOperatorBlock()
+    public void ResetOperator()
     {
-        return operatorBlock.operators.Count == 1 ? operatorBlock.operators[0] : null;
+        Operator = null;
+        OperatorBlockManager.Instance.SelectedSpriteRenderer.sprite = null;
     }
 
     public bool IsValidEquation()
     {
         //check binary,unaryleft,unaryright
-        if (GetOperatorBlock() != null)
+        if (Operator != null)
         {
-            if (GetOperatorBlock().GetOperatorType() == OperatorType.Binary)
+            if (Operator.GetOperatorType() == OperatorType.Binary)
             {
                 if (GetNumberBlockA() != null && GetNumberBlockB() != null)
                 {
@@ -51,7 +52,7 @@ public class CalculationManager : MonoBehaviour
                 }
             }
             //unaryleft
-            else if (GetOperatorBlock().GetOperatorType() == OperatorType.UnaryLeft)
+            else if (Operator.GetOperatorType() == OperatorType.UnaryLeft)
             {
                 if (GetNumberBlockA() != null && GetNumberBlockB() == null)
                 {
@@ -59,7 +60,7 @@ public class CalculationManager : MonoBehaviour
                 }
             }
             //unaryright
-            else if (GetOperatorBlock().GetOperatorType() == OperatorType.UnaryRight)
+            else if (Operator.GetOperatorType() == OperatorType.UnaryRight)
             {
                 if (GetNumberBlockB() != null && GetNumberBlockA() == null)
                 {
@@ -72,22 +73,21 @@ public class CalculationManager : MonoBehaviour
 
     public void SetNumberInOperator()
     {
-        //check for case for binary, unaryleft, unaryright and use setNumberBlock in the operator
-        if (GetOperatorBlock() != null && IsValidEquation())
+        // check for case for binary, unaryleft, unaryright and use setNumberBlock in the operator
+        if (Operator != null && IsValidEquation())
         {
-            OperatorBlock operatorBlock = GetOperatorBlock();
-            if (operatorBlock.operation.operatorType == OperatorType.Binary)
+            if (Operator.operation.operatorType == OperatorType.Binary)
             {
-                operatorBlock.SetNumberBlockA(GetNumberBlockA());
-                operatorBlock.SetNumberBlockB(GetNumberBlockB());
+                Operator.SetNumberBlockA(GetNumberBlockA());
+                Operator.SetNumberBlockB(GetNumberBlockB());
             }
-            else if (operatorBlock.operation.operatorType == OperatorType.UnaryLeft)
+            else if (Operator.operation.operatorType == OperatorType.UnaryLeft)
             {
-                operatorBlock.SetNumberBlockA(GetNumberBlockA());
+                Operator.SetNumberBlockA(GetNumberBlockA());
             }
-            else if (operatorBlock.operation.operatorType == OperatorType.UnaryRight)
+            else if (Operator.operation.operatorType == OperatorType.UnaryRight)
             {
-                operatorBlock.SetNumberBlockB(GetNumberBlockB());
+                Operator.SetNumberBlockB(GetNumberBlockB());
             }
         }
     }
@@ -97,29 +97,33 @@ public class CalculationManager : MonoBehaviour
         if (IsValidEquation())
         {
             //calculate the result
-            int result = GetOperatorBlock().operation.Calculate();
+            int result = Operator.operation.Calculate();
             NumberBlocksManager.Instance.CreateAnswerNumberBlock(result);
 
-            //remove the number blocks
+            //remove the number blocks also from the manager
 
-            if (GetNumberBlockA() != null)
-            {
-                GetNumberBlockA().RemoveBlock();
-                numberBlockA.ResetNumber();
-            }
+            ClearAll();
+        }
+    }
 
-            if (GetNumberBlockB() != null)
-            {
-                GetNumberBlockB().RemoveBlock();
-                numberBlockB.ResetNumber();
-            }
-            if (GetOperatorBlock() != null)
-            {
-                GetOperatorBlock().RemoveBlock();
-                this.operatorBlock.ResetOperator();
-            }
+    public void ClearAll()
+    {
+        if (GetNumberBlockA() != null)
+        {
+            NumberBlocksManager.Instance.RemoveNumberBlockFromList(GetNumberBlockA());
+            GetNumberBlockA().RemoveBlock();
+            numberBlockA.ResetNumber();
+        }
 
-            CombatManager.Instance.hasDraggedSomething = false;
+        if (GetNumberBlockB() != null)
+        {
+            NumberBlocksManager.Instance.RemoveNumberBlockFromList(GetNumberBlockB());
+            GetNumberBlockB().RemoveBlock();
+            numberBlockB.ResetNumber();
+        }
+        if (Operator != null)
+        {
+            ResetOperator();
         }
     }
 }
