@@ -16,7 +16,7 @@ public class OperatorBlock : Block
 
     public string Name { get; set; }
 
-    public string description { get; set; }
+    public string Description { get; set; }
 
     public override void Update()
     {
@@ -99,19 +99,4 @@ public class OperatorBlock : Block
     {
         transform.localScale = scale / ParentTransform.transform.lossyScale;
     }
-}
-
-// all of the operator functions
-
-//operation name enum
-public enum OperationName
-{
-    Add,
-    Subtract,
-    Multiply,
-    Divide,
-    Modulo,
-    Power,
-    Sqrt,
-    Factorial
 }

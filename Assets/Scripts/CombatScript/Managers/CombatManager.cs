@@ -41,6 +41,8 @@ public class CombatManager : MonoBehaviour
         CreateEnemy();
     }
 
+    private List<OperationCard> operationCards = new List<OperationCard>();
+
     void Awake()
     {
         Instance = this;

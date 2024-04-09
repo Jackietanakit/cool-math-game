@@ -6,15 +6,24 @@ public class OperatorCalculation
     {
         switch (name)
         {
-            case OperationName.Add: return new AddOperation();
-            case OperationName.Subtract: return new SubtractOperation();
-            case OperationName.Multiply: return new MultiplyOperation();
-            case OperationName.Divide: return new DivideOperation();
-            case OperationName.Modulo: return new ModuloOperation();
-            case OperationName.Power: return new PowerOperation();
-            case OperationName.Sqrt: return new SqrtOperation();
-            case OperationName.Factorial: return new FactorialOperation();
-            default: return null;
+            case OperationName.Add:
+                return new AddOperation();
+            case OperationName.Subtract:
+                return new SubtractOperation();
+            case OperationName.Multiply:
+                return new MultiplyOperation();
+            case OperationName.Divide:
+                return new DivideOperation();
+            case OperationName.Modulo:
+                return new ModuloOperation();
+            case OperationName.Power:
+                return new PowerOperation();
+            case OperationName.Sqrt:
+                return new SqrtOperation();
+            case OperationName.Factorial:
+                return new FactorialOperation();
+            default:
+                return null;
         }
     }
 }
@@ -34,8 +43,6 @@ public abstract class Operation
 
     public abstract int Calculate();
 }
-
-
 
 public class AddOperation : Operation
 {

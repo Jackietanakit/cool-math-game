@@ -5,31 +5,43 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public int maxHealth = 100;
+    public int maxHealth = 3;
     public int currentHealth;
     public int money;
 
-    public List<Operation> opeartions = new List<Operation>();
+    public List<OperationCard> operationCards = new List<OperationCard>();
     public List<Artifact> artifacts = new List<Artifact>();
 
     private string saveFilePath;
+    private cardManager cardInstance;
 
     private void Start()
     {
+        cardInstance = new cardManager(); // Create an instance of cardManager
         currentHealth = maxHealth;
         saveFilePath = Path.Combine(Application.persistentDataPath, "inventory.json");
         LoadInventory();
     }
 
-    public void AddCard(Operation card)
+    public void createNewPlayerInventory()
     {
-        opeartions.Add(card);
+        // Clear all data
+        operationCards.Clear();
+        artifacts.Clear();
+
+        // Add initial cards
+        operationCards = cardInstance.createInitialDeck();
+    }
+
+    public void AddOperationCard(OperationCard card)
+    {
+        operationCards.Add(card);
         SaveInventory();
     }
 
-    public void RemoveCard(Operation card)
+    public void RemoveOperationCard(OperationCard card)
     {
-        opeartions.Remove(card);
+        operationCards.Remove(card);
         SaveInventory();
     }
 
@@ -59,37 +71,4 @@ public class PlayerInventory : MonoBehaviour
             JsonConvert.PopulateObject(json, this);
         }
     }
-}
-
-[System.Serializable]
-public class Card
-{
-    public string name;
-    public CardType type;
-    public int damage;
-    public int blockAmount;
-    public string effect;
-}
-
-public enum CardType
-{
-    Attack,
-    Defense,
-    Utility
-}
-
-[System.Serializable]
-public class Artifact
-{
-    public string name;
-    public ArtifactType type;
-    public string bonus;
-    public string effect;
-}
-
-public enum ArtifactType
-{
-    Passive,
-    Active,
-    Consumable
 }
