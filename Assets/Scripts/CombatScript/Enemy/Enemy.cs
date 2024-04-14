@@ -21,7 +21,8 @@ public class Enemy : MonoBehaviour
         UpdateHealth();
     }
 
-    public void TakeDamage(int damage)
+    //returns whether the enemy dies
+    public bool TakeDamage(int damage)
     {
         int actualdamage = GetRealDamage(damage);
         health -= actualdamage;
@@ -29,8 +30,10 @@ public class Enemy : MonoBehaviour
         {
             Die();
             Debug.Log("Enemy died");
+            return true;
         }
         UpdateHealth();
+        return false;
     }
 
     public int GetRealDamage(int damage)

@@ -163,7 +163,19 @@ public class CombatManager : MonoBehaviour
 
             if (closestEnemy != null)
             {
-                closestEnemy.TakeDamage(damage);
+                bool isDead = closestEnemy.TakeDamage(damage);
+                if (isDead)
+                {
+                    //remove from the array
+                    for (int i = 0; i < enemiesInScene.Length; i++)
+                    {
+                        if (enemiesInScene[i] == closestEnemy)
+                        {
+                            enemiesInScene[i] = null;
+                            break;
+                        }
+                    }
+                }
             }
             else
             {
