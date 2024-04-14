@@ -13,10 +13,11 @@ public class Enemy : MonoBehaviour
 
     public List<Requirement> requirements = new List<Requirement>();
 
-    public void Initialize(int healthmin, int healthmax, List<Requirement> requirements)
+    public void Initialize(EnemyInfoSO enemyInfo)
     {
-        health = Random.Range(healthmin, healthmax + 1);
-        this.requirements = requirements;
+        health = Random.Range(enemyInfo.minHealth, enemyInfo.maxHealth + 1);
+        this.requirements = enemyInfo.requirements;
+        spriteRenderer.sprite = enemyInfo.sprite;
         UpdateHealth();
     }
 
@@ -27,6 +28,7 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             Die();
+            Debug.Log("Enemy died");
         }
         UpdateHealth();
     }
@@ -65,14 +67,5 @@ public class Enemy : MonoBehaviour
     void UpdateHealth()
     {
         healthText.text = health.ToString();
-    }
-
-    public enum Requirement
-    {
-        Exact,
-        Prime,
-        Odd,
-        Even,
-        MultipleOf3, // may change to Multiple Of N
     }
 }

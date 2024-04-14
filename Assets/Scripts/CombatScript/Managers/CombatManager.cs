@@ -1,13 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
     public static CombatManager Instance;
     public NumberBlockZone NumberBlockZone;
 
+    public int PlayerHealth;
+
+    public Slider HealthSlider;
+
     public Enemy enemyPrefab;
+
+    public List<EnemyInfoSO> enemyInfoSOs;
 
     public GameObject EnemyContainer; //The parent of the enemies
 
@@ -15,14 +24,35 @@ public class CombatManager : MonoBehaviour
 
     public bool hasDraggedSomething;
 
-    public List<Enemy> enemies = new List<Enemy>();
+    public Enemy[] enemiesInScene;
 
     public List<Transform> enemiesPossiblePositions;
 
     public List<Zone> zones;
 
+    public PlayerInventory playerInventory;
+
+    public List<EnemyInfoSO> enemiesThisCombat;
+
     void Start()
     {
+        playerInventory = FindObjectOfType<PlayerInventory>();
+        //if there is no Gamemanager, then create 4 example enemies
+        if (playerInventory == null)
+        {
+            enemiesThisCombat = new List<EnemyInfoSO>
+            {
+                enemyInfoSOs[0],
+                enemyInfoSOs[0],
+                enemyInfoSOs[0],
+                enemyInfoSOs[0],
+            };
+        }
+        else
+        {
+            //Get the enemies from Gamemanager
+        }
+        InititializeFromPlayerInventory();
         NumberBlocksManager.Instance.CreateManyNumberBlocks(
             NumberBlocksManager.Instance.GenerateStartingRandomFairNumbers(
                 NumberBlocksManager.Instance.numberSpawnPerTurn
@@ -37,8 +67,20 @@ public class CombatManager : MonoBehaviour
                 OperationName.Divide,
             }
         );
+        enemiesInScene = new Enemy[4] { null, null, null, null };
+        SpawnNewEnemy();
+    }
 
-        CreateEnemy();
+    private void InititializeFromPlayerInventory()
+    {
+        if (playerInventory != null)
+        {
+            PlayerHealth = playerInventory.currentHealth;
+        }
+        else
+        {
+            PlayerHealth = (int)HealthSlider.maxValue;
+        }
     }
 
     private List<OperationCard> operationCards = new List<OperationCard>();
@@ -48,13 +90,28 @@ public class CombatManager : MonoBehaviour
         Instance = this;
     }
 
-    public void CreateEnemy()
+    public void SpawnNewEnemy()
+    {
+        //if there is an enemy at the first position, don't spawn a new one
+        if (enemiesInScene[0] != null || enemiesThisCombat.Count == 0)
+        {
+            return;
+        }
+        //pull the enemyinfo from the enemiesthsicombat
+        //create enemy
+        EnemyInfoSO enemyInfo = enemiesThisCombat[0];
+        CreateEnemyAtFirstPosition(enemyInfo);
+        enemiesThisCombat.RemoveAt(0);
+    }
+
+    public void CreateEnemyAtFirstPosition(EnemyInfoSO enemyInfoSO)
     {
         //Instantiate enemy at position 0
         Enemy enemy = Instantiate(enemyPrefab, enemiesPossiblePositions[0], true);
         enemy.transform.localPosition = new Vector3(0, 0.5f, 0);
-        enemy.Initialize(10, 70, new List<Enemy.Requirement> { Enemy.Requirement.Exact });
-        enemies.Add(enemy);
+        enemy.Initialize(enemyInfoSOs[0]);
+        enemiesInScene[0] = enemy;
+        Debug.Log("Enemy created");
     }
 
     public Block GetBlockUnderMouse()
@@ -91,9 +148,28 @@ public class CombatManager : MonoBehaviour
             NumberBlocksManager.Instance.RemoveNumberBlockFromList(numberBlock);
             numberBlock.RemoveBlock();
             damageZone.ResetNumber();
-            //Damage Enemy at the closest distance to the player, using enemies
-            enemies[0].TakeDamage(damage);
-            //
+            //Damage Enemy at the closest distance to the player, using enemies array, [0] is furthest distance
+            //Get closest enemy
+            // Get closest enemy
+            Enemy closestEnemy = null;
+            for (int i = enemiesInScene.Length - 1; i >= 0; i--)
+            {
+                if (enemiesInScene[i] != null)
+                {
+                    closestEnemy = enemiesInScene[i];
+                    break;
+                }
+            }
+
+            if (closestEnemy != null)
+            {
+                closestEnemy.TakeDamage(damage);
+            }
+            else
+            {
+                Debug.Log("No Enemy in zone");
+            }
+
             Debug.Log("Dealing " + damage + " damage");
 
             NextTurn();
@@ -106,7 +182,64 @@ public class CombatManager : MonoBehaviour
 
     public void NextTurn()
     {
+        //if there is no enemy in the list and in the scene then the player wins
+        if (
+            enemiesThisCombat.Count == 0
+            && enemiesInScene[0] == null
+            && enemiesInScene[1] == null
+            && enemiesInScene[2] == null
+            && enemiesInScene[3] == null
+        )
+        {
+            Debug.Log("Player wins");
+            //Player wins, shows a panel
+
+            return;
+        }
         NumberBlocksManager.Instance.NextTurn();
         CalculationManager.Instance.ClearAll();
+        MoveEnemiesForward();
+        SpawnNewEnemy();
+    }
+
+    public void MoveEnemiesForward()
+    {
+        for (int i = enemiesInScene.Length - 1; i >= 0; i--)
+        {
+            if (enemiesInScene[i] != null)
+            {
+                if (i + 1 < enemiesPossiblePositions.Count)
+                {
+                    enemiesInScene[i]
+                        .transform.DOMove(
+                            enemiesPossiblePositions[i + 1].position + new Vector3(0, 0.5f, 0),
+                            0.5f
+                        );
+                    enemiesInScene[i + 1] = enemiesInScene[i];
+                    enemiesInScene[i] = null;
+                }
+                else
+                {
+                    //enemies reached the player
+                    Debug.Log("Enemies reached the player");
+                    PlayerTakeDamage();
+                }
+            }
+        }
+    }
+
+    public void PlayerTakeDamage()
+    {
+        PlayerHealth -= 1;
+        HealthSlider.value = PlayerHealth;
+        if (PlayerHealth <= 0)
+        {
+            //Player dies
+            Debug.Log("Player dies");
+
+            //Game Over Panel
+
+            //
+        }
     }
 }
