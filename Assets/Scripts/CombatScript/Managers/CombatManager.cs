@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,12 @@ public class CombatManager : MonoBehaviour
 {
     public static CombatManager Instance;
     public NumberBlockZone NumberBlockZone;
+
+    [SerializeField]
+    SPUM_Prefabs mainCharacterPrefab;
+
+    [SerializeField]
+    Transform mainCharacterPosition;
 
     public int PlayerHealth;
 
@@ -24,9 +31,13 @@ public class CombatManager : MonoBehaviour
 
     public bool hasDraggedSomething;
 
+    public DamageButton damageButton;
+
     public Enemy[] enemiesInScene;
 
     public List<Transform> enemiesPossiblePositions;
+
+    public Transform StartingPosition;
 
     public List<Zone> zones;
 
@@ -107,8 +118,13 @@ public class CombatManager : MonoBehaviour
     public void CreateEnemyAtFirstPosition(EnemyInfoSO enemyInfoSO)
     {
         //Instantiate enemy at position 0
-        Enemy enemy = Instantiate(enemyPrefab, enemiesPossiblePositions[0], true);
-        enemy.transform.localPosition = new Vector3(0, 0.5f, 0);
+        Enemy enemy = Instantiate(enemyPrefab, StartingPosition, true);
+        enemy.transform.localPosition = new Vector3(0, 0.1f, 0);
+        //Move to enemypossiblepostion[0] using dotween
+        enemy.transform.DOMove(
+            enemiesPossiblePositions[0].position + new Vector3(0, 0.5f, 0),
+            0.5f
+        );
         enemy.Initialize(enemyInfoSOs[0]);
         enemiesInScene[0] = enemy;
         Debug.Log("Enemy created");
@@ -147,7 +163,7 @@ public class CombatManager : MonoBehaviour
             int damage = numberBlock.number;
             NumberBlocksManager.Instance.RemoveNumberBlockFromList(numberBlock);
             numberBlock.RemoveBlock();
-            damageZone.ResetNumber();
+            damageZone.RemoveBlockFromZone(numberBlock);
             //Damage Enemy at the closest distance to the player, using enemies array, [0] is furthest distance
             //Get closest enemy
             // Get closest enemy
@@ -220,7 +236,7 @@ public class CombatManager : MonoBehaviour
         {
             if (enemiesInScene[i] != null)
             {
-                if (i + 1 < enemiesPossiblePositions.Count)
+                if (i + 1 < enemiesPossiblePositions.Count && enemiesInScene[i + 1] == null)
                 {
                     enemiesInScene[i]
                         .transform.DOMove(
@@ -230,9 +246,9 @@ public class CombatManager : MonoBehaviour
                     enemiesInScene[i + 1] = enemiesInScene[i];
                     enemiesInScene[i] = null;
                 }
-                else
+                else if (i == enemiesInScene.Length - 1 && enemiesInScene[i] != null)
                 {
-                    //enemies reached the player
+                    //Enemies reached the player
                     Debug.Log("Enemies reached the player");
                     PlayerTakeDamage();
                 }

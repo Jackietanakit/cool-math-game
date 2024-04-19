@@ -85,16 +85,9 @@ public abstract class Zone : MonoBehaviour
         block.zone = this;
     }
 
-    public virtual void RemoveBlockFromZone(Block block)
+    public virtual void RemoveBlockFromZone(NumberBlock block)
     {
-        if (block is NumberBlock)
-        {
-            numbers.Remove((NumberBlock)block);
-        }
-        else if (block is OperatorBlock)
-        {
-            operators.Remove((OperatorBlock)block);
-        }
+        numbers.Remove(block);
     }
 
     public virtual void MoveBlockToThisZone(NumberBlock block)

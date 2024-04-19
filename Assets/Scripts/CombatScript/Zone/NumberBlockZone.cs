@@ -28,10 +28,7 @@ public class NumberBlockZone : Zone
         {
             numberBlock.transform.SetParent(this.transform, true);
             numberBlock.SetOriginalPosition(
-                new Vector2(
-                    NumberBlocksManager.Instance.numberBlocksInContainer * 0.09f - 0.4f,
-                    0.15f
-                )
+                new Vector2(NumberBlocksManager.Instance.numberBlocksInContainer * 2f + 1.5f, 0.15f)
             );
             numberBlock.PutBackToOriginalPosition();
         }
@@ -41,15 +38,14 @@ public class NumberBlockZone : Zone
         NumberBlocksManager.Instance.numberBlocksInContainer++;
     }
 
-    public override void RemoveBlockFromZone(Block block)
+    public override void RemoveBlockFromZone(NumberBlock numberBlock)
     {
-        NumberBlock numberBlock = (NumberBlock)block;
         numberBlock.isInContainer = false;
         numbers.Remove(numberBlock);
         int i = 0;
         foreach (var number in numbers)
         {
-            number.SetLocalPosition(new Vector2(i * 0.09f - 0.4f, 0.15f));
+            number.SetLocalPosition(new Vector2(i * 2f + 1.5f, 0.15f));
             number.SetOriginalPosition();
             i++;
         }
