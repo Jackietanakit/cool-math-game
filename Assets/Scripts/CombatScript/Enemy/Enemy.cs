@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 {
     public SpriteRenderer spriteRenderer;
 
-    public TextMeshProUGUI healthText;
+    public TextMeshPro healthText;
 
     public int health;
 

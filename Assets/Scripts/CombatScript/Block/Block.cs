@@ -11,7 +11,6 @@ public class Block : MonoBehaviour
     public Vector2 normalScale;
     public Color normalColor;
     public Color hoverColor;
-    public GameObject BorderOnHover;
     public SpriteRenderer spriteRenderer;
     public BoxCollider2D boxCollider;
 
@@ -43,7 +42,6 @@ public class Block : MonoBehaviour
         {
             //set local scale according to lossy scale factor divided by parent lossy scale factor
             SetScale(normalScale);
-            BorderOnHover.SetActive(false);
         }
     }
 
@@ -67,7 +65,6 @@ public class Block : MonoBehaviour
     public void OnHover()
     {
         SetScale(normalScale * 1.2f);
-        BorderOnHover.SetActive(true);
     }
 
     public void SetLocalPosition(Vector2 position)
@@ -84,7 +81,6 @@ public class Block : MonoBehaviour
     {
         this.orderInLayer = orderinLayer;
         spriteRenderer.sortingOrder = orderinLayer + 1;
-        BorderOnHover.GetComponent<SpriteRenderer>().sortingOrder = orderinLayer;
     }
 
     public virtual void SetScale(Vector2 scale) { }
