@@ -31,6 +31,6 @@ public class GameManager : MonoBehaviour
         {
             playerInventory = gameObject.AddComponent<PlayerInventory>(); // Create the PlayerInventory component if not already present
         }
-        playerInventory.createNewPlayerInventory(); // Reset the player's inventory
+        playerInventory.CreateNewPlayerInventory(); // Reset the player's inventory
     }
 }
