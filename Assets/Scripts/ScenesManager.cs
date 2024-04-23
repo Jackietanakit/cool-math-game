@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Map;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -32,6 +33,12 @@ public class ScenesManager : MonoBehaviour
     public void LoadScene(Scene scene)
     {
         SceneManager.LoadScene(scene.ToString());
+    }
+
+    public void LoadMapScene()
+    {
+        MapPlayerTracker.Instance.Locked = false;
+        SceneManager.LoadScene(Scene.MapScene.ToString());
     }
 
     public void LoadNewGame()

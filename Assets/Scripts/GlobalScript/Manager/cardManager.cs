@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cardManager
+public class CardManager
 {
     public OperationCard createNewCard(OperationName name, AdditionalEffect effect)
     {
@@ -29,14 +29,23 @@ public class cardManager
 
     public List<OperationCard> createInitialDeck()
     {
-        List<OperationCard> initialDeck = new List<OperationCard>();
-
-        // Add initial cards
-        initialDeck.Add(createNewCard(OperationName.Add, null));
-        initialDeck.Add(createNewCard(OperationName.Subtract, null));
-        initialDeck.Add(createNewCard(OperationName.Multiply, null));
-        initialDeck.Add(createNewCard(OperationName.Divide, null));
+        List<OperationCard> initialDeck = new List<OperationCard>
+        {
+            // Add initial cards
+            createNewCard(OperationName.Add, null),
+            createNewCard(OperationName.Subtract, null),
+            createNewCard(OperationName.Multiply, null),
+            createNewCard(OperationName.Divide, null)
+        };
 
         return initialDeck;
+    }
+
+    public OperationCard createRandomCard()
+    {
+        OperationName operationName = (OperationName)Random.Range(0, 3);
+        Debug.Log("Random card not found for name: " + operationName);
+        // Create a random operation card
+        return createNewCard(operationName, null);
     }
 }

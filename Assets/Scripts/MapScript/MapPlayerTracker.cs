@@ -53,7 +53,7 @@ namespace Map
 
         private void SendPlayerToNode(MapNode mapNode)
         {
-            Locked = false;
+            Locked = lockAfterSelecting;
             mapManager.CurrentMap.path.Add(mapNode.Node.point);
             mapManager.SaveMap();
             view.SetAttainableNodes();
@@ -75,6 +75,7 @@ namespace Map
             // load appropriate scene with context based on nodeType:
             // or show appropriate GUI over the map:
             // if you choose to show GUI in some of these cases, do not forget to set "Locked" in MapPlayerTracker back to false
+
             switch (mapNode.Node.nodeType)
             {
                 case NodeType.MinorEnemy:
