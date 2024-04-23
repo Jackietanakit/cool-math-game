@@ -5,25 +5,40 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
+    public static PlayerInventory Instance;
     public int maxHealth = 3;
     public int currentHealth;
     public int money;
+    public int maxOperation = 5;
 
     public List<OperationCard> operationCards = new List<OperationCard>();
     public List<Artifact> artifacts = new List<Artifact>();
 
     private string saveFilePath;
-    private cardManager cardInstance;
+    private CardManager cardInstance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Ensure GameManager persists between scenes if needed
+        }
+        else
+        {
+            Destroy(gameObject); // Ensure only one GameManager instance exists
+        }
+    }
 
     private void Start()
     {
-        cardInstance = new cardManager(); // Create an instance of cardManager
+        cardInstance = new CardManager(); // Create an instance of cardManager
         currentHealth = maxHealth;
         saveFilePath = Path.Combine(Application.persistentDataPath, "inventory.json");
         LoadInventory();
     }
 
-    public void createNewPlayerInventory()
+    public void CreateNewPlayerInventory()
     {
         // Clear all data
         operationCards.Clear();
@@ -36,25 +51,21 @@ public class PlayerInventory : MonoBehaviour
     public void AddOperationCard(OperationCard card)
     {
         operationCards.Add(card);
-        SaveInventory();
     }
 
     public void RemoveOperationCard(OperationCard card)
     {
         operationCards.Remove(card);
-        SaveInventory();
     }
 
     public void AddArtifact(Artifact artifact)
     {
         artifacts.Add(artifact);
-        SaveInventory();
     }
 
     public void RemoveArtifact(Artifact artifact)
     {
         artifacts.Remove(artifact);
-        SaveInventory();
     }
 
     public void SaveInventory()
