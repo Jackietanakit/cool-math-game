@@ -13,14 +13,17 @@ public class OperationOption : MonoBehaviour
     public SpriteRenderer operationSpriteRenderer;
     public Transform ParentTransform;
     public OperationCard operationCard;
+    public int orderInLayer = 2;
 
-    public void Initialize(OperationCard card, Transform parent)
+    public void Initialize(OperationCard card)
     {
+        Debug.Log("qwer" + card.operationName.ToString());
         operationCard = card;
-        ParentTransform = parent.transform;
-        operationSpriteRenderer.sprite = Resources.Load<Sprite>("Operators/" + name.ToString());
-        tag = "OperatorOption";
-        name = "OperatorOption" + name;
+        operationSpriteRenderer.sprite = Resources.Load<Sprite>(
+            "Operators/" + card.operationName.ToString()
+        );
+        deleteSpriteRenderer.sprite = Resources.Load<Sprite>("Operators/Add");
+        SetOrderInLayer(2);
     }
 
     void Update()
@@ -30,12 +33,27 @@ public class OperationOption : MonoBehaviour
             deleteSpriteRenderer.color = Color.gray;
             if (Input.GetMouseButtonUp(0))
             {
-                Debug.LogWarning("Kuay Pit");
+                RewardManager.Instance.RemoveOperationCard(operationCard);
+                Destroy(gameObject);
+                RewardManager.Instance.AddOperationCard();
+                ScenesManager.Instance.LoadMapScene();
             }
         }
         else
         {
             deleteSpriteRenderer.color = Color.white;
         }
+    }
+
+    public void SetLocalPosition(Vector2 position)
+    {
+        transform.localPosition = position;
+    }
+
+    public virtual void SetOrderInLayer(int orderinLayer)
+    {
+        this.orderInLayer = orderinLayer;
+        operationSpriteRenderer.sortingOrder = orderinLayer + 1;
+        deleteSpriteRenderer.sortingOrder = orderinLayer + 2;
     }
 }

@@ -45,7 +45,7 @@ public class PlayerInventory : MonoBehaviour
         artifacts.Clear();
 
         // Add initial cards
-        operationCards = cardInstance.createInitialDeck();
+        operationCards = cardInstance.CreateInitialDeck();
     }
 
     public void AddOperationCard(OperationCard card)
@@ -81,5 +81,16 @@ public class PlayerInventory : MonoBehaviour
             string json = File.ReadAllText(saveFilePath);
             JsonConvert.PopulateObject(json, this);
         }
+    }
+
+    public List<OperationName> GetOperationCardNames()
+    {
+        List<OperationName> cardNames = new List<OperationName>();
+        foreach (OperationCard card in operationCards)
+        {
+            cardNames.Add(card.operationName);
+        }
+
+        return cardNames;
     }
 }

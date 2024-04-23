@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardManager
+public class CardManager : MonoBehaviour
 {
-    public OperationCard createNewCard(OperationName name, AdditionalEffect effect)
+    public static CardManager Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    public OperationCard CreateNewCard(OperationName name, AdditionalEffect effect)
     {
         Dictionary<OperationName, OperationCard> operationCardMap =
             new Dictionary<OperationName, OperationCard>();
@@ -27,25 +34,34 @@ public class CardManager
         }
     }
 
-    public List<OperationCard> createInitialDeck()
+    public List<OperationCard> CreateInitialDeck()
     {
         List<OperationCard> initialDeck = new List<OperationCard>
         {
             // Add initial cards
-            createNewCard(OperationName.Add, null),
-            createNewCard(OperationName.Subtract, null),
-            createNewCard(OperationName.Multiply, null),
-            createNewCard(OperationName.Divide, null)
+            CreateNewCard(OperationName.Add, null),
+            CreateNewCard(OperationName.Subtract, null),
+            CreateNewCard(OperationName.Multiply, null),
+            CreateNewCard(OperationName.Divide, null)
         };
 
         return initialDeck;
     }
 
-    public OperationCard createRandomCard()
+    public OperationCard CreateRandomCard()
     {
-        OperationName operationName = (OperationName)Random.Range(0, 3);
-        Debug.Log("Random card not found for name: " + operationName);
-        // Create a random operation card
-        return createNewCard(operationName, null);
+        List<OperationName> operationInDeck =
+            GameManager.instance._playerInventory.GetOperationCardNames();
+
+        // Get randome cards that not contain in the deck
+        foreach (OperationName name in System.Enum.GetValues(typeof(OperationName)))
+        {
+            if (!operationInDeck.Contains(name))
+            {
+                return CreateNewCard(name, null);
+            }
+        }
+
+        return null;
     }
 }
