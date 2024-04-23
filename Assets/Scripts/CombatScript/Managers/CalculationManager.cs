@@ -21,6 +21,23 @@ public class CalculationManager : MonoBehaviour
     void Update()
     {
         SetNumberInOperator();
+        //disable TheZone if the operator is unaryleft or right, enable it back if it is binary operator
+        if (Operator != null)
+        {
+            if (Operator.operation.operatorType == OperatorType.UnaryLeft)
+            {
+                numberBlockB.gameObject.SetActive(false);
+            }
+            else if (Operator.operation.operatorType == OperatorType.UnaryRight)
+            {
+                numberBlockA.gameObject.SetActive(false);
+            }
+            else
+            {
+                numberBlockA.gameObject.SetActive(true);
+                numberBlockB.gameObject.SetActive(true);
+            }
+        }
     }
 
     public NumberBlock GetNumberBlockA()
@@ -94,7 +111,7 @@ public class CalculationManager : MonoBehaviour
 
     public void Calculate()
     {
-        if (IsValidEquation())
+        if (IsValidEquation() && AnswerZone.numbers.Count == 0)
         {
             //calculate the result
             int result = Operator.operation.Calculate();

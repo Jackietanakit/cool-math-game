@@ -7,7 +7,7 @@ public class EnemyInfoSO : ScriptableObject
 {
     public int minHealth;
     public int maxHealth;
-    public Sprite sprite;
+    public SPUM_Prefabs enemyPrefab;
     public List<Requirement> requirements;
 }
 
