@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public SpriteRenderer spriteRenderer;
+    public SPUM_Prefabs spumprefab;
 
     public TextMeshPro healthText;
 
@@ -15,9 +15,11 @@ public class Enemy : MonoBehaviour
 
     public void Initialize(EnemyInfoSO enemyInfo)
     {
+        spumprefab = enemyInfo.enemyPrefab;
+        //instantiates the enemy prefab
+        Instantiate(spumprefab, this.transform);
         health = Random.Range(enemyInfo.minHealth, enemyInfo.maxHealth + 1);
         this.requirements = enemyInfo.requirements;
-        spriteRenderer.sprite = enemyInfo.sprite;
         UpdateHealth();
     }
 

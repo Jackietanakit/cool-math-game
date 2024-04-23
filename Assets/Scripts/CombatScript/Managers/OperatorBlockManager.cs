@@ -47,6 +47,21 @@ public class OperatorBlockManager : MonoBehaviour
 
     public void SelectOperator(OperatorBlock operatorBlock)
     {
+        if (
+            SelectedOperatorBlock != null
+            && SelectedOperatorBlock.GetOperatorType() != operatorBlock.GetOperatorType()
+        )
+        {
+            //kick the numberblock back to the container
+            if (CalculationManager.Instance.GetNumberBlockA() != null)
+                NumberBlocksManager.Instance.NumberBlockZone.MoveBlockToThisZone(
+                    CalculationManager.Instance.GetNumberBlockA()
+                );
+            if (CalculationManager.Instance.GetNumberBlockB() != null)
+                NumberBlocksManager.Instance.NumberBlockZone.MoveBlockToThisZone(
+                    CalculationManager.Instance.GetNumberBlockB()
+                );
+        }
         SelectedOperatorBlock = operatorBlock;
         SelectedSpriteRenderer.sprite = operatorBlock.OperatorSprite.sprite;
         CalculationManager.Instance.Operator = operatorBlock;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class NumberBlockZone : Zone
 
     public override void OnNumberBlockStay(NumberBlock numberBlock)
     {
+        Debug.Log("Block Stay");
         // if the number is not in container and the mouse stop left click then put the number block into the container
         if (
             !numberBlock.isInContainer

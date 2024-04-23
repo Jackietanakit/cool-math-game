@@ -9,7 +9,6 @@ public class CalculationNumberZone : Zone
     {
         if (HighlightObject != null && numbers.Count == 0 && !numbers.Contains(numberBlock))
         {
-            HighlightObject.SetActive(true);
             if (Input.GetMouseButtonUp(0))
             {
                 //Put the number block into the zone

@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minHealth: 20
   maxHealth: 50
-  sprite: {fileID: 1214362206, guid: d1065bbc5025fe648b6a92de904c40a4, type: 3}
+  enemyPrefab: {fileID: 3790982329745309077, guid: 4c1b05170f52045f1a6d3ac26f923977,
+    type: 3}
   requirements: 

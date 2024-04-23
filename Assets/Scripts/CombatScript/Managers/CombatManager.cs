@@ -76,6 +76,7 @@ public class CombatManager : MonoBehaviour
                 OperationName.Subtract,
                 OperationName.Multiply,
                 OperationName.Divide,
+                (OperationName)UnityEngine.Random.Range(4, 8)
             }
         );
         enemiesInScene = new Enemy[4] { null, null, null, null };
@@ -117,14 +118,11 @@ public class CombatManager : MonoBehaviour
 
     public void CreateEnemyAtFirstPosition(EnemyInfoSO enemyInfoSO)
     {
-        //Instantiate enemy at position 0
-        Enemy enemy = Instantiate(enemyPrefab, StartingPosition, true);
-        enemy.transform.localPosition = new Vector3(0, 0.1f, 0);
+        //Instantiate enemy from prefab of the enemy
+        Enemy enemy = Instantiate(enemyPrefab, StartingPosition.position, Quaternion.identity);
+
         //Move to enemypossiblepostion[0] using dotween
-        enemy.transform.DOMove(
-            enemiesPossiblePositions[0].position + new Vector3(0, 0.5f, 0),
-            0.5f
-        );
+        enemy.transform.DOMove(enemiesPossiblePositions[0].position, 0.5f);
         enemy.Initialize(enemyInfoSOs[0]);
         enemiesInScene[0] = enemy;
         Debug.Log("Enemy created");
@@ -239,10 +237,7 @@ public class CombatManager : MonoBehaviour
                 if (i + 1 < enemiesPossiblePositions.Count && enemiesInScene[i + 1] == null)
                 {
                     enemiesInScene[i]
-                        .transform.DOMove(
-                            enemiesPossiblePositions[i + 1].position + new Vector3(0, 0.5f, 0),
-                            0.5f
-                        );
+                        .transform.DOMove(enemiesPossiblePositions[i + 1].position, 0.5f);
                     enemiesInScene[i + 1] = enemiesInScene[i];
                     enemiesInScene[i] = null;
                 }

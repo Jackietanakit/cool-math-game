@@ -15,6 +15,7 @@ public class AnswerZone : Zone
         //but the block into the center
         block.SetOriginalPosition(new Vector2(0.125f, 0.125f));
         block.SetLocalPosition(new Vector2(0.125f, 0.125f));
+        numbers.Add(block);
         block.isInContainer = false;
     }
 }
