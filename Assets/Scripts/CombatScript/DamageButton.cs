@@ -1,21 +1,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DamageButton : MonoBehaviour
 {
     [SerializeField]
-    BoxCollider2D boxCollider;
+    TextMeshProUGUI damagetext;
 
-    void Update()
+    public void DealDamage()
     {
-        if (boxCollider.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+        CombatManager.Instance.DealDamage();
+    }
+
+    public void updateText(string text)
+    {
+        if (!this.isActiveAndEnabled)
         {
-            if (Input.GetMouseButtonUp(0))
-            {
-                CombatManager.Instance.DealDamage();
-            }
+            this.gameObject.SetActive(true);
         }
+        damagetext.text = text;
+    }
+
+    public void setInactive()
+    {
+        this.gameObject.SetActive(false);
     }
 }

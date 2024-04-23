@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class DamageZone : Zone
@@ -25,10 +26,12 @@ public class DamageZone : Zone
         base.AddBlockToZone(block);
         //but the block into the center
         block.SetOriginalPosition(new Vector2(0.125f, 0.125f));
+        CombatManager.Instance.damageButton.updateText(block.GetNumber() + " Damage");
     }
 
-    public void ResetNumber()
+    public override void RemoveBlockFromZone(NumberBlock block)
     {
-        numbers.Clear();
+        base.RemoveBlockFromZone(block);
+        CombatManager.Instance.damageButton.setInactive();
     }
 }

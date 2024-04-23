@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +9,13 @@ public class RestManager : MonoBehaviour
     public static RestManager Instance;
     public Button button;
     private OperationCard card;
+    public List<Transform> operationOptionTransform;
+    public OperationOption OperationOptionPrefab;
 
     void Start()
     {
         CreateRandomOperatorCard();
+        Test();
     }
 
     private void CreateRandomOperatorCard()
@@ -36,5 +40,14 @@ public class RestManager : MonoBehaviour
         Debug.Log("RestButton");
         RewardManager.Instance.HealHealth(1);
         ScenesManager.Instance.LoadMapScene();
+    }
+
+    public void Test()
+    {
+        OperationOption operationOption = Instantiate(
+            OperationOptionPrefab,
+            operationOptionTransform[0]
+        );
+        operationOption.Initialize(card, operationOptionTransform[0]);
     }
 }
