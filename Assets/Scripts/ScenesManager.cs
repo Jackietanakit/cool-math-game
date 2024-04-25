@@ -12,6 +12,7 @@ public class ScenesManager : MonoBehaviour
     {
         if (Instance == null)
         {
+            this.tag = "SceneManager";
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
@@ -44,6 +45,11 @@ public class ScenesManager : MonoBehaviour
     public void LoadNewGame()
     {
         SceneManager.LoadScene(Scene.MapScene.ToString());
+    }
+
+    public void LoadCombatScene()
+    {
+        SceneManager.LoadScene(Scene.CombatScene.ToString());
     }
 
     public void LoadMainMenu()

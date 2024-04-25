@@ -28,6 +28,7 @@ public class NumberBlock : Block
             SetOrderInLayer(4);
             isSelected = true;
             CombatManager.Instance.hasDraggedSomething = true;
+            CombatManager.Instance.DraggedNumberBlock = this;
             if (!hasGhost)
             {
                 GameObject ghostBlock = Instantiate(
@@ -45,6 +46,7 @@ public class NumberBlock : Block
         {
             SetOrderInLayer(2);
             CombatManager.Instance.hasDraggedSomething = false;
+            CombatManager.Instance.DraggedNumberBlock = null;
             isSelected = false;
             Zone newzone = CombatManager.Instance.GetZoneUnderMouse();
 

@@ -64,6 +64,10 @@ public class Enemy : MonoBehaviour
         return damage;
     }
 
+    void generateRandomHealth(int min,int max) {
+        
+    }
+
     void Die()
     {
         Destroy(gameObject);

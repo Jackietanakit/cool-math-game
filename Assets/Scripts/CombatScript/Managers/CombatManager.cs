@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CombatManager : MonoBehaviour
 {
     public static CombatManager Instance;
     public NumberBlockZone NumberBlockZone;
+
+    public GameObject VictoryPanel;
 
     [SerializeField]
     SPUM_Prefabs mainCharacterPrefab;
@@ -23,15 +26,17 @@ public class CombatManager : MonoBehaviour
 
     public Enemy enemyPrefab;
 
-    public List<EnemyInfoSO> enemyInfoSOs;
-
     public GameObject EnemyContainer; //The parent of the enemies
 
     public DamageZone damageZone;
 
     public bool hasDraggedSomething;
 
+    public NumberBlock DraggedNumberBlock;
+
     public DamageButton damageButton;
+
+    public TextMeshProUGUI moneyText;
 
     public Enemy[] enemiesInScene;
 
@@ -41,34 +46,30 @@ public class CombatManager : MonoBehaviour
 
     public List<Zone> zones;
 
-    public PlayerInventory playerInventory;
-
     public List<EnemyInfoSO> enemiesThisCombat;
 
     void Start()
     {
-        playerInventory = FindObjectOfType<PlayerInventory>();
-        //if there is no Gamemanager, then create 4 example enemies
-        if (playerInventory == null)
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (gameManager == null)
         {
-            enemiesThisCombat = new List<EnemyInfoSO>
-            {
-                enemyInfoSOs[0],
-                enemyInfoSOs[0],
-                enemyInfoSOs[0],
-                enemyInfoSOs[0],
-            };
+            //throw error exception manager not found
+            Debug.LogError("GameManager not found");
         }
         else
         {
             //Get the enemies from Gamemanager
+            enemiesThisCombat = GameManager.instance.GenerateEnemies();
+            //load
+            InititializeFromPlayerInventory();
         }
-        InititializeFromPlayerInventory();
+
         NumberBlocksManager.Instance.CreateManyNumberBlocks(
             NumberBlocksManager.Instance.GenerateStartingRandomFairNumbers(
                 NumberBlocksManager.Instance.numberSpawnPerTurn
             )
         );
+
         OperatorBlockManager.Instance.CreateManyOperators(
             new List<OperationName>
             {
@@ -76,7 +77,8 @@ public class CombatManager : MonoBehaviour
                 OperationName.Subtract,
                 OperationName.Multiply,
                 OperationName.Divide,
-                (OperationName)UnityEngine.Random.Range(4, 8)
+                (OperationName)UnityEngine.Random.Range(4, 6),
+                (OperationName)UnityEngine.Random.Range(6, 8)
             }
         );
         enemiesInScene = new Enemy[4] { null, null, null, null };
@@ -85,9 +87,9 @@ public class CombatManager : MonoBehaviour
 
     private void InititializeFromPlayerInventory()
     {
-        if (playerInventory != null)
+        if (GameManager.instance._playerInventory != null)
         {
-            PlayerHealth = playerInventory.currentHealth;
+            PlayerHealth = GameManager.instance._playerInventory.currentHealth;
         }
         else
         {
@@ -123,22 +125,14 @@ public class CombatManager : MonoBehaviour
 
         //Move to enemypossiblepostion[0] using dotween
         enemy.transform.DOMove(enemiesPossiblePositions[0].position, 0.5f);
-        enemy.Initialize(enemyInfoSOs[0]);
+        enemy.Initialize(enemyInfoSO);
         enemiesInScene[0] = enemy;
         Debug.Log("Enemy created");
     }
 
     public Block GetBlockUnderMouse()
     {
-        RaycastHit2D hit = Physics2D.Raycast(
-            Camera.main.ScreenToWorldPoint(Input.mousePosition),
-            Vector2.zero
-        );
-        if (hit.collider != null)
-        {
-            return hit.collider.GetComponent<Block>();
-        }
-        return null;
+        return DraggedNumberBlock;
     }
 
     public Zone GetZoneUnderMouse()
@@ -219,6 +213,7 @@ public class CombatManager : MonoBehaviour
         {
             Debug.Log("Player wins");
             //Player wins, shows a panel
+            VictoryPanel.SetActive(true);
 
             return;
         }
@@ -264,5 +259,10 @@ public class CombatManager : MonoBehaviour
 
             //
         }
+    }
+
+    public void ChangeScene()
+    {
+        ScenesManager.Instance.LoadMapScene();
     }
 }

@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class OperationCard
+[CreateAssetMenu(fileName = "Operation", menuName = "Operation/OperationCard")]
+public class OperationCard : ScriptableObject
 {
+    public Sprite sprite;
     public OperationName operationName;
     public string description;
+
+    public string limit; //The max number that can be used in the operation
     public AdditionalEffect additionalEffect;
 
     public OperationCard(
@@ -30,7 +34,7 @@ public enum OperationName
     Modulo,
     Power,
     Sqrt,
-    Factorial
+    Factorial,
 }
 
 // private Dictionary<OperationName, string> OperationDescription { }
