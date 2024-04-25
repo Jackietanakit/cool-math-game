@@ -15,7 +15,7 @@ public class PlayerInventory : MonoBehaviour
     public List<Artifact> artifacts = new List<Artifact>();
 
     private string saveFilePath;
-    private CardManager cardInstance;
+    private cardManager cardInstance;
 
     private void Awake()
     {
@@ -32,7 +32,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void Start()
     {
-        cardInstance = new CardManager(); // Create an instance of cardManager
+        cardInstance = new cardManager(); // Create an instance of cardManager
         currentHealth = maxHealth;
         saveFilePath = Path.Combine(Application.persistentDataPath, "inventory.json");
         LoadInventory();

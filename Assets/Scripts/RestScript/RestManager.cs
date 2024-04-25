@@ -1,20 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework.Internal;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RestManager : MonoBehaviour
 {
+    [SerializeField]
+    TextMeshProUGUI informationText;
     public Transform parent;
     public static RestManager Instance;
-    public Button button;
     private OperationCard card;
     public List<Transform> operationOptionTransform;
     public OperationOption OperationOptionPrefab;
     public Transform newOperationTransform;
     public GameObject inventoryPanel;
     public GameObject inventoryZone;
+    public GameObject idleScreen;
+    public GameObject informationScreen;
+    public GameObject restScreen;
+    public GameObject canvas;
 
     void Start()
     {
@@ -25,10 +31,7 @@ public class RestManager : MonoBehaviour
     private void CreateRandomOperatorCard()
     {
         // Create Random Operation Card
-        card = CardManager.Instance.CreateRandomCard();
-
-        // Create GameObject in the scene
-        button.image.sprite = Resources.Load<Sprite>("Operators/" + card.operationName.ToString());
+        card = cardManager.Instance.CreateRandomCard();
     }
 
     public void OperationOption()
@@ -42,6 +45,10 @@ public class RestManager : MonoBehaviour
         {
             inventoryPanel.SetActive(true);
             inventoryZone.SetActive(true);
+            idleScreen.SetActive(false);
+            informationScreen.SetActive(false);
+            restScreen.SetActive(false);
+            canvas.SetActive(false);
         }
         else
         {
@@ -54,6 +61,10 @@ public class RestManager : MonoBehaviour
     {
         inventoryPanel.SetActive(false);
         inventoryZone.SetActive(false);
+        idleScreen.SetActive(true);
+        informationScreen.SetActive(true);
+        restScreen.SetActive(true);
+        canvas.SetActive(true);
     }
 
     public void RestOption()
@@ -77,5 +88,25 @@ public class RestManager : MonoBehaviour
         OperationOption newOperationOption = Instantiate(OperationOptionPrefab, parent);
         newOperationOption.Initialize(card);
         newOperationOption.transform.position = newOperationTransform.position;
+    }
+
+    public void GetInformation(string option)
+    {
+        switch (option)
+        {
+            case "Rest":
+                informationText.text =
+                    "Increase Current HP by 1 (The HP will not exceed MAX Health)";
+                break;
+            case "Operation":
+                informationText.text = "Get a Random Operation (Maximum 5 Operation Cards)";
+                break;
+            case "Artifact":
+                informationText.text = "Get a Random Artifact. Help you defeat the Game!";
+                break;
+            default:
+                informationText.text = "Select 1 of the 3 Options.";
+                break;
+        }
     }
 }

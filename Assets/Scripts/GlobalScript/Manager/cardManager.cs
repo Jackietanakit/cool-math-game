@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CardManager : MonoBehaviour
+public class cardManager : MonoBehaviour
 {
-    public static CardManager Instance;
+    public static cardManager Instance;
 
     void Awake()
     {
@@ -52,16 +52,18 @@ public class CardManager : MonoBehaviour
     {
         List<OperationName> operationInDeck =
             GameManager.instance._playerInventory.GetOperationCardNames();
+        List<OperationName> operationOutDeck = new List<OperationName>();
 
         // Get randome cards that not contain in the deck
         foreach (OperationName name in System.Enum.GetValues(typeof(OperationName)))
         {
             if (!operationInDeck.Contains(name))
             {
-                return CreateNewCard(name, null);
+                operationOutDeck.Add(name);
             }
         }
+        OperationName randomeOperation = operationOutDeck[Random.Range(0, operationOutDeck.Count)];
 
-        return null;
+        return CreateNewCard(randomeOperation, null);
     }
 }
