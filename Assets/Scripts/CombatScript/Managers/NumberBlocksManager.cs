@@ -20,6 +20,8 @@ public class NumberBlocksManager : MonoBehaviour
     public List<NumberBlock> numberBlocks = new List<NumberBlock>();
     public int numberSpawnPerTurn = 4;
 
+    public int bonusSpawnPerTurn = 0;
+
     void Awake()
     {
         Instance = this;
@@ -87,7 +89,10 @@ public class NumberBlocksManager : MonoBehaviour
     public void NextTurn()
     {
         RemoveAllNumberBlocks();
-        CreateManyNumberBlocks(GenerateStartingRandomFairNumbers(numberSpawnPerTurn));
+        CreateManyNumberBlocks(
+            GenerateStartingRandomFairNumbers(numberSpawnPerTurn + bonusSpawnPerTurn)
+        );
+        bonusSpawnPerTurn = 0;
     }
 
     public List<int> GenerateStartingRandomFairNumbers(int amount)

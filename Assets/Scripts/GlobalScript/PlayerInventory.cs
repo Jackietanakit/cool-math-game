@@ -8,7 +8,7 @@ public class PlayerInventory : MonoBehaviour
     public static PlayerInventory Instance;
     public int maxHealth = 3;
     public int currentHealth;
-    public int money;
+    public int money = 0;
     public int maxOperation = 5;
 
     public List<OperationCard> operationCards = new List<OperationCard>();
