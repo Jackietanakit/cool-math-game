@@ -6,8 +6,8 @@ using UnityEngine;
 public class GameDataLoader : MonoBehaviour
 {
     public static GameDataLoader instance;
-    List<OperationCard> operationCards = new List<OperationCard>();
-    List<Artifact> artifacts = new List<Artifact>();
+    readonly List<OperationCard> operationCards = new List<OperationCard>();
+    readonly List<Artifact> artifacts = new List<Artifact>();
 
     public AllStaticData allStaticData;
 

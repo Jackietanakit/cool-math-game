@@ -6,6 +6,7 @@ public class RewardManager : MonoBehaviour
 {
     public static RewardManager Instance;
     public static PlayerInventory playerInventory;
+    public OperationCard newCard;
 
     private void Awake()
     {
@@ -30,13 +31,18 @@ public class RewardManager : MonoBehaviour
         playerInventory.money += amount;
     }
 
-    public void AddOperationCard(OperationCard card)
+    public void AddOperationCard()
     {
-        playerInventory.AddOperationCard(card);
+        playerInventory.AddOperationCard(newCard);
     }
 
     public void AddArtifact(Artifact artifact)
     {
         playerInventory.AddArtifact(artifact);
+    }
+
+    public void RemoveOperationCard(OperationCard card)
+    {
+        playerInventory.RemoveOperationCard(card);
     }
 }
