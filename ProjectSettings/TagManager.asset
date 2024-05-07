@@ -8,6 +8,7 @@ TagManager:
   - NumberBlock
   - OperatorBlock
   - CalculationButton
+  - SceneManager
   layers:
   - Default
   - TransparentFX

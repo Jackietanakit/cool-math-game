@@ -59,17 +59,17 @@ public class NumberBlock : Block
             )
             {
                 //Put it in the zone
+                newzone.MoveBlockToThisZone(this);
+
                 return;
             }
             else
             {
-                Debug.Log("Put back to original position");
                 PutBackToOriginalPosition();
             }
         }
         if (hasGhost && !isSelected)
         {
-            Debug.Log("Put back to original position");
             PutBackToOriginalPosition();
         }
     }

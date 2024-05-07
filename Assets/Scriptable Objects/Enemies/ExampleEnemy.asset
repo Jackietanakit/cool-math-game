@@ -16,4 +16,10 @@ MonoBehaviour:
   maxHealth: 50
   enemyPrefab: {fileID: 3790982329745309077, guid: 4c1b05170f52045f1a6d3ac26f923977,
     type: 3}
-  requirements: 
+  difficultyRequirements:
+  - DifficultyThreshold: 0
+    Requirements: 
+    Penalty: 0
+  - DifficultyThreshold: 1.5
+    Requirements: 00000000
+    Penalty: 0

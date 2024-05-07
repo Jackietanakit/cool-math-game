@@ -11,6 +11,10 @@ public class PlayerInventory : MonoBehaviour
     public int money = 0;
     public int maxOperation = 5;
 
+    public float difficulty = 1;
+
+    public int EnemyAdditionalCount = 0; //Can be edited by difficulty modifier
+
     public List<OperationCard> operationCards = new List<OperationCard>();
     public List<Artifact> artifacts = new List<Artifact>();
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -11,5 +12,21 @@ public class AllStaticData : ScriptableObject
 
     public List<Artifact> artifacts;
 
-    public List<EnemyInfoSO> enemyInfoSOs;
+    public List<EnemySpawningPatternInfo> EnemySpawnInfos;
+}
+
+[Serializable]
+public struct EnemySpawningPatternInfo
+{
+    public int mapid;
+    public bool isBoss;
+    public EnemySpawnType type;
+    public List<EnemyInfoSO> Enemies;
+}
+
+public enum EnemySpawnType
+{
+    Repeating,
+    Random,
+    Fixed
 }
