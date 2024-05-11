@@ -17,7 +17,6 @@ public class OperationOption : MonoBehaviour
 
     public void Initialize(OperationCard card)
     {
-        Debug.Log("qwer" + card.operationName.ToString());
         operationCard = card;
         operationSpriteRenderer.sprite = Resources.Load<Sprite>(
             "Operators/" + card.operationName.ToString()
