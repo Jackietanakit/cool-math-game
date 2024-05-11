@@ -14,9 +14,13 @@ public class OperatorBlock : Block
 
     public Operation operation;
 
-    public string Name { get; set; }
+    public OperationName OperatorName { get; set; }
 
-    public string Description { get; set; }
+    public string OperatorDescription { get; set; }
+
+    public int UsePerCombat = -1; //Limit use per Combat, -1 means no limit
+
+    public int numberLimit = -1; //Limit the numbers to be used in calculation, -1 means no limit
 
     public override void Update()
     {
@@ -30,11 +34,13 @@ public class OperatorBlock : Block
         }
     }
 
-    public void Initialize(OperationName name, Transform parent)
+    public void Initialize(OperationCard operationCard, Transform parent)
     {
         ParentTransform = parent;
         SetOrderInLayer(2);
-        SetOperation(name);
+        SetOperation(operationCard.operationName);
+        OperatorName = operationCard.operationName;
+        OperatorDescription = operationCard.operationDescription;
         normalScale = transform.lossyScale;
         this.tag = "OperatorBlock";
         this.name = "OperatorBlock" + name;

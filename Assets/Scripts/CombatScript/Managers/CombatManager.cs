@@ -39,7 +39,6 @@ public class CombatManager : MonoBehaviour
     void Start()
     {
         GameManager gameManager = FindObjectOfType<GameManager>();
-        victoryPanel.SetActive(false);
         if (gameManager == null)
         {
             //throw error exception manager not found
@@ -48,9 +47,20 @@ public class CombatManager : MonoBehaviour
         else
         {
             //Get the enemies from Gamemanager
-            enemiesThisCombat = GameManager.instance.GenerateEnemies();
-            //load
-            InititializeFromPlayerInventory();
+            if (TutorialManager.Instance.IsInCombatTutorial)
+            {
+                enemiesThisCombat = TutorialManager.Instance.TutorialEnemyInfos;
+                OperatorBlockManager.Instance.CreateManyOperators(
+                    TutorialManager.Instance.TutorialOperationCards
+                );
+                TutorialManager.Instance.IsInCombatTutorial = false;
+            }
+            else
+            {
+                enemiesThisCombat = GameManager.instance.GenerateEnemies();
+                //load
+                InititializeFromPlayerInventory();
+            }
         }
 
         NumberBlocksManager.Instance.CreateManyNumberBlocks(
@@ -59,17 +69,6 @@ public class CombatManager : MonoBehaviour
             )
         );
 
-        OperatorBlockManager.Instance.CreateManyOperators(
-            new List<OperationName>
-            {
-                OperationName.Add,
-                OperationName.Subtract,
-                OperationName.Multiply,
-                OperationName.Divide,
-                (OperationName)UnityEngine.Random.Range(4, 6),
-                (OperationName)UnityEngine.Random.Range(6, 8)
-            }
-        );
         enemiesInScene = new Enemy[4] { null, null, null, null };
         SpawnNewEnemy();
     }
@@ -84,9 +83,11 @@ public class CombatManager : MonoBehaviour
         {
             PlayerHealth = (int)HealthSlider.maxValue;
         }
-    }
 
-    private List<OperationCard> operationCards = new List<OperationCard>();
+        OperatorBlockManager.Instance.CreateManyOperators(
+            GameManager.instance._playerInventory.operationCards
+        );
+    }
 
     void Awake()
     {
@@ -164,6 +165,7 @@ public class CombatManager : MonoBehaviour
             if (closestEnemy != null)
             {
                 bool isDead = closestEnemy.TakeDamage(damage);
+                Debug.Log("Dealing " + damage + " damage");
                 if (isDead)
                 {
                     //remove from the array
@@ -175,14 +177,17 @@ public class CombatManager : MonoBehaviour
                             break;
                         }
                     }
+
+                    //Update combat info
+                    finalcombatInfo.enemiesDefeated += 1;
+
+                    //If the damage is equal to the enemy health and all numberblocks are used, then it is a perfect
                 }
             }
             else
             {
                 Debug.Log("No Enemy in zone");
             }
-
-            Debug.Log("Dealing " + damage + " damage");
 
             NextTurn();
         }
@@ -272,19 +277,26 @@ public class CombatManager : MonoBehaviour
     void UpdateInventory()
     {
         // Update Difficulty  = 𝑃 + 𝑚𝑎𝑥(0. 1 × 𝐷𝑖𝑓𝑀𝑜𝑑𝑖𝑓𝑖𝑒𝑟 , 0. 1(− 2 × 𝐻𝑒𝑎𝑙𝑡ℎ𝑙𝑜𝑠𝑡 + 𝑃𝑒𝑟𝑓𝑒𝑐𝑡 + 𝐷𝑖𝑓𝑀𝑜𝑑𝑖𝑓𝑖𝑒𝑟 + 2 × 𝐼𝑠𝐸𝑙𝑖𝑡𝑒 + 1)
-        GameManager.instance._playerInventory.difficulty =
-            GameManager.instance._playerInventory.difficulty
-            + Math.Max(
-                0.1f,
-                0.1f
-                    * (
-                        -2 * finalcombatInfo.damageTaken
-                        + finalcombatInfo.perfect
-                        + 0 // Modifier TO BE IMPLEMENTED
-                        + 2 * (finalcombatInfo.isElite ? 1 : 0)
-                        + 1
-                    )
-            );
+        float increasedDiff = Math.Max(
+            0.1f,
+            0.1f
+                * (
+                    -2 * finalcombatInfo.damageTaken
+                    + finalcombatInfo.perfect
+                    + 0 // Modifier TO BE IMPLEMENTED
+                    + 2 * (finalcombatInfo.isElite ? 1 : 0)
+                    + 1
+                )
+        );
+
+        GameManager.instance._playerInventory.difficulty += increasedDiff;
+        finalcombatInfo.difficultyAdded = increasedDiff;
+        finalcombatInfo.newDifficulty = GameManager.instance._playerInventory.difficulty;
+
+        //Update Coin -> enemy defeated * 10 + perfect * 10
+        int coinGained = finalcombatInfo.enemiesDefeated * 10 + finalcombatInfo.perfect * 10;
+        finalcombatInfo.coinGained = coinGained;
+        GameManager.instance._playerInventory.money += coinGained;
     }
 }
 
@@ -296,8 +308,8 @@ public struct FinalCombatInfo
     public int coinGained;
 
     public bool isElite;
-    public int difficultyAdded;
-    public int newDifficulty;
+    public float difficultyAdded;
+    public float newDifficulty;
 
     public FinalCombatInfo(bool isElite)
     {
@@ -342,4 +354,24 @@ public struct CombatPositionsAndPrefabs
     public Enemy enemyPrefab;
     public List<Transform> enemiesPossiblePositions;
     public Transform StartingPosition;
+}
+
+public struct damageInfo
+{
+    public int initialdamage;
+    public int actualdamage;
+    public bool isLethal;
+    public bool isExact;
+    public bool isSatisfied; // true if all requirement are met
+
+    //TO DO piercing, crit, etc
+
+    public damageInfo(int initialdamage)
+    {
+        this.initialdamage = initialdamage;
+        this.actualdamage = initialdamage;
+        this.isLethal = false;
+        this.isExact = false;
+        this.isSatisfied = false;
+    }
 }

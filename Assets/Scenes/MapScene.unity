@@ -862,6 +862,8 @@ MonoBehaviour:
   currentHealth: 0
   money: 0
   maxOperation: 5
+  difficulty: 1
+  EnemyAdditionalCount: 0
   operationCards: []
   artifacts: []
 --- !u!4 &1674160030
@@ -1241,8 +1243,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1776090139}
+        m_TargetAssemblyTypeName: Map.MapManager, Assembly-CSharp
         m_MethodName: GenerateNewMap
         m_Mode: 1
         m_Arguments:

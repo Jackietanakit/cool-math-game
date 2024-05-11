@@ -19,6 +19,8 @@ public class AllStaticData : ScriptableObject
 public struct EnemySpawningPatternInfo
 {
     public int mapid;
+
+    public int amountEnemySpawn; //Required for repeating and random type
     public bool isBoss;
     public EnemySpawnType type;
     public List<EnemyInfoSO> Enemies;

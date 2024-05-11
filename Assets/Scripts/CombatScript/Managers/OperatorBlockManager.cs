@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class OperatorBlockManager : MonoBehaviour
@@ -18,12 +19,17 @@ public class OperatorBlockManager : MonoBehaviour
 
     public List<OperatorBlock> operatorBlocks = new List<OperatorBlock>();
 
+    public TextMeshPro OperatorNameText;
+    public TextMeshPro OperatorDescriptionText;
+
+    public TextMeshPro OperatorOtherInfoText;
+
     void Awake()
     {
         Instance = this;
     }
 
-    public void CreateOperatorBlockAtContainer(OperationName name)
+    public void CreateOperatorBlockAtContainer(OperationCard operationCard)
     {
         //spawn operator at the postions
         OperatorBlock operatorBlock = Instantiate(
@@ -31,17 +37,17 @@ public class OperatorBlockManager : MonoBehaviour
             OperatorBlockPosition[operatorBlocksInContainer]
         );
 
-        operatorBlock.Initialize(name, OperatorBlockPosition[operatorBlocksInContainer]);
+        operatorBlock.Initialize(operationCard, OperatorBlockPosition[operatorBlocksInContainer]);
         //set position
         operatorBlock.SetLocalPosition(new Vector3(0.15f, 0.15f, 0));
         operatorBlocksInContainer++;
     }
 
-    public void CreateManyOperators(List<OperationName> names)
+    public void CreateManyOperators(List<OperationCard> operationCards)
     {
-        foreach (OperationName name in names)
+        foreach (OperationCard operationCard in operationCards)
         {
-            CreateOperatorBlockAtContainer(name);
+            CreateOperatorBlockAtContainer(operationCard);
         }
     }
 
@@ -65,5 +71,14 @@ public class OperatorBlockManager : MonoBehaviour
         SelectedOperatorBlock = operatorBlock;
         SelectedSpriteRenderer.sprite = operatorBlock.OperatorSprite.sprite;
         CalculationManager.Instance.Operator = operatorBlock;
+
+        //Update the Text
+        UpdateOperatorTextDescription();
+    }
+
+    public void UpdateOperatorTextDescription()
+    {
+        OperatorNameText.text = SelectedOperatorBlock.OperatorName.ToString();
+        OperatorDescriptionText.text = SelectedOperatorBlock.OperatorDescription;
     }
 }

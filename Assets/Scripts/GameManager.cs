@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -43,29 +44,30 @@ public class GameManager : MonoBehaviour
             x.mapid == 1
         );
         EnemySpawningPatternInfo enemySpawningPatternInfo = enemyGroups[
-            Random.Range(0, enemyGroups.Count)
+            UnityEngine.Random.Range(0, enemyGroups.Count)
         ];
-
-        //Depending on the type of enemy spawning pattern, generate the enemies
+        // Depending on the type of enemy spawning pattern, generate the enemies
         switch (enemySpawningPatternInfo.type)
         {
             case EnemySpawnType.Fixed:
                 enemies = enemySpawningPatternInfo.Enemies;
                 break;
             case EnemySpawnType.Random:
-                for (int i = 0; i < enemySpawningPatternInfo.Enemies.Count; i++)
+                for (int i = 0; i < enemySpawningPatternInfo.amountEnemySpawn; i++)
                 {
                     enemies.Add(
                         enemySpawningPatternInfo.Enemies[
-                            Random.Range(0, enemySpawningPatternInfo.Enemies.Count)
+                            UnityEngine.Random.Range(0, enemySpawningPatternInfo.Enemies.Count)
                         ]
                     );
                 }
                 break;
             case EnemySpawnType.Repeating:
-                for (int i = 0; i < enemySpawningPatternInfo.Enemies.Count; i++)
+                for (int i = 0; i < enemySpawningPatternInfo.amountEnemySpawn; i++)
                 {
-                    enemies.Add(enemySpawningPatternInfo.Enemies[i]);
+                    enemies.Add(
+                        enemySpawningPatternInfo.Enemies[i % enemySpawningPatternInfo.Enemies.Count]
+                    );
                 }
                 break;
         }
