@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387c7699de7d849f5b7f10384f75e6da, type: 3}
+  m_Name: Crown
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: cd2d1eab6472f4297a936dd84dd26c86, type: 3}
+  ArtifactName: Crown
+  description: Test1
+  bonus: 
+  effectId: 0
+  price: 10
