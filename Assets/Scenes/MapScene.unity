@@ -862,6 +862,8 @@ MonoBehaviour:
   currentHealth: 0
   money: 0
   maxOperation: 5
+  difficulty: 1
+  EnemyAdditionalCount: 0
   operationCards: []
   artifacts: []
 --- !u!4 &1674160030

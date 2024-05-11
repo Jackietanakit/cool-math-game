@@ -8,7 +8,7 @@ public class OperationCard : ScriptableObject
 {
     public Sprite sprite;
     public OperationName operationName;
-    public string description;
+    public string operationDescription;
 
     public string limit; //The max number that can be used in the operation
     public AdditionalEffect additionalEffect;
@@ -20,7 +20,7 @@ public class OperationCard : ScriptableObject
     )
     {
         this.operationName = operationName;
-        this.description = description;
+        this.operationDescription = description;
         this.additionalEffect = additionalEffect;
     }
 }

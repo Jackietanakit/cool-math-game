@@ -20,26 +20,28 @@ public abstract class Zone : MonoBehaviour
 
     //Ontrigger block collide into the zone
 
+    void OnEnable()
+    {
+        StartCoroutine("Update"); // starts the function
+    }
+
     public virtual void Update()
     {
         //check if the block is in the zone
-        if (boxCollider.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
-        {
-            Block block = CombatManager.Instance.GetBlockUnderMouse();
-            if (block is NumberBlock && AcceptNumbers)
-            {
-                NumberBlock numberBlock = (NumberBlock)block;
-                if (numberBlock != null)
-                {
-                    OnNumberBlockStay(numberBlock);
-                }
-            }
-        }
-        else
-        {
-            if (HighlightObject != null)
-                HighlightObject.SetActive(false);
-        }
+        // if (boxCollider.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+        // {
+        //     Block block = CombatManager.Instance.GetBlockUnderMouse();
+        //     NumberBlock numberBlock = (NumberBlock)block;
+        //     if (numberBlock != null)
+        //     {
+        //         OnNumberBlockStay(numberBlock);
+        //     }
+        // }
+        // else
+        // {
+        //     if (HighlightObject != null)
+        //         HighlightObject.SetActive(false);
+        // }
     }
 
     public virtual void OnNumberBlockStay(NumberBlock numberBlock)
@@ -56,11 +58,7 @@ public abstract class Zone : MonoBehaviour
     {
         if (block is NumberBlock && numbers.Count < MaxNumberBlocks)
         {
-            return AcceptNumbers;
-        }
-        else if (block is OperatorBlock && operators.Count < MaxOperatorBlock)
-        {
-            return AcceptOperators;
+            return !this.numbers.Contains((NumberBlock)block) && AcceptNumbers;
         }
         else
         {

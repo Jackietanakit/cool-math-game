@@ -23,6 +23,11 @@ public class NumberBlockZone : Zone
         }
     }
 
+    public override bool CanAccept(Block block)
+    {
+        return !block.isInContainer && base.CanAccept(block);
+    }
+
     public override void AddBlockToZone(NumberBlock block)
     {
         NumberBlock numberBlock = (NumberBlock)block;
@@ -52,5 +57,11 @@ public class NumberBlockZone : Zone
             i++;
         }
         NumberBlocksManager.Instance.numberBlocksInContainer--;
+    }
+
+    public override void MoveBlockToThisZone(NumberBlock block)
+    {
+        base.MoveBlockToThisZone(block);
+        block.isInContainer = true;
     }
 }
