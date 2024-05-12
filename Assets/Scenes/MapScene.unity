@@ -348,12 +348,106 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7dd36fbf74103b45a172657d62a3f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TutorialPartPrefab: {fileID: 6004919538845704370, guid: 3f2688c0c04000046b44035d0bc3a033,
+    type: 3}
   WantMapTutorial: 0
   MapTutorials: []
-  CombatTutorials: []
+  CombatTutorials:
+  - maskPosition: {x: 0, y: 0}
+    maskScale: {x: 1, y: 1}
+    panelPosition: {x: 0, y: 0}
+    tutorialType: 1
+    tutorialTitle: Introduction
+    tutorialText: Welcome to the combat tutorial, click the arrow to start.
+    needMask: 1
+    order: 0
+  - maskPosition: {x: 0.25, y: 2.75}
+    maskScale: {x: 12.5, y: 3.5}
+    panelPosition: {x: 0.5, y: -1.5}
+    tutorialType: 1
+    tutorialTitle: Enemy
+    tutorialText: The enemy walks toward you. If they reaches you, you will lose
+      health.
+    needMask: 1
+    order: 1
+  - maskPosition: {x: -1.5, y: -0.35}
+    maskScale: {x: 7, y: 2}
+    panelPosition: {x: -1.25, y: -3.25}
+    tutorialType: 1
+    tutorialTitle: Number Blocks
+    tutorialText: This is your number blocks. You will get a new set of them every
+      turn.
+    needMask: 1
+    order: 2
+  - maskPosition: {x: -1, y: -5.33}
+    maskScale: {x: 6.75, y: 1.8}
+    panelPosition: {x: -1.22, y: -2.29}
+    tutorialType: 1
+    tutorialTitle: Operator Blocks
+    tutorialText: This is your Operators. Use them to create number blocks. Select
+      them by clicking on it.
+    needMask: 1
+    order: 3
+  - maskPosition: {x: -1.4, y: -2.84}
+    maskScale: {x: 5.6, y: 2.687}
+    panelPosition: {x: -1.16, y: 0.82}
+    tutorialType: 1
+    tutorialTitle: Calculation
+    tutorialText: Drag the number blocks in here to begin calculation.
+    needMask: 1
+    order: 4
+  - maskPosition: {x: 2, y: -2.65}
+    maskScale: {x: 2, y: 2}
+    panelPosition: {x: 1.95, y: 0.45}
+    tutorialType: 1
+    tutorialTitle: Calculation Button
+    tutorialText: Once the operator and number blocks are selected, click this button
+      to calculate.
+    needMask: 1
+    order: 5
+  - maskPosition: {x: 4.2815, y: -2.6648}
+    maskScale: {x: 3, y: 2.5}
+    panelPosition: {x: 4.16, y: 0.57}
+    tutorialType: 1
+    tutorialTitle: Answer Zone
+    tutorialText: The answer of the calculation will be created here.
+    needMask: 1
+    order: 6
+  - maskPosition: {x: 8.16, y: -4.75}
+    maskScale: {x: 3, y: 2.5}
+    panelPosition: {x: 6.29, y: -1.31}
+    tutorialType: 1
+    tutorialTitle: Damage Zone
+    tutorialText: Drag a number block in here to damage the enemy. This will end
+      the turn.
+    needMask: 1
+    order: 7
+  - maskPosition: {x: 0, y: 0}
+    maskScale: {x: 0, y: 0}
+    panelPosition: {x: 0, y: 0}
+    tutorialType: 1
+    tutorialTitle: Enemy Info
+    tutorialText: Some enemies have specific requirement. Hover on them for more
+      information.
+    needMask: 1
+    order: 8
+  - maskPosition: {x: 0, y: 0}
+    maskScale: {x: 0, y: 0}
+    panelPosition: {x: -6.2, y: 4.76}
+    tutorialType: 1
+    tutorialTitle: End of the tutorial
+    tutorialText: Defeat all enemies to finish the tutorial
+    needMask: 0
+    order: 9
   AskCombatTutorialPanel: {fileID: 0}
-  TutorialEnemyInfos: []
-  TutorialOperationCards: []
+  TutorialEnemyInfos:
+  - {fileID: 11400000, guid: ad4ecdcf9e017c447b02ae41c3a23246, type: 2}
+  - {fileID: 11400000, guid: 3c9e4975c75453c4ca0df25ffc65cdf1, type: 2}
+  TutorialOperationCards:
+  - {fileID: 11400000, guid: 2adfeb070ec05ba408389699ea4a8f64, type: 2}
+  - {fileID: 11400000, guid: af6bedb95e8cb7440889038cd0238450, type: 2}
+  - {fileID: 11400000, guid: 6360d1881cefe534ca3b821eef9bfcac, type: 2}
+  - {fileID: 11400000, guid: d08ff2393c80da34497f1a96e0fe60dc, type: 2}
   IsInCombatTutorial: 0
 --- !u!4 &492619730
 Transform:
@@ -363,13 +457,148 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 492619728}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3424248, y: -2.3591542, z: 1.4895413}
+  m_LocalPosition: {x: 0, y: 0, z: 1.4895413}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &501777908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 501777909}
+  - component: {fileID: 501777911}
+  - component: {fileID: 501777910}
+  m_Layer: 5
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &501777909
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501777908}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1572971539}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &501777910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501777908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Load Tutorial
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4281479730
+  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 16
+  m_fontSizeBase: 16
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &501777911
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501777908}
+  m_CullTransparentMesh: 1
 --- !u!1 &612580488
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,6 +1057,7 @@ RectTransform:
   m_Children:
   - {fileID: 2038588483}
   - {fileID: 51717897}
+  - {fileID: 1572971539}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -836,6 +1066,140 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1572971538
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1572971539}
+  - component: {fileID: 1572971542}
+  - component: {fileID: 1572971541}
+  - component: {fileID: 1572971540}
+  m_Layer: 5
+  m_Name: Load Tutorial Button
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1572971539
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572971538}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 501777909}
+  m_Father: {fileID: 1311161702}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -279, y: -233.5}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1572971540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572971538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1572971541}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 492619729}
+        m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+        m_MethodName: LoadCombatTutorialScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1572971541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572971538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1572971542
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572971538}
+  m_CullTransparentMesh: 1
 --- !u!1 &1613414901
 GameObject:
   m_ObjectHideFlags: 0

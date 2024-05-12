@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public EnemyInfoSO enemyInfo;
     public SPUM_Prefabs spumprefab;
 
     public TextMeshPro healthText;
@@ -37,6 +38,7 @@ public class Enemy : MonoBehaviour
 
     public void Initialize(EnemyInfoSO enemyInfo)
     {
+        this.enemyInfo = enemyInfo;
         spumprefab = enemyInfo.enemyPrefab;
         //instantiates the enemy prefab
         Instantiate(spumprefab, this.transform);
@@ -75,7 +77,7 @@ public class Enemy : MonoBehaviour
 
     public void UpdatePanel()
     {
-        EnemyPanelObjects.enemyName.text = spumprefab.name;
+        EnemyPanelObjects.enemyName.text = enemyInfo.EnemyName;
         EnemyPanelObjects.healthText.text = "Health : " + health.ToString();
         EnemyPanelObjects.requirementDescription.text = requirement.GetRequirementDescription();
         EnemyPanelObjects.penaltyDescription.text = requirement.GetPenaltyDescription();
