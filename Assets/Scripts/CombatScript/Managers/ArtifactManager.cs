@@ -8,6 +8,8 @@ public class ArtifactManager : MonoBehaviour
     public static ArtifactManager Instance;
 
     public List<Artifact> artifacts;
+    public Transform artifactPosition;
+    public GameObject artifactInfo;
 
     public void Awake()
     {
@@ -18,6 +20,14 @@ public class ArtifactManager : MonoBehaviour
     {
         // Load all artifacts
         LoadArtifacts();
+    }
+
+    public void CreateArtifactInfo()
+    {
+        foreach (Artifact artifact in artifacts)
+        {
+            // Create ArtifactInfo in ArtifactPanel
+        }
     }
 
     public void LoadArtifacts()
