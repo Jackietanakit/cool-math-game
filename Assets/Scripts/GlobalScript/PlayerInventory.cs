@@ -50,6 +50,35 @@ public class PlayerInventory : MonoBehaviour
 
         // Add initial cards
         operationCards = cardInstance.CreateInitialDeck();
+        CreateTestArtifact();
+    }
+
+    private void CreateTestArtifact()
+    {
+        Artifact testArtifact1 = new Artifact(
+            0,
+            "Test Artifact1",
+            "Test Bonus",
+            200,
+            ArtifactEffectType.OnceStartCombat
+        );
+        Artifact testArtifact2 = new Artifact(
+            1,
+            "Test Artifact",
+            "Test Bonus",
+            300,
+            ArtifactEffectType.BeforeTurn
+        );
+        Artifact testArtifact3 = new Artifact(
+            2,
+            "Test Artifact",
+            "Test Bonus",
+            400,
+            ArtifactEffectType.AfterTurn
+        );
+        artifacts.Add(testArtifact1);
+        artifacts.Add(testArtifact2);
+        artifacts.Add(testArtifact3);
     }
 
     public void AddOperationCard(OperationCard card)

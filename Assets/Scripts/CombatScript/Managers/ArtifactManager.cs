@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ArtifactManager : MonoBehaviour
 {
+    // Call all the Artifact that effect the game play from start to finish
     public static ArtifactManager Instance;
 
     public List<Artifact> artifacts;
@@ -22,6 +23,39 @@ public class ArtifactManager : MonoBehaviour
     public void LoadArtifacts()
     {
         // Load all artifacts from Gamemanager
-        GameManager.instance._playerInventory.artifacts = artifacts;
+        artifacts = GameManager.instance._playerInventory.artifacts;
+    }
+
+    public void OnceStartCombat()
+    {
+        foreach (Artifact artifact in artifacts)
+        {
+            if (artifact.effectType == ArtifactEffectType.OnceStartCombat)
+            {
+                // Call the effect of the artifact
+            }
+        }
+    }
+
+    public void BeforeTurnStart()
+    {
+        foreach (Artifact artifact in artifacts)
+        {
+            if (artifact.effectType == ArtifactEffectType.BeforeTurn)
+            {
+                // Call the effect of the artifact
+            }
+        }
+    }
+
+    public void AfterTurn()
+    {
+        foreach (Artifact artifact in artifacts)
+        {
+            if (artifact.effectType == ArtifactEffectType.BeforeTurn)
+            {
+                // Call the effect of the artifact
+            }
+        }
     }
 }

@@ -47,20 +47,20 @@ public class CombatManager : MonoBehaviour
         else
         {
             //Get the enemies from Gamemanager
-            if (TutorialManager.Instance.IsInCombatTutorial)
-            {
-                enemiesThisCombat = TutorialManager.Instance.TutorialEnemyInfos;
-                OperatorBlockManager.Instance.CreateManyOperators(
-                    TutorialManager.Instance.TutorialOperationCards
-                );
-                TutorialManager.Instance.IsInCombatTutorial = false;
-            }
-            else
-            {
-                enemiesThisCombat = GameManager.instance.GenerateEnemies();
-                //load
-                InititializeFromPlayerInventory();
-            }
+            // if (TutorialManager.Instance.IsInCombatTutorial)
+            // {
+            //     enemiesThisCombat = TutorialManager.Instance.TutorialEnemyInfos;
+            //     OperatorBlockManager.Instance.CreateManyOperators(
+            //         TutorialManager.Instance.TutorialOperationCards
+            //     );
+            //     TutorialManager.Instance.IsInCombatTutorial = false;
+            // }
+            // else
+            // {
+            enemiesThisCombat = GameManager.instance.GenerateEnemies();
+            //load
+            InititializeFromPlayerInventory();
+            // }
         }
 
         NumberBlocksManager.Instance.CreateManyNumberBlocks(
