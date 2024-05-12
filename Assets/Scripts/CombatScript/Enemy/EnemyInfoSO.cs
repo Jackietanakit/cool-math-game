@@ -29,7 +29,7 @@ public struct DifficultyRequirement
     {
         this.difficultyThreshold = 0;
         this.requirements = new List<Requirement>();
-        this.penalty = PenaltyType.DividedBy;
+        this.penalty = PenaltyType.None;
         this.penaltyAmount = 0;
     }
 
@@ -150,8 +150,10 @@ public struct DifficultyRequirement
                 return "Damage is mod by " + penaltyAmount;
             case PenaltyType.SetTo:
                 return "Damage is set to " + penaltyAmount;
+            case PenaltyType.None:
+                return "No Penalty";
             default:
-                return "No penalty";
+                return "No Penalty";
         }
     }
 
@@ -200,7 +202,7 @@ public struct DifficultyRequirement
         }
         if (description == "")
         {
-            description = "None";
+            description = "No Requirement";
         }
         return description;
     }
@@ -258,4 +260,5 @@ public enum PenaltyType //Penalty if the requirement(s) are not met
     DividedBy,
     ModBy,
     SetTo,
+    None,
 }
