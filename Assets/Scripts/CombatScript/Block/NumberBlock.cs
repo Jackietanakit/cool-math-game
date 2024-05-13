@@ -94,6 +94,12 @@ public class NumberBlock : Block
         return number;
     }
 
+    public void ChangeNumber(int number)
+    {
+        //TO DO : Add an effect when the number is changed
+        SetNumber(number);
+    }
+
     public override void SetOrderInLayer(int orderinLayer)
     {
         base.SetOrderInLayer(orderinLayer);

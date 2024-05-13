@@ -11,6 +11,7 @@ public class Artifact : ScriptableObject
     public string description;
     public int price;
     public ArtifactEffectType effectType;
+    public Sprite artifactSprite;
 
     public Artifact(
         int id,

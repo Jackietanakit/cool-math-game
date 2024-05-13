@@ -4,10 +4,76 @@ using UnityEngine;
 
 public class ArtifactEffectManager : MonoBehaviour
 {
-    // Add all Logic Effect Respectively to The Artifact Effect ID
-    // Start is called before the first frame update
-    void Start() { }
+    public static ArtifactEffectManager Instance;
 
-    // Update is called once per frame
-    void Update() { }
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    public void ActivateEffect(Artifact artifact)
+    {
+        //Switch case using artifact name
+        switch (artifact.ArtifactName)
+        {
+            case "Big Pocket":
+                Big_Pocket();
+                break;
+            case "Lucky 7":
+                Lucky7();
+                break;
+            case "Life Support":
+                Life_Support();
+                break;
+            default:
+                break;
+        }
+    }
+
+    public DamageInfo ActivateEffect(Artifact artifact, DamageInfo damageInfo)
+    {
+        switch (artifact.ArtifactName)
+        {
+            case "Perfect Blade":
+                return Perfect_Blade(damageInfo);
+            default:
+                return damageInfo;
+        }
+    }
+
+    void Big_Pocket()
+    {
+        //Start with an extra Number Block, add 1 to numberSpawnPerTurn
+        NumberBlocksManager.Instance.numberSpawnPerTurn += 1;
+    }
+
+    void Lucky7()
+    {
+        //Convert all number blocks with value 1, 2 or 3 to 7\
+        foreach (NumberBlock numberBlock in NumberBlocksManager.Instance.numberBlocks)
+        {
+            if (numberBlock.number == 1 || numberBlock.number == 2 || numberBlock.number == 3)
+            {
+                numberBlock.ChangeNumber(7);
+            }
+        }
+    }
+
+    void Life_Support()
+    {
+        //Change the first enemy health to 24
+        CombatManager.Instance.enemiesInScene[3].health = 24;
+    }
+
+    DamageInfo Perfect_Blade(DamageInfo damageInfo)
+    {
+        //Piece through 1 more enemy if perfect
+        //Check if perfect
+        if (damageInfo.isPerfect)
+        {
+            damageInfo.piercing += 1;
+        }
+
+        return damageInfo;
+    }
 }

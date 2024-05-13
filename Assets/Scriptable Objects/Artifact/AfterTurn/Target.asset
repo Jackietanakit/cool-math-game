@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 387c7699de7d849f5b7f10384f75e6da, type: 3}
-  m_Name: Sandglass
+  m_Name: Target
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: fc88903a7ce0b4ebf921a7d757a2ca70, type: 3}
-  ArtifactName: Sandglass
-  description: 
-  bonus: 
-  effectId: 0
-  price: 40
+  id: 33
+  ArtifactName: Perfect Blade
+  description: Piece through 1 enemy if perfect
+  price: 20
+  effectType: 2
+  artifactSprite: {fileID: 21300000, guid: 3eb5b0c92903f49b29b80b4160762fe5, type: 3}

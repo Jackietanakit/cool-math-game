@@ -113,6 +113,13 @@ public class NumberBlocksManager : MonoBehaviour
         {
             numbers.Add(Random.Range(1, 10));
         }
+        //Print the numbers in the log
+        string numberString = "";
+        foreach (int number in numbers)
+        {
+            numberString += number + " ";
+        }
+        Debug.Log("Generated numbers: " + numberString);
         return numbers;
     }
 

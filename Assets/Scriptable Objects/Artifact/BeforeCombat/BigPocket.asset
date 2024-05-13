@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 387c7699de7d849f5b7f10384f75e6da, type: 3}
-  m_Name: Heart
+  m_Name: BigPocket
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: bc4c31f88fad3439c9172531cd808816, type: 3}
-  ArtifactName: Heart
-  description: Increase Max Health
-  bonus: 
-  effectId: 0
-  price: 100
+  id: 11
+  ArtifactName: Big Pocket
+  description: Start with an extra Number Block
+  price: 50
+  effectType: 0
+  artifactSprite: {fileID: 21300000, guid: 1cb4bcd8c2b924c83a4d845c6c7c554c, type: 3}

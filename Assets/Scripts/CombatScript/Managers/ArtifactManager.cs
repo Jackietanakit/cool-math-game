@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class ArtifactManager : MonoBehaviour
     public static ArtifactManager Instance;
 
     public List<Artifact> artifacts;
-    public Transform artifactPosition;
+    public List<GameObject> artifactInPanel; //There is 9 position
     public GameObject artifactInfo;
 
     public void Awake()
@@ -34,6 +35,11 @@ public class ArtifactManager : MonoBehaviour
     {
         // Load all artifacts from Gamemanager
         artifacts = GameManager.instance._playerInventory.artifacts;
+        //Get sprite renderer from artifactInpanel and set to artifact.artifactsprite
+        for (int i = 0; i < Math.Min(artifactInPanel.Count, artifacts.Count); i++)
+        {
+            artifactInPanel[i].GetComponent<SpriteRenderer>().sprite = artifacts[i].artifactSprite;
+        }
     }
 
     public void OnceStartCombat()
@@ -43,6 +49,7 @@ public class ArtifactManager : MonoBehaviour
             if (artifact.effectType == ArtifactEffectType.OnceStartCombat)
             {
                 // Call the effect of the artifact
+                ArtifactEffectManager.Instance.ActivateEffect(artifact);
             }
         }
     }
@@ -54,18 +61,21 @@ public class ArtifactManager : MonoBehaviour
             if (artifact.effectType == ArtifactEffectType.BeforeTurn)
             {
                 // Call the effect of the artifact
+                ArtifactEffectManager.Instance.ActivateEffect(artifact);
             }
         }
     }
 
-    public void AfterTurn()
+    public DamageInfo AfterTurn(DamageInfo damageInfo)
     {
         foreach (Artifact artifact in artifacts)
         {
             if (artifact.effectType == ArtifactEffectType.BeforeTurn)
             {
                 // Call the effect of the artifact
+                damageInfo = ArtifactEffectManager.Instance.ActivateEffect(artifact, damageInfo);
             }
         }
+        return damageInfo;
     }
 }

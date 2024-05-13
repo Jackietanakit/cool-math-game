@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 387c7699de7d849f5b7f10384f75e6da, type: 3}
-  m_Name: Crown
+  m_Name: Heart
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: cd2d1eab6472f4297a936dd84dd26c86, type: 3}
-  ArtifactName: Crown
-  description: Test1
-  bonus: 
-  effectId: 0
-  price: 10
+  id: 31
+  ArtifactName: Heart
+  description: Increase Max Health
+  price: 100
+  effectType: 2
+  artifactSprite: {fileID: 21300000, guid: 6498d7d7e73fe480daf5db29da37c19b, type: 3}

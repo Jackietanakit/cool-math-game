@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
 
     public GameObject RequirementContainer;
 
+    public GameObject DamageInfo;
+
     public EnemyPanelObjects EnemyPanelObjects;
 
     public BoxCollider2D Collider;
@@ -73,6 +75,17 @@ public class Enemy : MonoBehaviour
             CanvasGroup.alpha -= Time.deltaTime / 2;
             yield return null;
         }
+    }
+
+    void ShowDamageInfo(int Damage)
+    {
+        DamageInfo.SetActive(true);
+        DamageInfo.GetComponent<TextMeshPro>().text = Damage.ToString();
+    }
+
+    void HideDamageInfo()
+    {
+        DamageInfo.SetActive(false);
     }
 
     public void UpdatePanel()

@@ -11,7 +11,7 @@ public class DamageButton : MonoBehaviour
 
     public void DealDamage()
     {
-        CombatManager.Instance.DealDamage();
+        CombatManager.Instance.ChangeGameState(GameState.AfterPlayerTurn);
     }
 
     public void updateText(string text)
