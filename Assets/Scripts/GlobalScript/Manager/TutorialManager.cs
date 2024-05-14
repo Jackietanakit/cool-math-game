@@ -152,7 +152,10 @@ public class TutorialManager : MonoBehaviour
     public void EndTutorial()
     {
         //Hide the tutorial
-        currentTutorial.HideTutorial();
+        if (currentTutorial != null)
+        {
+            currentTutorial.HideTutorial();
+        }
     }
 }
 

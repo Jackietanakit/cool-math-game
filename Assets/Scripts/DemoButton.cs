@@ -34,4 +34,9 @@ public class DemoButton : MonoBehaviour
     {
         consoleText.text = name;
     }
+
+    public void KillFirstEnemy()
+    {
+        CombatManager.Instance.GetNearestEnemies(1)[0].Die();
+    }
 }

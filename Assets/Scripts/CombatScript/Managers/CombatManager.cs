@@ -89,6 +89,7 @@ public class CombatManager : MonoBehaviour
                 CombatManager.Instance.ChangeGameState(GameState.EnemyTurn);
                 break;
             case GameState.EnemyTurn:
+                NextTurn();
                 EnemyTurn();
                 Debug.Log("Enemy Turn");
                 if (currentState != GameState.Waiting)
@@ -232,8 +233,6 @@ public class CombatManager : MonoBehaviour
                     finalcombatInfo.enemiesDefeated += 1;
                 }
             }
-
-            NextTurn();
         }
         else
         {
@@ -330,13 +329,7 @@ public class CombatManager : MonoBehaviour
         HealthSlider.value = PlayerHealth;
         if (PlayerHealth <= 0)
         {
-            ChangeGameState(GameState.Waiting);
-            //Player dies
-            Debug.Log("Player dies");
-
-            //Game Over Panel
-            defeatPanel.SetActive(true);
-            //
+            Lose();
         }
     }
 
@@ -345,13 +338,21 @@ public class CombatManager : MonoBehaviour
         SceneManager.LoadScene(scenename);
     }
 
-    void Win()
+    public void Win()
     {
         TutorialManager.Instance.EndTutorial();
         Debug.Log("Player wins");
         //Player wins, shows a panel
         UpdateInventory();
         victoryPanel.ShowPanel(finalcombatInfo.ToString());
+        Instance.ChangeGameState(GameState.Waiting);
+    }
+
+    public void Lose()
+    {
+        //Player loses, shows a panel
+        defeatPanel.SetActive(true);
+        GameManager.instance._playerInventory.CreateNewPlayerInventory();
         Instance.ChangeGameState(GameState.Waiting);
     }
 
@@ -378,6 +379,24 @@ public class CombatManager : MonoBehaviour
         int coinGained = finalcombatInfo.enemiesDefeated * 10 + finalcombatInfo.perfect * 10;
         finalcombatInfo.coinGained = coinGained;
         GameManager.instance._playerInventory.money += coinGained;
+    }
+
+    //FOR DEMO PURPOSE ONLY
+    public void KillFirstEnemy()
+    {
+        var nearestEnemies = GetNearestEnemies(1)[0];
+        //set the element in the array to null
+        for (int i = 0; i < enemiesInScene.Length; i++)
+        {
+            if (enemiesInScene[i] == nearestEnemies)
+            {
+                enemiesInScene[i] = null;
+                break;
+            }
+        }
+
+        nearestEnemies.Die();
+        ChangeGameState(GameState.EnemyTurn);
     }
 }
 

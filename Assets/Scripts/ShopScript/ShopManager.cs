@@ -52,7 +52,10 @@ public class ShopManager : MonoBehaviour
 
         List<Artifact> artifactsInBuyShop = new List<Artifact>();
 
-        while (artifactsInBuyShop.Count < 2)
+        while (
+            artifactsInBuyShop.Count < 3
+            && artifactsInBuyShop.Count + playerArtifacts.Count < availableArtifacts.Count
+        )
         {
             Artifact randomArtifact = availableArtifacts[Random.Range(0, availableArtifacts.Count)];
             if (

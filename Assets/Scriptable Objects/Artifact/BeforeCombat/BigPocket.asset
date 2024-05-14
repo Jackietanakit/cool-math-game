@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 11
   ArtifactName: Big Pocket
-  description: Start with an extra Number Block
-  price: 50
+  description: Gain an extra Number Block every turn.
+  price: 100
   effectType: 0
   artifactSprite: {fileID: 21300000, guid: 1cb4bcd8c2b924c83a4d845c6c7c554c, type: 3}
