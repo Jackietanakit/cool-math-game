@@ -365,7 +365,7 @@ public class CombatManager : MonoBehaviour
                 * (
                     -2 * finalcombatInfo.damageTaken
                     + finalcombatInfo.perfect
-                    + 0 // Modifier TO BE IMPLEMENTED
+                    + GameManager.instance._playerInventory.difficultyModifier
                     + 2 * (finalcombatInfo.isElite ? 1 : 0)
                     + 1
                 )

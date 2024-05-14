@@ -27,10 +27,47 @@ public class GameManager : MonoBehaviour
 
     private void Start() { }
 
-    public void InitializePlayerInventory(float difficulty)
+    public void InitializePlayerInventory(string difficulty)
     {
         _playerInventory.CreateNewPlayerInventory(); // Reset the player's inventory
-        _playerInventory.difficulty = difficulty;
+        DifficultyInitilize(difficulty);
+    }
+
+    public void DifficultyInitilize(string difficulty)
+    {
+        switch (difficulty)
+        {
+            case "Easy":
+                _playerInventory.difficulty = 1f;
+                _playerInventory.money = 300;
+                _playerInventory.EnemyAdditionalCount = 0;
+                _playerInventory.difficultyModifier = 0;
+                break;
+            case "Normal":
+                _playerInventory.difficulty = 1.35f;
+                _playerInventory.money = 100;
+                _playerInventory.EnemyAdditionalCount = 0;
+                _playerInventory.difficultyModifier = 0;
+                break;
+            case "Hard":
+                _playerInventory.difficulty = 1.5f;
+                _playerInventory.money = 50;
+                _playerInventory.EnemyAdditionalCount = 1;
+                _playerInventory.difficultyModifier = 1;
+                break;
+            case "Challenging":
+                _playerInventory.difficulty = 1.5f;
+                _playerInventory.money = 0;
+                _playerInventory.EnemyAdditionalCount = 1;
+                _playerInventory.difficultyModifier = 1;
+                break;
+            case "Extreme":
+                _playerInventory.difficulty = 1.75f;
+                _playerInventory.money = 0;
+                _playerInventory.EnemyAdditionalCount = 2;
+                _playerInventory.difficultyModifier = 2;
+                break;
+        }
     }
 
     public List<EnemyInfoSO> GenerateEnemies()
@@ -51,7 +88,13 @@ public class GameManager : MonoBehaviour
                 enemies = enemySpawningPatternInfo.Enemies;
                 break;
             case EnemySpawnType.Random:
-                for (int i = 0; i < enemySpawningPatternInfo.amountEnemySpawn; i++)
+                for (
+                    int i = 0;
+                    i
+                        < enemySpawningPatternInfo.amountEnemySpawn
+                            + _playerInventory.EnemyAdditionalCount;
+                    i++
+                )
                 {
                     enemies.Add(
                         enemySpawningPatternInfo.Enemies[
@@ -61,7 +104,13 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case EnemySpawnType.Repeating:
-                for (int i = 0; i < enemySpawningPatternInfo.amountEnemySpawn; i++)
+                for (
+                    int i = 0;
+                    i
+                        < enemySpawningPatternInfo.amountEnemySpawn
+                            + _playerInventory.EnemyAdditionalCount;
+                    i++
+                )
                 {
                     enemies.Add(
                         enemySpawningPatternInfo.Enemies[i % enemySpawningPatternInfo.Enemies.Count]

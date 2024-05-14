@@ -51,9 +51,7 @@ public class cardManager : MonoBehaviour
         {
             // Add initial cards
             CreateNewCard(OperationName.Add, null),
-            CreateNewCard(OperationName.Subtract, null),
-            CreateNewCard(OperationName.Multiply, null),
-            CreateNewCard(OperationName.Divide, null)
+            CreateNewCard(OperationName.Multiply, null)
         };
 
         return initialDeck;

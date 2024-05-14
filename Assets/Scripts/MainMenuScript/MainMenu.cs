@@ -68,9 +68,9 @@ public class MainMenu : MonoBehaviour
             case "Normal":
                 titleText.text = "Normal";
                 informationText.text =
-                    "Initial Difficulty: 1.2"
+                    "Initial Difficulty: 1.35"
                     + "\nStarting Coin: 100"
-                    + "\nReaching 1.5 Difficulty"
+                    + "\nReaching 2 Difficulty"
                     + "\nNormal Mode!";
                 break;
             case "Hard":
@@ -78,7 +78,8 @@ public class MainMenu : MonoBehaviour
                 informationText.text =
                     "Initial Difficulty: 1.5"
                     + "\nStarting Coin: 50"
-                    + "\nReaching 1.8 Difficulty"
+                    + "\nReaching 2.5 Difficulty"
+                    + "\nEnemy each combat: + 1"
                     + "\nHard Mode!";
                 break;
             case "Challenging":
@@ -86,7 +87,8 @@ public class MainMenu : MonoBehaviour
                 informationText.text =
                     "Initial Difficulty: 1.8"
                     + "\nStarting Coin: 0"
-                    + "\nReaching 2.1 Difficulty"
+                    + "\nReaching 3 Difficulty"
+                    + "\nEnemy each combat: + 1"
                     + "\nChallenging Mode!";
                 break;
             case "Extreme":
@@ -94,7 +96,8 @@ public class MainMenu : MonoBehaviour
                 informationText.text =
                     "Initial Difficulty: 2"
                     + "\nStarting Coin: 0"
-                    + "\nReaching 3 Difficulty"
+                    + "\nReaching 3.5 Difficulty"
+                    + "\nEnemy each combat: + 2"
                     + "\nExtreme Mode!";
                 break;
             default:
@@ -110,22 +113,22 @@ public class MainMenu : MonoBehaviour
 
     public void SetDisableDifficulty()
     {
-        if (HighestDifficulty < 1.5f)
+        if (HighestDifficulty < 2.0f)
         {
             NormalButton.interactable = false;
             NormalText.text = "Locked";
         }
-        if (HighestDifficulty < 1.8f)
+        if (HighestDifficulty < 2.5f)
         {
             HardButton.interactable = false;
             HardText.text = "Locked";
         }
-        if (HighestDifficulty < 2.1f)
+        if (HighestDifficulty < 3.0f)
         {
             ChallengingButton.interactable = false;
             ChallengingText.text = "Locked";
         }
-        if (HighestDifficulty < 3f)
+        if (HighestDifficulty < 3.5f)
         {
             ExtremeButton.interactable = false;
             ExtremeText.text = "Locked";
@@ -139,7 +142,7 @@ public class MainMenu : MonoBehaviour
         ScenesManager.Instance.LoadNewGame();
     }
 
-    public void NewGame(float difficulty)
+    public void NewGame(string difficulty)
     {
         if (PlayerPrefs.HasKey("Tutorial"))
         {
@@ -157,7 +160,7 @@ public class MainMenu : MonoBehaviour
     public void Tutorial(string isTutorial)
     {
         PlayerPrefs.SetString("Tutorial", isTutorial);
-        GameManager.instance.InitializePlayerInventory(1.0f);
+        GameManager.instance.InitializePlayerInventory("easy");
         GameManager.instance.IsNewGame = true;
         PlayerPrefs.DeleteKey("Map");
         ScenesManager.Instance.LoadNewGame();
