@@ -10,6 +10,8 @@ using UnityEngine.UI;
 public class CombatManager : MonoBehaviour
 {
     public static CombatManager Instance;
+
+    public GameState currentState = GameState.ArtifactInitiation;
     public NumberBlockZone NumberBlockZone;
 
     public VictoryPanel victoryPanel;
@@ -38,6 +40,65 @@ public class CombatManager : MonoBehaviour
 
     void Start()
     {
+        Instance.ChangeGameState(GameState.CombatInitialization);
+    }
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    public void ChangeGameState(GameState newState)
+    {
+        currentState = newState;
+        switch (newState)
+        {
+            case GameState.CombatInitialization:
+                Debug.Log("Combat Initialization");
+                InitializeCombat();
+                CombatManager.Instance.ChangeGameState(GameState.ArtifactInitiation);
+                break;
+            case GameState.ArtifactInitiation:
+                Debug.Log("Artifact Initiation");
+                ArtifactManager.Instance.OnceStartCombat();
+                CombatManager.Instance.ChangeGameState(GameState.BeforePlayerTurn);
+                break;
+            case GameState.BeforePlayerTurn:
+                Debug.Log("Before Player Turn");
+                NumberBlocksManager.Instance.NextTurn(); // Create number blocks
+                CalculationManager.Instance.ClearAll(); // Clear all number blocks
+                ArtifactManager.Instance.BeforeTurnStart();
+                CombatManager.Instance.ChangeGameState(GameState.PlayerTurn);
+                break;
+            case GameState.PlayerTurn:
+                Debug.Log("Player Turn");
+                //This state allows the player to move the number blocks and calculate
+                break;
+            case GameState.AfterPlayerTurn:
+                Debug.Log("After Player Turn");
+                //Calculate the damage
+                DamageInfo damageInfo = new DamageInfo(
+                    damageZone.numbers[0].number,
+                    IsPerfect(damageZone.numbers[0].number)
+                );
+                damageInfo = ArtifactManager.Instance.AfterTurn(damageInfo);
+
+                DealDamage(damageInfo);
+                CombatManager.Instance.ChangeGameState(GameState.EnemyTurn);
+                break;
+            case GameState.EnemyTurn:
+                EnemyTurn();
+                Debug.Log("Enemy Turn");
+                CombatManager.Instance.ChangeGameState(GameState.BeforePlayerTurn);
+                break;
+            case GameState.Waiting:
+                Debug.Log("Waiting");
+                break;
+        }
+    }
+
+    private void InitializeCombat()
+    {
         GameManager gameManager = FindObjectOfType<GameManager>();
         if (gameManager == null)
         {
@@ -63,12 +124,6 @@ public class CombatManager : MonoBehaviour
             }
         }
 
-        NumberBlocksManager.Instance.CreateManyNumberBlocks(
-            NumberBlocksManager.Instance.GenerateStartingRandomFairNumbers(
-                NumberBlocksManager.Instance.numberSpawnPerTurn
-            )
-        );
-
         enemiesInScene = new Enemy[4] { null, null, null, null };
         SpawnNewEnemy();
     }
@@ -87,11 +142,8 @@ public class CombatManager : MonoBehaviour
         OperatorBlockManager.Instance.CreateManyOperators(
             GameManager.instance._playerInventory.operationCards
         );
-    }
 
-    void Awake()
-    {
-        Instance = this;
+        moneyText.text = GameManager.instance._playerInventory.money.ToString();
     }
 
     public void SpawnNewEnemy()
@@ -141,7 +193,7 @@ public class CombatManager : MonoBehaviour
         return null;
     }
 
-    public void DealDamage()
+    public void DealDamage(DamageInfo damageInfo)
     {
         if (damageZone.numbers.Count != 0)
         {
@@ -150,43 +202,30 @@ public class CombatManager : MonoBehaviour
             NumberBlocksManager.Instance.RemoveNumberBlockFromList(numberBlock);
             numberBlock.RemoveBlock();
             damageZone.RemoveBlockFromZone(numberBlock);
-            //Damage Enemy at the closest distance to the player, using enemies array, [0] is furthest distance
-            //Get closest enemy
-            Enemy closestEnemy = null;
-            for (int i = enemiesInScene.Length - 1; i >= 0; i--)
-            {
-                if (enemiesInScene[i] != null)
-                {
-                    closestEnemy = enemiesInScene[i];
-                    break;
-                }
-            }
+            //Damage Enemy at the closest distance to the player, using enemies array, [0] is furthest distance\
+            //Damage can have number of piercing eg. if piercing = 1 then 2 closest enemies will receive damage
 
-            if (closestEnemy != null)
+            // Get closest enemies based on the number of piercing
+            List<Enemy> closestEnemies = GetNearestEnemies(damageInfo.piercing + 1);
+            foreach (Enemy enemy in closestEnemies)
             {
-                bool isDead = closestEnemy.TakeDamage(damage);
+                bool isDead = enemy.TakeDamage(damage);
                 Debug.Log("Dealing " + damage + " damage");
                 if (isDead)
                 {
-                    //remove from the array
+                    // Remove from the array
                     for (int i = 0; i < enemiesInScene.Length; i++)
                     {
-                        if (enemiesInScene[i] == closestEnemy)
+                        if (enemiesInScene[i] == enemy)
                         {
                             enemiesInScene[i] = null;
                             break;
                         }
                     }
 
-                    //Update combat info
+                    // Update combat info
                     finalcombatInfo.enemiesDefeated += 1;
-
-                    //If the damage is equal to the enemy health and all numberblocks are used, then it is a perfect
                 }
-            }
-            else
-            {
-                Debug.Log("No Enemy in zone");
             }
 
             NextTurn();
@@ -195,6 +234,24 @@ public class CombatManager : MonoBehaviour
         {
             Debug.Log("No Number in zone");
         }
+    }
+
+    public List<Enemy> GetNearestEnemies(int numberOfEnemy)
+    {
+        //Get the n enemy closest to the player
+        List<Enemy> nearestEnemies = new List<Enemy>();
+        for (int i = enemiesInScene.Length - 1; i >= 0; i--)
+        {
+            if (enemiesInScene[i] != null)
+            {
+                nearestEnemies.Add(enemiesInScene[i]);
+                if (nearestEnemies.Count == numberOfEnemy)
+                {
+                    break;
+                }
+            }
+        }
+        return nearestEnemies;
     }
 
     public void NextTurn()
@@ -211,8 +268,10 @@ public class CombatManager : MonoBehaviour
             Win();
             return;
         }
-        NumberBlocksManager.Instance.NextTurn();
-        CalculationManager.Instance.ClearAll();
+    }
+
+    public void EnemyTurn()
+    {
         MoveEnemiesForward();
         SpawnNewEnemy();
     }
@@ -246,6 +305,20 @@ public class CombatManager : MonoBehaviour
         }
     }
 
+    bool IsPerfect(int Damage)
+    {
+        //check if the damage is equal to the enemy health and all numberblocks are used
+        bool isPerfect =
+            Damage == GetNearestEnemies(1)[0].health
+            && NumberBlocksManager.Instance.numberBlocksInContainer == 0;
+        if (isPerfect)
+        {
+            finalcombatInfo.perfect += 1;
+            Debug.Log("Perfect!");
+        }
+        return isPerfect;
+    }
+
     public void PlayerTakeDamage()
     {
         PlayerHealth -= 1;
@@ -270,8 +343,9 @@ public class CombatManager : MonoBehaviour
     {
         Debug.Log("Player wins");
         //Player wins, shows a panel
+        Instance.ChangeGameState(GameState.Waiting);
         UpdateInventory();
-        victoryPanel.SetActive(true);
+        victoryPanel.ShowPanel(finalcombatInfo.ToString());
     }
 
     void UpdateInventory()
@@ -356,22 +430,49 @@ public struct CombatPositionsAndPrefabs
     public Transform StartingPosition;
 }
 
-public struct damageInfo
+public struct DamageInfo
 {
     public int initialdamage;
     public int actualdamage;
-    public bool isLethal;
-    public bool isExact;
+    public bool isLethal; //true if the damage is enough to kill the enemy
+    public bool isExact; //true if the damage is exactly equal to the enemy health
+    public bool isPerfect; //true if the damage is equal to the enemy health and all numberblocks are used
     public bool isSatisfied; // true if all requirement are met
+
+    public int piercing; // Number of enemies that will be pierced
 
     //TO DO piercing, crit, etc
 
-    public damageInfo(int initialdamage)
+    public DamageInfo(int initialdamage)
     {
         this.initialdamage = initialdamage;
         this.actualdamage = initialdamage;
         this.isLethal = false;
         this.isExact = false;
         this.isSatisfied = false;
+        this.isPerfect = false;
+        this.piercing = 0;
     }
+
+    public DamageInfo(int initialdamage, bool isPerfect)
+    {
+        this.initialdamage = initialdamage;
+        this.actualdamage = initialdamage;
+        this.isLethal = false;
+        this.isExact = false;
+        this.isSatisfied = false;
+        this.isPerfect = isPerfect;
+        this.piercing = 0;
+    }
+}
+
+public enum GameState
+{
+    CombatInitialization,
+    ArtifactInitiation,
+    BeforePlayerTurn,
+    PlayerTurn,
+    AfterPlayerTurn,
+    EnemyTurn,
+    Waiting,
 }

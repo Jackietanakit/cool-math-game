@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 4f167ac4b0efd9c4b83879baeb11c27e, type: 3}
   operationName: 0
-  description: Simple Addition
+  operationDescription: Simple Addition
   limit: 

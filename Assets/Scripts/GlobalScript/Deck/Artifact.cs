@@ -6,18 +6,26 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Artifact", menuName = "Artifact")]
 public class Artifact : ScriptableObject
 {
-    public Sprite sprite;
+    public int id;
     public string ArtifactName;
     public string description;
-    public string bonus;
-    public int effectId;
     public int price;
+    public ArtifactEffectType effectType;
+    public Sprite artifactSprite;
 
-    public Artifact(int id, string name, string bonus, int effectId)
+    public Artifact(
+        int id,
+        string name,
+        string description,
+        int price,
+        ArtifactEffectType effectType
+    )
     {
+        this.id = id;
         this.name = name;
-        this.bonus = bonus;
-        this.effectId = effectId;
+        this.description = description;
+        this.price = price;
+        this.effectType = effectType;
     }
 }
 

@@ -2067,7 +2067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd55ac284e04d49d7a65f679178cdef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridLayout: {fileID: 1279260449}
+  ShopGridParent: {fileID: 1279260449}
   artifacts: {fileID: 0}
 --- !u!1 &469410968
 GameObject:
@@ -9064,7 +9064,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53c88972be7e44c7b8712d687dc88476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ParentTransform: {fileID: 0}
+  SpriteRenderer: {fileID: 0}
+  Artifact: {fileID: 0}
 --- !u!1 &4462493984486854568
 GameObject:
   m_ObjectHideFlags: 0

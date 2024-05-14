@@ -5,10 +5,17 @@ using UnityEngine;
 public class GridManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject gridLayout;
+    GameObject ShopGridParent;
+
+    public List<ArtifactGrid> ArtifactsInShop;
 
     [SerializeField]
     GameObject artifacts;
 
-    private void Start() { }
+    void AddArtifactToGrid(Artifact artifact)
+    {
+        GameObject artifactGrid = Instantiate(artifacts, ShopGridParent.transform);
+        artifactGrid.GetComponent<ArtifactGrid>().Initialize(artifact);
+        ArtifactsInShop.Add(artifactGrid.GetComponent<ArtifactGrid>());
+    }
 }

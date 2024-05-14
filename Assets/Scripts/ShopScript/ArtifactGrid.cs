@@ -16,7 +16,7 @@ public class ArtifactGrid : MonoBehaviour
 
     public void SetArtifact(string ArtifactName)
     {
-        SpriteRenderer.sprite = Resources.Load<Sprite>("Artifacts/" + ArtifactName);
+        SpriteRenderer.sprite = Artifact.artifactSprite;
     }
 
     public void BuyArtifact()

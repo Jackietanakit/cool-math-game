@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 3f832ab9fb9dc6f498b305f1331e9ede, type: 3}
   operationName: 2
-  description: Simple Muliplication
+  operationDescription: Simple Multiplication
   limit: 
