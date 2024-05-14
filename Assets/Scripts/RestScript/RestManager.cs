@@ -29,6 +29,7 @@ public class RestManager : MonoBehaviour
     {
         CreateRandomOperatorCard();
         GenerateInventory();
+        CheckFullHealth();
     }
 
     private void CreateRandomOperatorCard()
@@ -118,6 +119,18 @@ public class RestManager : MonoBehaviour
             default:
                 informationText.text = "Select 1 of the 3 Options.";
                 break;
+        }
+    }
+
+    public void CheckFullHealth()
+    {
+        if (
+            GameManager.instance._playerInventory.currentHealth
+            == GameManager.instance._playerInventory.maxHealth
+        )
+        {
+            restOptionButton.interactable = false;
+            restOptionText.color = Color.black;
         }
     }
 }
