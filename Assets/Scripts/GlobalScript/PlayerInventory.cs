@@ -9,7 +9,7 @@ public class PlayerInventory : MonoBehaviour
     public int maxHealth = 3;
     public int currentHealth;
     public int money = 0;
-    public int maxOperation = 5;
+    public int maxOperation = 6;
     public float difficulty = 1;
     public int EnemyAdditionalCount = 0; //Can be edited by difficulty modifier
     public int difficultyModifier = 0;

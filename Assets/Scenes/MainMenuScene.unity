@@ -3239,7 +3239,7 @@ MonoBehaviour:
   maxHealth: 3
   currentHealth: 0
   money: 0
-  maxOperation: 5
+  maxOperation: 6
   difficulty: 1
   EnemyAdditionalCount: 0
   difficultyModifier: 0

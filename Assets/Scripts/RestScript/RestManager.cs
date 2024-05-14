@@ -9,14 +9,13 @@ public class RestManager : MonoBehaviour
 {
     [SerializeField]
     TextMeshProUGUI informationText;
-    public Transform parent;
+    public Transform GridParent;
     public static RestManager Instance;
     private OperationCard card;
-    public List<Transform> operationOptionTransform;
-    public OperationOption OperationOptionPrefab;
-    public Transform newOperationTransform;
-    public GameObject inventoryPanel;
-    public GameObject inventoryZone;
+
+    [SerializeField]
+    GameObject OperationOptionPrefab;
+    public GameObject inventoryPopup;
     public GameObject idleScreen;
     public GameObject informationScreen;
     public GameObject restScreen;
@@ -24,6 +23,7 @@ public class RestManager : MonoBehaviour
     private Artifact artifact;
     public TextMeshProUGUI restOptionText;
     public Button restOptionButton;
+    public Image newOperationCardImage;
 
     void Start()
     {
@@ -48,8 +48,7 @@ public class RestManager : MonoBehaviour
             >= GameManager.instance._playerInventory.maxOperation
         )
         {
-            inventoryPanel.SetActive(true);
-            inventoryZone.SetActive(true);
+            inventoryPopup.SetActive(true);
             idleScreen.SetActive(false);
             informationScreen.SetActive(false);
             restScreen.SetActive(false);
@@ -71,8 +70,7 @@ public class RestManager : MonoBehaviour
 
     public void CloseInventory()
     {
-        inventoryPanel.SetActive(false);
-        inventoryZone.SetActive(false);
+        inventoryPopup.SetActive(false);
         idleScreen.SetActive(true);
         informationScreen.SetActive(true);
         restScreen.SetActive(true);
@@ -88,18 +86,21 @@ public class RestManager : MonoBehaviour
 
     public void GenerateInventory()
     {
-        int i = 0;
         List<OperationCard> operationCards = GameManager.instance._playerInventory.operationCards;
-        foreach (OperationCard inventoryCard in operationCards)
+
+        foreach (OperationCard card in operationCards)
         {
-            OperationOption operationOption = Instantiate(OperationOptionPrefab, parent);
-            operationOption.Initialize(inventoryCard);
-            operationOption.transform.position = operationOptionTransform[i].position;
-            i++;
+            CreateOperationsInGrid(card);
         }
-        OperationOption newOperationOption = Instantiate(OperationOptionPrefab, parent);
-        newOperationOption.Initialize(card);
-        newOperationOption.transform.position = newOperationTransform.position;
+        newOperationCardImage.sprite = Resources.Load<Sprite>(
+            "Operators/" + card.operationName.ToString()
+        );
+    }
+
+    public void CreateOperationsInGrid(OperationCard operationCard)
+    {
+        GameObject operationOption = Instantiate(OperationOptionPrefab, GridParent);
+        operationOption.GetComponent<OperationOption>().Initialize(operationCard);
     }
 
     public void GetInformation(string option)
