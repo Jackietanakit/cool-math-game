@@ -153,14 +153,14 @@ public class Enemy : MonoBehaviour
     void generateRandomHealth(int min, int max)
     {
         health = 0;
+        float difficulty =
+            GameManager.instance._playerInventory.difficulty
+            + (GameManager.instance.IsInElite ? 0.5f : 0f);
         // Max and Min is multiplied by the difficulty
         while (requirement.CheckRequirement(health, health) || health == 0)
             SetHealth(
-                (int)
-                    UnityEngine.Random.Range(
-                        min * GameManager.instance._playerInventory.difficulty,
-                        max * GameManager.instance._playerInventory.difficulty + 1
-                    ) + UnityEngine.Random.Range(-5, 5)
+                (int)UnityEngine.Random.Range(min * difficulty, max * difficulty + 1)
+                    + UnityEngine.Random.Range(-5, 5)
             );
     }
 

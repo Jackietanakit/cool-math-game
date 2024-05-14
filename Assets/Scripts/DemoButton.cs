@@ -30,6 +30,20 @@ public class DemoButton : MonoBehaviour
         TutorialManager.Instance.LoadCombatTutorialScene();
     }
 
+    public void LoadBoss()
+    {
+        GameManager.instance.IsInElite = false;
+        GameManager.instance.IsInBoss = true;
+        ScenesManager.Instance.LoadCombatScene();
+    }
+
+    public void LoadCombat()
+    {
+        GameManager.instance.IsInElite = false;
+        GameManager.instance.IsInBoss = false;
+        ScenesManager.Instance.LoadCombatScene();
+    }
+
     public void SetConsole(string name)
     {
         consoleText.text = name;

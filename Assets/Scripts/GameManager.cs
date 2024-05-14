@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public PlayerInventory _playerInventory;
 
+    public bool IsInBoss;
+
+    public bool IsInElite;
+
     public AllStaticData allStaticData;
 
     public ScenesManager scenesManager;
@@ -41,6 +45,14 @@ public class GameManager : MonoBehaviour
         List<EnemySpawningPatternInfo> enemyGroups = allStaticData.EnemySpawnInfos.FindAll(x =>
             x.mapid == 1
         );
+        if (GameManager.instance.IsInBoss)
+        {
+            enemyGroups = allStaticData.EnemySpawnInfos.FindAll(x => x.mapid == 2);
+        }
+        else if (GameManager.instance.IsInElite)
+        {
+            enemyGroups = allStaticData.EnemySpawnInfos.FindAll(x => x.mapid == 1);
+        }
         EnemySpawningPatternInfo enemySpawningPatternInfo = enemyGroups[
             UnityEngine.Random.Range(0, enemyGroups.Count)
         ];

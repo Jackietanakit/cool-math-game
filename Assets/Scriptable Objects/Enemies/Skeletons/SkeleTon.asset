@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 841389076da8aa94983bcf6cff125286, type: 3}
-  m_Name: New Enemy Info
+  m_Name: SkeleTon
   m_EditorClassIdentifier: 
-  minHealth: 20
-  maxHealth: 45
-  EnemyName: Skelington
+  minHealth: 100
+  maxHealth: 150
+  EnemyName: SkeleTon
   EnemyDescription: 
   enemyPrefab: {fileID: 3790982329745309077, guid: 83c37e73fd50f492dbb2b08fa20ff94f,
     type: 3}
@@ -24,14 +24,14 @@ MonoBehaviour:
     penalty: 0
     penaltyAmount: 0
   - difficultyThreshold: 1
-    requirements: 0800000006000000
+    requirements: 05000000
     penalty: 0
     penaltyAmount: 2
-  - difficultyThreshold: 1.5
-    requirements: 0800000006000000
-    penalty: 0
-    penaltyAmount: 5
   - difficultyThreshold: 2
-    requirements: 080000000600000004000000
+    requirements: 05000000
+    penalty: 0
+    penaltyAmount: 3
+  - difficultyThreshold: 3
+    requirements: 05000000
     penalty: 0
     penaltyAmount: 5
