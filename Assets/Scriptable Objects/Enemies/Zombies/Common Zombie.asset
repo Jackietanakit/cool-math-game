@@ -26,16 +26,16 @@ MonoBehaviour:
   - difficultyThreshold: 1.5
     requirements: 02000000
     penalty: 0
-    penaltyAmount: 2
+    penaltyAmount: 5
   - difficultyThreshold: 2
     requirements: 01000000
     penalty: 0
-    penaltyAmount: 2
+    penaltyAmount: 5
   - difficultyThreshold: 2.5
     requirements: 01000000
     penalty: 0
     penaltyAmount: 5
   - difficultyThreshold: 3
     requirements: 00000000
-    penalty: 2
-    penaltyAmount: 1
+    penalty: 1
+    penaltyAmount: 10

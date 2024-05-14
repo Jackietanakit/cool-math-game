@@ -71,7 +71,5 @@ public class ScenesManager : MonoBehaviour
         }
 
         PlayerPrefs.SetFloat("HighestDifficulty", currentDifficulty);
-
-        SceneManager.LoadScene(Scene.MainMenuScene.ToString());
     }
 }

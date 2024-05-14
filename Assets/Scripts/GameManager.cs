@@ -60,7 +60,11 @@ public class GameManager : MonoBehaviour
         switch (enemySpawningPatternInfo.type)
         {
             case EnemySpawnType.Fixed:
-                enemies = enemySpawningPatternInfo.Enemies;
+                // Generate the enemy spawning pattern
+                foreach (EnemyInfoSO enemy in enemySpawningPatternInfo.Enemies)
+                {
+                    enemies.Add(enemy);
+                }
                 break;
             case EnemySpawnType.Random:
                 for (int i = 0; i < enemySpawningPatternInfo.amountEnemySpawn; i++)

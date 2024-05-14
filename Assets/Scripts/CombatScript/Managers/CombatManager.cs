@@ -335,17 +335,30 @@ public class CombatManager : MonoBehaviour
 
     public void ChangeScene(string scenename)
     {
-        SceneManager.LoadScene(scenename);
+        if (GameManager.instance.IsInBoss)
+        {
+            ScenesManager.Instance.LoadMainMenu();
+        }
+        else
+        {
+            SceneManager.LoadScene(scenename);
+        }
     }
 
     public void Win()
     {
         TutorialManager.Instance.EndTutorial();
-        Debug.Log("Player wins");
-        //Player wins, shows a panel
         UpdateInventory();
         victoryPanel.ShowPanel(finalcombatInfo.ToString());
         Instance.ChangeGameState(GameState.Waiting);
+
+        Debug.Log("Player wins");
+
+        if (GameManager.instance.IsInBoss)
+        {
+            ScenesManager.Instance.WinStage();
+        }
+        //Player wins, shows a panel
     }
 
     public void Lose()
