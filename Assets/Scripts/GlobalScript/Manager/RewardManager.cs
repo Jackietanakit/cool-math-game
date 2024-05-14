@@ -26,6 +26,11 @@ public class RewardManager : MonoBehaviour
         playerInventory.currentHealth += amount;
     }
 
+    public void RemoveMoney(int amount)
+    {
+        playerInventory.money -= amount;
+    }
+
     public void AddMoney(int amount)
     {
         playerInventory.money += amount;

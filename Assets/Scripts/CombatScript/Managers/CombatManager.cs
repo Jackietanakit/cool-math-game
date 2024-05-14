@@ -370,7 +370,7 @@ public class CombatManager : MonoBehaviour
         //Update Coin -> enemy defeated * 10 + perfect * 10
         int coinGained = finalcombatInfo.enemiesDefeated * 10 + finalcombatInfo.perfect * 10;
         finalcombatInfo.coinGained = coinGained;
-        GameManager.instance._playerInventory.money += coinGained;
+        RewardManager.Instance.AddMoney(coinGained);
     }
 }
 
