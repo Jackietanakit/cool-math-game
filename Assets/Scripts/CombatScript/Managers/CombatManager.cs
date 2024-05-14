@@ -142,6 +142,8 @@ public class CombatManager : MonoBehaviour
         OperatorBlockManager.Instance.CreateManyOperators(
             GameManager.instance._playerInventory.operationCards
         );
+
+        moneyText.text = GameManager.instance._playerInventory.money.ToString();
     }
 
     public void SpawnNewEnemy()
@@ -238,7 +240,7 @@ public class CombatManager : MonoBehaviour
     {
         //Get the n enemy closest to the player
         List<Enemy> nearestEnemies = new List<Enemy>();
-        for (int i = 0; i < enemiesInScene.Length; i++)
+        for (int i = enemiesInScene.Length - 1; i >= 0; i--)
         {
             if (enemiesInScene[i] != null)
             {
@@ -343,7 +345,7 @@ public class CombatManager : MonoBehaviour
         //Player wins, shows a panel
         Instance.ChangeGameState(GameState.Waiting);
         UpdateInventory();
-        victoryPanel.SetActive(true);
+        victoryPanel.ShowPanel(finalcombatInfo.ToString());
     }
 
     void UpdateInventory()

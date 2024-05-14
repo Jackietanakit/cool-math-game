@@ -13,6 +13,7 @@ public class ArtifactEffectManager : MonoBehaviour
 
     public void ActivateEffect(Artifact artifact)
     {
+        Debug.Log("Activating effect: " + artifact.ArtifactName);
         //Switch case using artifact name
         switch (artifact.ArtifactName)
         {
@@ -32,6 +33,7 @@ public class ArtifactEffectManager : MonoBehaviour
 
     public DamageInfo ActivateEffect(Artifact artifact, DamageInfo damageInfo)
     {
+        Debug.Log("Activating effect: " + artifact.ArtifactName);
         switch (artifact.ArtifactName)
         {
             case "Perfect Blade":
@@ -62,7 +64,7 @@ public class ArtifactEffectManager : MonoBehaviour
     void Life_Support()
     {
         //Change the first enemy health to 24
-        CombatManager.Instance.enemiesInScene[3].health = 24;
+        CombatManager.Instance.GetNearestEnemies(1)[0].SetHealth(24);
     }
 
     DamageInfo Perfect_Blade(DamageInfo damageInfo)

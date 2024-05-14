@@ -70,7 +70,7 @@ public class ArtifactManager : MonoBehaviour
     {
         foreach (Artifact artifact in artifacts)
         {
-            if (artifact.effectType == ArtifactEffectType.BeforeTurn)
+            if (artifact.effectType == ArtifactEffectType.AfterTurn)
             {
                 // Call the effect of the artifact
                 damageInfo = ArtifactEffectManager.Instance.ActivateEffect(artifact, damageInfo);

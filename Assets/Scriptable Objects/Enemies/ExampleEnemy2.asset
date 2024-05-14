@@ -25,5 +25,5 @@ MonoBehaviour:
     penaltyAmount: 0
   - difficultyThreshold: 1
     requirements: 00000000
-    penalty: 2
-    penaltyAmount: 1
+    penalty: 1
+    penaltyAmount: 10
