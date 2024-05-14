@@ -107,7 +107,7 @@ public class MainMenu : MonoBehaviour
 
     public void Test()
     {
-        PlayerPrefs.SetFloat("HighestDifficulty", 1.5f);
+        PlayerPrefs.SetFloat("HighestDifficulty", 2.1f);
         PlayerPrefs.DeleteKey("Tutorial");
     }
 
