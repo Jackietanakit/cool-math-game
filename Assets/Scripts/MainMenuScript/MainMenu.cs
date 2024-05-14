@@ -39,8 +39,12 @@ public class MainMenu : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI ExtremeText;
 
+    [SerializeField]
+    GameObject TutorialPanel;
+
     public void Start()
     {
+        PlayerPrefs.DeleteKey("Tutorial");
         Test();
         if (PlayerPrefs.HasKey("HighestDifficulty"))
         {
@@ -137,9 +141,25 @@ public class MainMenu : MonoBehaviour
 
     public void NewGame(float difficulty)
     {
+        if (PlayerPrefs.HasKey("Tutorial"))
+        {
+            GameManager.instance.InitializePlayerInventory(difficulty);
+            GameManager.instance.IsNewGame = true;
+            PlayerPrefs.DeleteKey("Map");
+            ScenesManager.Instance.LoadNewGame();
+        }
+        else
+        {
+            TutorialPanel.SetActive(true);
+        }
+    }
+
+    public void Tutorial(string isTutorial)
+    {
+        PlayerPrefs.SetString("Tutorial", isTutorial);
+        GameManager.instance.InitializePlayerInventory(1.0f);
         GameManager.instance.IsNewGame = true;
         PlayerPrefs.DeleteKey("Map");
-        GameManager.instance.InitializePlayerInventory(difficulty);
         ScenesManager.Instance.LoadNewGame();
     }
 

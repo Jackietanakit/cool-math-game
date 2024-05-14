@@ -2328,6 +2328,7 @@ MonoBehaviour:
   _playerInventory: {fileID: 1674160029}
   allStaticData: {fileID: 11400000, guid: 2a0baebcc25f90049a952d52e0b101c0, type: 2}
   scenesManager: {fileID: 0}
+  IsNewGame: 0
 --- !u!4 &1898036123
 Transform:
   m_ObjectHideFlags: 0

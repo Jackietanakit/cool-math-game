@@ -33,6 +33,18 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (PlayerPrefs.HasKey("Tutorial"))
+        {
+            if (PlayerPrefs.GetString("Tutorial") == "true")
+            {
+                LoadCombatTutorialScene();
+            }
+        }
+        PlayerPrefs.SetString("Tutorial", "false");
+    }
+
     public void StartMapTutorial() { }
 
     public void LoadCombatTutorialScene()
