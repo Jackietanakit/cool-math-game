@@ -17,9 +17,7 @@ public class PlayerInventory : MonoBehaviour
 
     public List<OperationCard> operationCards = new List<OperationCard>();
     public List<Artifact> artifacts = new List<Artifact>();
-
     private string saveFilePath;
-    private cardManager cardInstance;
 
     private void Awake()
     {
@@ -34,22 +32,17 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        cardInstance = new cardManager(); // Create an instance of cardManager
-        currentHealth = maxHealth;
-        saveFilePath = Path.Combine(Application.persistentDataPath, "inventory.json");
-        LoadInventory();
-    }
-
     public void CreateNewPlayerInventory()
     {
         // Clear all data
         operationCards.Clear();
         artifacts.Clear();
 
+        // Initial Health
+        currentHealth = maxHealth;
+
         // Add initial cards
-        operationCards = cardInstance.CreateInitialDeck();
+        operationCards = cardManager.Instance.CreateInitialDeck();
     }
 
     public void AddOperationCard(OperationCard card)
@@ -74,16 +67,36 @@ public class PlayerInventory : MonoBehaviour
 
     public void SaveInventory()
     {
-        string json = JsonConvert.SerializeObject(this, Formatting.Indented);
-        File.WriteAllText(saveFilePath, json);
+        Debug.Log("Saving inventory to: " + saveFilePath);
+        PlayerInventoryData playerInventoryData = new PlayerInventoryData();
+        playerInventoryData.SaveData();
     }
 
     public void LoadInventory()
     {
-        if (File.Exists(saveFilePath))
+        Debug.Log("Loading inventory from: " + saveFilePath);
+        PlayerInventoryData playerInventoryData = new PlayerInventoryData();
+        playerInventoryData = playerInventoryData.loadData();
+        ApplyData(playerInventoryData);
+    }
+
+    private void ApplyData(PlayerInventoryData data)
+    {
+        Debug.Log("Change Data Formamt");
+        maxHealth = data.maxHealth;
+        currentHealth = data.currentHealth;
+        money = data.money;
+        maxOperation = data.maxOperation;
+        difficulty = data.difficulty;
+        EnemyAdditionalCount = data.EnemyAdditionalCount;
+        foreach (OperationName operationName in data.operationNames)
         {
-            string json = File.ReadAllText(saveFilePath);
-            JsonConvert.PopulateObject(json, this);
+            operationCards.Add(cardManager.Instance.CreateNewCard(operationName, null));
+        }
+
+        foreach (string artifactName in data.artifactNames)
+        {
+            artifacts.Add(cardManager.Instance.CreateArtifactFromName(artifactName));
         }
     }
 
@@ -96,5 +109,10 @@ public class PlayerInventory : MonoBehaviour
         }
 
         return cardNames;
+    }
+
+    public void SetDifficulty(int difficulty)
+    {
+        this.difficulty = difficulty;
     }
 }

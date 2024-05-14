@@ -6,9 +6,20 @@ public class cardManager : MonoBehaviour
 {
     public static cardManager Instance;
 
-    void Awake()
+    [SerializeField]
+    List<Artifact> ArtifactPools;
+
+    private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Ensure GameManager persists between scenes if needed
+        }
+        else
+        {
+            Destroy(gameObject); // Ensure only one GameManager instance exists
+        }
     }
 
     public OperationCard CreateNewCard(OperationName name, AdditionalEffect effect)
@@ -65,5 +76,29 @@ public class cardManager : MonoBehaviour
         OperationName randomeOperation = operationOutDeck[Random.Range(0, operationOutDeck.Count)];
 
         return CreateNewCard(randomeOperation, null);
+    }
+
+    public Artifact CreateRandomArtifact()
+    {
+        // List<Artifact> artifacts = GameDataLoader.instance.allStaticData.artifacts;
+        foreach (Artifact artifact in GameManager.instance._playerInventory.artifacts)
+        {
+            // artifacts.Remove(artifact);
+            ArtifactPools.Remove(artifact);
+        }
+        // return artifacts[Random.Range(0, artifacts.Count)];
+        return ArtifactPools[Random.Range(0, ArtifactPools.Count)];
+    }
+
+    public Artifact CreateArtifactFromName(string artifactName)
+    {
+        foreach (Artifact artifact in ArtifactPools)
+        {
+            if (artifact.ArtifactName == artifactName)
+            {
+                return artifact;
+            }
+        }
+        return null;
     }
 }
