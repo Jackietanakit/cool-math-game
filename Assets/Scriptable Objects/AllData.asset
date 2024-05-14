@@ -23,11 +23,7 @@ MonoBehaviour:
   artifacts:
   - {fileID: 11400000, guid: 286dd8733a69a49a2826d0717f1e5f09, type: 2}
   - {fileID: 11400000, guid: 262d0128cd065475882e14575dd05961, type: 2}
-  - {fileID: 11400000, guid: 74b8eb4e21de14e9b84dd4fb3f18a6af, type: 2}
   - {fileID: 11400000, guid: 646b5fea22869400b9a5110ebf8877aa, type: 2}
-  - {fileID: 11400000, guid: 2e2d2079825ab4f9ca97e86082fc792d, type: 2}
-  - {fileID: 11400000, guid: 96ca467dc02d64dc0ab1ef0f79e40e43, type: 2}
-  - {fileID: 11400000, guid: 7de4df1a611f8432d8e80bfe216d832a, type: 2}
   - {fileID: 11400000, guid: f6ec597a36eb943cabb494ecc2e19990, type: 2}
   EnemySpawnInfos:
   - mapid: 10000
@@ -49,3 +45,9 @@ MonoBehaviour:
     Enemies:
     - {fileID: 11400000, guid: 6f4667ead83ed494f94f96a4cacbe73f, type: 2}
     - {fileID: 11400000, guid: 6dfc0d6dd5e4c2548b37d08ab49c6eac, type: 2}
+  - mapid: 1
+    amountEnemySpawn: 6
+    isBoss: 0
+    type: 0
+    Enemies:
+    - {fileID: 11400000, guid: 019b16605cd4fa344829e941dd9b568d, type: 2}

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 387c7699de7d849f5b7f10384f75e6da, type: 3}
-  m_Name: Arrow
+  m_Name: LifeSupport
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: e907faf65279b4b55a8b4e55f8d61a87, type: 3}
-  ArtifactName: Arrow
-  description: Artemist Arrow
-  bonus: 
-  effectId: 0
-  price: 50
+  id: 12
+  ArtifactName: Life Support
+  description: Convert the first enemy to have 24 health
+  price: 60
+  effectType: 0
+  artifactSprite: {fileID: 21300000, guid: 1897ecea99cf84580bc3a541451ec66f, type: 3}

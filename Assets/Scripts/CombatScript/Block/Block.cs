@@ -34,6 +34,7 @@ public class Block : MonoBehaviour
         if (
             boxCollider.OverlapPoint(mousePosition)
             && CombatManager.Instance.hasDraggedSomething == false
+            && CombatManager.Instance.currentState == GameState.PlayerTurn
         )
         {
             OnHover();

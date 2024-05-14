@@ -1152,6 +1152,7 @@ MonoBehaviour:
   spumprefab: {fileID: 0}
   healthText: {fileID: 2703961884040828251}
   RequirementContainer: {fileID: 0}
+  DamageInfo: {fileID: 0}
   EnemyPanelObjects:
     InfoPanel: {fileID: 7126077560444652234}
     enemyName: {fileID: 7417304486208072078}
@@ -1283,7 +1284,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7126077560444652234}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

@@ -21,7 +21,7 @@ MonoBehaviour:
   difficultyRequirements:
   - difficultyThreshold: 1
     requirements: 
-    penalty: 0
+    penalty: 3
     penaltyAmount: 0
   - difficultyThreshold: 1.5
     requirements: 02000000

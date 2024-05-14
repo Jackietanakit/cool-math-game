@@ -48,9 +48,9 @@ public struct DifficultyRequirement
 
     // Check the requirement, if not met then take penalty, return true damage to the enemy
 
-    public int ApplyRequirement(int Damage)
+    public int ApplyRequirement(int Damage, int Health)
     {
-        if (CheckRequirement(Damage))
+        if (CheckRequirement(Damage, Health))
         {
             return ApplyPenalty(Damage);
         }
@@ -58,25 +58,25 @@ public struct DifficultyRequirement
     }
 
     //return true if the requirement is not met
-    public bool CheckRequirement(int Damage)
+    public bool CheckRequirement(int Damage, int Health)
     {
         if (requirements.Contains(Requirement.Exact))
         {
-            if (Damage != difficultyThreshold)
+            if (Damage != Health)
             {
                 return true;
             }
         }
         else if (requirements.Contains(Requirement.WithIn10Percent))
         {
-            if (Damage < difficultyThreshold * 0.9 || Damage > difficultyThreshold * 1.1)
+            if (Damage < Health * 0.9 || Damage > Health * 1.1)
             {
                 return true;
             }
         }
         else if (requirements.Contains(Requirement.WithIn25Percent))
         {
-            if (Damage < difficultyThreshold * 0.75 || Damage > difficultyThreshold * 1.25)
+            if (Damage < Health * 0.75 || Damage > Health * 1.25)
             {
                 return true;
             }

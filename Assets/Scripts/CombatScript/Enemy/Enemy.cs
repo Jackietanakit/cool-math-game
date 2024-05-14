@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
 
     public GameObject RequirementContainer;
 
+    public GameObject DamageInfo;
+
     public EnemyPanelObjects EnemyPanelObjects;
 
     public BoxCollider2D Collider;
@@ -75,6 +77,17 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    void ShowDamageInfo(int Damage)
+    {
+        DamageInfo.SetActive(true);
+        DamageInfo.GetComponent<TextMeshPro>().text = Damage.ToString();
+    }
+
+    void HideDamageInfo()
+    {
+        DamageInfo.SetActive(false);
+    }
+
     public void UpdatePanel()
     {
         EnemyPanelObjects.enemyName.text = enemyInfo.EnemyName;
@@ -117,7 +130,7 @@ public class Enemy : MonoBehaviour
     public bool TakeDamage(int damage)
     {
         int actualdamage = GetRealDamage(damage);
-        health -= actualdamage;
+        SetHealth(health - actualdamage);
         if (health <= 0)
         {
             Die();
@@ -132,7 +145,7 @@ public class Enemy : MonoBehaviour
     {
         if (!requirement.Equals(new DifficultyRequirement(true)))
         {
-            return requirement.ApplyRequirement(damage);
+            return requirement.ApplyRequirement(damage, health);
         }
         return damage;
     }
@@ -141,13 +154,14 @@ public class Enemy : MonoBehaviour
     {
         health = 0;
         // Max and Min is multiplied by the difficulty
-        while (requirement.CheckRequirement(health) || health == 0)
-            health =
+        while (requirement.CheckRequirement(health, health) || health == 0)
+            SetHealth(
                 (int)
                     UnityEngine.Random.Range(
                         min * GameManager.instance._playerInventory.difficulty,
                         max * GameManager.instance._playerInventory.difficulty + 1
-                    ) + UnityEngine.Random.Range(-5, 5);
+                    ) + UnityEngine.Random.Range(-5, 5)
+            );
     }
 
     void Die()
@@ -159,6 +173,12 @@ public class Enemy : MonoBehaviour
     {
         healthText.text = health.ToString();
         UpdatePanel();
+    }
+
+    public void SetHealth(int health)
+    {
+        this.health = health;
+        UpdateHealth();
     }
 }
 
