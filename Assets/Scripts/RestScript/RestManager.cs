@@ -21,6 +21,9 @@ public class RestManager : MonoBehaviour
     public GameObject informationScreen;
     public GameObject restScreen;
     public GameObject canvas;
+    private Artifact artifact;
+    public TextMeshProUGUI restOptionText;
+    public Button restOptionButton;
 
     void Start()
     {
@@ -32,6 +35,7 @@ public class RestManager : MonoBehaviour
     {
         // Create Random Operation Card
         card = cardManager.Instance.CreateRandomCard();
+        artifact = cardManager.Instance.CreateRandomArtifact();
     }
 
     public void OperationOption()
@@ -55,6 +59,13 @@ public class RestManager : MonoBehaviour
             RewardManager.Instance.AddOperationCard();
             ScenesManager.Instance.LoadMapScene();
         }
+    }
+
+    public void ArtifactOption()
+    {
+        Debug.Log("ActionButton");
+        RewardManager.Instance.AddArtifact(artifact);
+        ScenesManager.Instance.LoadMapScene();
     }
 
     public void CloseInventory()

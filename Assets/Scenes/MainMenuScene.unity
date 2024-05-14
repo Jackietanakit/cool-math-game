@@ -152,6 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 773a273fd8b5c4d6e81692ce9a005ff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ArtifactPools:
+  - {fileID: 11400000, guid: 286dd8733a69a49a2826d0717f1e5f09, type: 2}
+  - {fileID: 11400000, guid: 646b5fea22869400b9a5110ebf8877aa, type: 2}
+  - {fileID: 11400000, guid: 262d0128cd065475882e14575dd05961, type: 2}
+  - {fileID: 11400000, guid: f6ec597a36eb943cabb494ecc2e19990, type: 2}
 --- !u!4 &102482111
 Transform:
   m_ObjectHideFlags: 0
