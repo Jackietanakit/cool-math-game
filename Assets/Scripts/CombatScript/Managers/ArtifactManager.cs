@@ -2,15 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ArtifactManager : MonoBehaviour
 {
     // Call all the Artifact that effect the game play from start to finish
     public static ArtifactManager Instance;
-
+    public GameObject artifactPrefab;
     public List<Artifact> artifacts;
-    public List<GameObject> artifactInPanel; //There is 9 position
-    public GameObject artifactInfo;
+    public List<GameObject> artifactInPanel;
+    public GridLayoutGroup artifactpanelgrid;
 
     public void Awake()
     {
@@ -36,9 +37,12 @@ public class ArtifactManager : MonoBehaviour
         // Load all artifacts from Gamemanager
         artifacts = GameManager.instance._playerInventory.artifacts;
         //Get sprite renderer from artifactInpanel and set to artifact.artifactsprite
-        for (int i = 0; i < Math.Min(artifactInPanel.Count, artifacts.Count); i++)
+        for (int i = 0; i < artifacts.Count; i++)
         {
-            artifactInPanel[i].GetComponent<SpriteRenderer>().sprite = artifacts[i].artifactSprite;
+            //Initiate the game object with sprite renderer
+            GameObject artifact = Instantiate(artifactPrefab, artifactpanelgrid.transform);
+            //Get sprite renderer in the Gameobject and set it to the artifact sprite
+            artifact.GetComponent<SpriteRenderer>().sprite = artifacts[i].artifactSprite;
         }
     }
 
