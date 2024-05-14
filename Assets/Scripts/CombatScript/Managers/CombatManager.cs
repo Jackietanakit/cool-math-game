@@ -16,6 +16,8 @@ public class CombatManager : MonoBehaviour
 
     public VictoryPanel victoryPanel;
 
+    public GameObject defeatPanel;
+
     public FinalCombatInfo finalcombatInfo; //Contains the final combat info
 
     public CombatPositionsAndPrefabs initCombatInfo; //Contain all prefab and position
@@ -89,7 +91,10 @@ public class CombatManager : MonoBehaviour
             case GameState.EnemyTurn:
                 EnemyTurn();
                 Debug.Log("Enemy Turn");
-                CombatManager.Instance.ChangeGameState(GameState.BeforePlayerTurn);
+                if (currentState != GameState.Waiting)
+                {
+                    CombatManager.Instance.ChangeGameState(GameState.BeforePlayerTurn);
+                }
                 break;
             case GameState.Waiting:
                 Debug.Log("Waiting");
@@ -325,18 +330,19 @@ public class CombatManager : MonoBehaviour
         HealthSlider.value = PlayerHealth;
         if (PlayerHealth <= 0)
         {
+            ChangeGameState(GameState.Waiting);
             //Player dies
             Debug.Log("Player dies");
 
             //Game Over Panel
-
+            defeatPanel.SetActive(true);
             //
         }
     }
 
-    public void ChangeScene()
+    public void ChangeScene(string scenename)
     {
-        ScenesManager.Instance.LoadMapScene();
+        SceneManager.LoadScene(scenename);
     }
 
     void Win()
