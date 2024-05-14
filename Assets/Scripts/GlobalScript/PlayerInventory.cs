@@ -93,6 +93,11 @@ public class PlayerInventory : MonoBehaviour
         {
             operationCards.Add(cardManager.Instance.CreateNewCard(operationName, null));
         }
+
+        foreach (string artifactName in data.artifactNames)
+        {
+            artifacts.Add(cardManager.Instance.CreateArtifactFromName(artifactName));
+        }
     }
 
     public List<OperationName> GetOperationCardNames()

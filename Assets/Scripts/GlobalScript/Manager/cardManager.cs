@@ -6,6 +6,9 @@ public class cardManager : MonoBehaviour
 {
     public static cardManager Instance;
 
+    [SerializeField]
+    List<Artifact> ArtifactPools;
+
     private void Awake()
     {
         if (Instance == null)
@@ -73,5 +76,29 @@ public class cardManager : MonoBehaviour
         OperationName randomeOperation = operationOutDeck[Random.Range(0, operationOutDeck.Count)];
 
         return CreateNewCard(randomeOperation, null);
+    }
+
+    public Artifact CreateRandomArtifact()
+    {
+        // List<Artifact> artifacts = GameDataLoader.instance.allStaticData.artifacts;
+        foreach (Artifact artifact in GameManager.instance._playerInventory.artifacts)
+        {
+            // artifacts.Remove(artifact);
+            ArtifactPools.Remove(artifact);
+        }
+        // return artifacts[Random.Range(0, artifacts.Count)];
+        return ArtifactPools[Random.Range(0, ArtifactPools.Count)];
+    }
+
+    public Artifact CreateArtifactFromName(string artifactName)
+    {
+        foreach (Artifact artifact in ArtifactPools)
+        {
+            if (artifact.ArtifactName == artifactName)
+            {
+                return artifact;
+            }
+        }
+        return null;
     }
 }

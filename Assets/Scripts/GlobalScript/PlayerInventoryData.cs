@@ -14,6 +14,7 @@ public class PlayerInventoryData
     public float difficulty;
     public int EnemyAdditionalCount;
     public List<OperationName> operationNames;
+    public List<string> artifactNames;
 
     public PlayerInventoryData loadData()
     {
@@ -44,6 +45,12 @@ public class PlayerInventoryData
         foreach (OperationCard operationCard in PlayerInventory.Instance.operationCards)
         {
             operationNames.Add(operationCard.operationName);
+        }
+
+        artifactNames = new List<string>();
+        foreach (Artifact artifact in PlayerInventory.Instance.artifacts)
+        {
+            artifactNames.Add(artifact.ArtifactName);
         }
 
         string json = JsonConvert.SerializeObject(this, Formatting.Indented);
