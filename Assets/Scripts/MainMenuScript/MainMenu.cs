@@ -44,7 +44,6 @@ public class MainMenu : MonoBehaviour
 
     public void Start()
     {
-        PlayerPrefs.DeleteKey("Tutorial");
         Test();
         if (PlayerPrefs.HasKey("HighestDifficulty"))
         {
@@ -106,6 +105,7 @@ public class MainMenu : MonoBehaviour
     public void Test()
     {
         PlayerPrefs.SetFloat("HighestDifficulty", 1.5f);
+        PlayerPrefs.DeleteKey("Tutorial");
     }
 
     public void SetDisableDifficulty()
