@@ -13,6 +13,7 @@ public class PlayerInventoryData
     public int maxOperation;
     public float difficulty;
     public int EnemyAdditionalCount;
+    public int difficultyModifier;
     public List<OperationName> operationNames;
     public List<string> artifactNames;
 
@@ -41,6 +42,7 @@ public class PlayerInventoryData
         maxOperation = PlayerInventory.Instance.maxOperation;
         difficulty = PlayerInventory.Instance.difficulty;
         EnemyAdditionalCount = PlayerInventory.Instance.EnemyAdditionalCount;
+        difficultyModifier = PlayerInventory.Instance.difficultyModifier;
         operationNames = new List<OperationName>();
         foreach (OperationCard operationCard in PlayerInventory.Instance.operationCards)
         {
