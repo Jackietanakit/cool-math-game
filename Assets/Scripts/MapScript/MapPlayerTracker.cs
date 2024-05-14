@@ -91,7 +91,7 @@ namespace Map
                     break;
                 case NodeType.Treasure:
                     Debug.Log("Treasure");
-                    ScenesManager.Instance.LoadScene(ScenesManager.Scene.TreasureScene);
+                    ScenesManager.Instance.LoadScene(ScenesManager.Scene.ShopScene);
                     break;
                 case NodeType.Store:
                     Debug.Log("Store");

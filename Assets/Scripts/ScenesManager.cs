@@ -28,7 +28,7 @@ public class ScenesManager : MonoBehaviour
         MapScene,
         CombatScene,
         RestScene,
-        TreasureScene,
+        ShopScene,
     }
 
     public void LoadScene(Scene scene)
@@ -39,6 +39,7 @@ public class ScenesManager : MonoBehaviour
     public void LoadMapScene()
     {
         MapPlayerTracker.Instance.Locked = false;
+        GameManager.instance.SaveGame();
         SceneManager.LoadScene(Scene.MapScene.ToString());
     }
 
@@ -54,6 +55,22 @@ public class ScenesManager : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        SceneManager.LoadScene(Scene.MainMenuScene.ToString());
+    }
+
+    public void WinStage()
+    {
+        var currentDifficulty = GameManager.instance._playerInventory.difficulty;
+        if (PlayerPrefs.HasKey("HighestDifficulty"))
+        {
+            if (currentDifficulty < PlayerPrefs.GetFloat("HighestDifficulty"))
+            {
+                currentDifficulty = PlayerPrefs.GetFloat("HighestDifficulty");
+            }
+        }
+
+        PlayerPrefs.SetFloat("HighestDifficulty", currentDifficulty);
+
         SceneManager.LoadScene(Scene.MainMenuScene.ToString());
     }
 }

@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public AllStaticData allStaticData;
 
     public ScenesManager scenesManager;
+    public bool IsNewGame;
 
     private void Awake()
     {
@@ -24,15 +25,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        InitializePlayerInventory(); // Initialize the player's inventory
-        scenesManager = FindObjectOfType<ScenesManager>();
-    }
+    private void Start() { }
 
-    private void InitializePlayerInventory()
+    public void InitializePlayerInventory(float difficulty)
     {
         _playerInventory.CreateNewPlayerInventory(); // Reset the player's inventory
+        _playerInventory.difficulty = difficulty;
     }
 
     public List<EnemyInfoSO> GenerateEnemies()
@@ -73,5 +71,10 @@ public class GameManager : MonoBehaviour
         }
 
         return enemies;
+    }
+
+    public void SaveGame()
+    {
+        _playerInventory.SaveInventory();
     }
 }

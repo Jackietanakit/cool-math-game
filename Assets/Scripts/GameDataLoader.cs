@@ -53,26 +53,5 @@ public class GameDataLoader : MonoBehaviour
         Debug.Log("Data saved to: " + filePath);
     }
 
-    private void InitializeData()
-    {
-        // // Define static data for 20 cards
-        // operationCards.Add(new OperationCard(OperationName.Add, "Additional Operation", null));
-        // operationCards.Add(
-        //     new OperationCard(OperationName.Subtract, "Subtraction Operation", null)
-        // );
-        // operationCards.Add(
-        //     new OperationCard(OperationName.Multiply, "Multiplication Operation", null)
-        // );
-        // operationCards.Add(new OperationCard(OperationName.Divide, "Division Operation", null));
-        // operationCards.Add(new OperationCard(OperationName.Modulo, "Modulo Operation", null));
-        // operationCards.Add(new OperationCard(OperationName.Power, "Power Operation", null));
-        // operationCards.Add(new OperationCard(OperationName.Sqrt, "Square Root Operation", null));
-        // operationCards.Add(new OperationCard(OperationName.Factorial, "Factorial Operation", null));
-
-        // artifacts.Add(new Artifact(1, "Artifact 1", "Change all number 1 to number 3", 1));
-
-        // allStaticData = new AllStaticData(operationCards, artifacts);
-
-        // Debug.Log("Data initialized.");
-    }
+    private void InitializeData() { }
 }
