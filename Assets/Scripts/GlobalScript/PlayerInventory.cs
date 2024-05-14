@@ -111,12 +111,6 @@ public class PlayerInventory : MonoBehaviour
         return cardNames;
     }
 
-<<<<<<< Updated upstream
-    public void SetDifficulty(int difficulty)
-    {
-        this.difficulty = difficulty;
-    }
-=======
     public void SetDifficultyTo(float difficulty)
     {
         this.difficulty = difficulty;
@@ -126,5 +120,4 @@ public class PlayerInventory : MonoBehaviour
     {
         money = amount;
     }
->>>>>>> Stashed changes
 }

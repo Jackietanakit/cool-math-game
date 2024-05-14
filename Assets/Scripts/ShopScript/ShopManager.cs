@@ -24,15 +24,6 @@ public class ShopManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-<<<<<<< Updated upstream
-    void Start() { }
-
-    // Update is called once per frame
-    void Update() { }
-
-    public void ExitShop()
-    {
-=======
     void Start()
     {
         UpdateUI();
@@ -103,7 +94,6 @@ public class ShopManager : MonoBehaviour
 
     public void LeaveScene()
     {
->>>>>>> Stashed changes
         ScenesManager.Instance.LoadMapScene();
     }
 }

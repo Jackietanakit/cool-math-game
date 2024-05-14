@@ -29,10 +29,7 @@ public class ScenesManager : MonoBehaviour
         CombatScene,
         RestScene,
         ShopScene,
-<<<<<<< Updated upstream
-=======
         TreasureScene,
->>>>>>> Stashed changes
     }
 
     public void LoadScene(Scene scene)
@@ -62,7 +59,6 @@ public class ScenesManager : MonoBehaviour
         SceneManager.LoadScene(Scene.MainMenuScene.ToString());
     }
 
-<<<<<<< Updated upstream
     public void WinStage()
     {
         var currentDifficulty = GameManager.instance._playerInventory.difficulty;
@@ -77,10 +73,5 @@ public class ScenesManager : MonoBehaviour
         PlayerPrefs.SetFloat("HighestDifficulty", currentDifficulty);
 
         SceneManager.LoadScene(Scene.MainMenuScene.ToString());
-=======
-    public void LoadShop()
-    {
-        SceneManager.LoadScene(Scene.ShopScene.ToString());
->>>>>>> Stashed changes
     }
 }

@@ -10,13 +10,8 @@ public class VictoryPanel : MonoBehaviour
 
     public void ShowPanel(string Text)
     {
-        SetActive(true);
+        gameObject.SetActive(true);
         SetText(Text);
-    }
-
-    void SetActive(bool active)
-    {
-        gameObject.SetActive(active);
     }
 
     void SetText(string Text)

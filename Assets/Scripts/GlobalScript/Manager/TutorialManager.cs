@@ -18,6 +18,8 @@ public class TutorialManager : MonoBehaviour
 
     public List<OperationCard> TutorialOperationCards;
 
+    public TutorialPart currentTutorial;
+
     public bool IsInCombatTutorial;
 
     private void Awake()
@@ -101,6 +103,7 @@ public class TutorialManager : MonoBehaviour
         Debug.Log("Tutorial " + tutorialPartInfo.order + " is shown");
         TutorialPart tutorialPart = Instantiate(TutorialPartPrefab, transform, true);
         tutorialPart.Init(tutorialPartInfo);
+        currentTutorial = tutorialPart;
     }
 
     public void ShowPreviousTutorial(TutorialPart tutorialPart)
@@ -144,6 +147,12 @@ public class TutorialManager : MonoBehaviour
             default:
                 return 0;
         }
+    }
+
+    public void EndTutorial()
+    {
+        //Hide the tutorial
+        currentTutorial.HideTutorial();
     }
 }
 

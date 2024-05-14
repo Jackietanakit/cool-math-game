@@ -341,11 +341,12 @@ public class CombatManager : MonoBehaviour
 
     void Win()
     {
+        TutorialManager.Instance.EndTutorial();
         Debug.Log("Player wins");
         //Player wins, shows a panel
-        Instance.ChangeGameState(GameState.Waiting);
         UpdateInventory();
         victoryPanel.ShowPanel(finalcombatInfo.ToString());
+        Instance.ChangeGameState(GameState.Waiting);
     }
 
     void UpdateInventory()
@@ -370,7 +371,7 @@ public class CombatManager : MonoBehaviour
         //Update Coin -> enemy defeated * 10 + perfect * 10
         int coinGained = finalcombatInfo.enemiesDefeated * 10 + finalcombatInfo.perfect * 10;
         finalcombatInfo.coinGained = coinGained;
-        RewardManager.Instance.AddMoney(coinGained);
+        GameManager.instance._playerInventory.money += coinGained;
     }
 }
 
