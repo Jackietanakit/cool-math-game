@@ -6,9 +6,17 @@ public class cardManager : MonoBehaviour
 {
     public static cardManager Instance;
 
-    void Awake()
+    private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Ensure GameManager persists between scenes if needed
+        }
+        else
+        {
+            Destroy(gameObject); // Ensure only one GameManager instance exists
+        }
     }
 
     public OperationCard CreateNewCard(OperationName name, AdditionalEffect effect)
