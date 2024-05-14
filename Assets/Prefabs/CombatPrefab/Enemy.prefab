@@ -767,7 +767,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 11
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &2703961884040828251
 MonoBehaviour:
@@ -887,8 +887,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4614101885468429212}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -385.927, y: -250.396, z: 0}
-  m_LocalScale: {x: 1.3766234, y: 1.6164383, z: 1}
+  m_LocalPosition: {x: -385.65, y: -252.56, z: 0}
+  m_LocalScale: {x: 1.3766235, y: 1.6164383, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5225153552470270639}
@@ -935,13 +935,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: ffe7523fb84f34effb77d9337bf10ea8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 1.0962918, y: 0.5310055}
+  m_Size: {x: 1.3774624, y: 0.43890813}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

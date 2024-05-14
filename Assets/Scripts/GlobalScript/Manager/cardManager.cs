@@ -6,6 +6,8 @@ public class cardManager : MonoBehaviour
 {
     public static cardManager Instance;
 
+    public List<OperationCard> StartingCards;
+
     [SerializeField]
     List<Artifact> ArtifactPools;
 
@@ -47,14 +49,7 @@ public class cardManager : MonoBehaviour
 
     public List<OperationCard> CreateInitialDeck()
     {
-        List<OperationCard> initialDeck = new List<OperationCard>
-        {
-            // Add initial cards
-            CreateNewCard(OperationName.Add, null),
-            CreateNewCard(OperationName.Multiply, null)
-        };
-
-        return initialDeck;
+        return StartingCards;
     }
 
     public OperationCard CreateRandomCard()

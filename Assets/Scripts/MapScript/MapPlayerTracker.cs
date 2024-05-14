@@ -80,10 +80,15 @@ namespace Map
             {
                 case NodeType.MinorEnemy:
                     Debug.Log("Minor Enemy");
+                    GameManager.instance.IsInElite = false;
+                    GameManager.instance.IsInBoss = false;
                     ScenesManager.Instance.LoadScene(ScenesManager.Scene.CombatScene);
                     break;
                 case NodeType.EliteEnemy:
                     Debug.Log("Elite Enemy");
+                    GameManager.instance.IsInElite = true;
+                    GameManager.instance.IsInBoss = false;
+                    ScenesManager.Instance.LoadScene(ScenesManager.Scene.CombatScene);
                     break;
                 case NodeType.RestSite:
                     Debug.Log("Rest Site");
@@ -98,6 +103,9 @@ namespace Map
                     break;
                 case NodeType.Boss:
                     Debug.Log("Boss");
+                    GameManager.instance.IsInElite = false;
+                    GameManager.instance.IsInBoss = true;
+                    ScenesManager.Instance.LoadScene(ScenesManager.Scene.CombatScene);
                     break;
                 case NodeType.Mystery:
                     Debug.Log("Mystery");

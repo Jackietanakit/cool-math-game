@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3dc0ed41988e54ffaa58a89a75ce607d, type: 3}
-  m_Name: Subtraction
+  m_Name: Sqrt
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 53a737564089a4243a02f3f7e0a87675, type: 3}
-  operationName: 1
-  operationDescription: Simple Subtraction
+  sprite: {fileID: 21300000, guid: 1dcbba549fd53884eb45efc5c1788571, type: 3}
+  operationName: 6
+  operationDescription: Sqare Root of the number
   limit: 
