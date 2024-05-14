@@ -2520,13 +2520,13 @@ MonoBehaviour:
     rgba: 4294967295
   lockedColor:
     serializedVersion: 2
-    rgba: 4282795590
+    rgba: 4278190080
   lineVisitedColor:
     serializedVersion: 2
     rgba: 4294967295
   lineLockedColor:
     serializedVersion: 2
-    rgba: 4281216558
+    rgba: 4278190080
 --- !u!1 &1977153399
 GameObject:
   m_ObjectHideFlags: 0
