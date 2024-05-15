@@ -7831,7 +7831,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1b95cb3ca7ce43bdb3c4e714e030884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  informationText: {fileID: 0}
+  MoneyText: {fileID: 900158856}
+  HealthSlider: {fileID: 1526101106}
+  informationText: {fileID: 1408828409}
   GridParent: {fileID: 4375102236078108115}
   OperationOptionPrefab: {fileID: 37342640756478589, guid: 3ea3b4e089ea141cab69586312a10c26,
     type: 3}

@@ -8,6 +8,12 @@ using UnityEngine.UI;
 public class RestManager : MonoBehaviour
 {
     [SerializeField]
+    TextMeshProUGUI MoneyText;
+
+    [SerializeField]
+    Slider HealthSlider;
+
+    [SerializeField]
     TextMeshProUGUI informationText;
     public Transform GridParent;
     public static RestManager Instance;
@@ -27,9 +33,16 @@ public class RestManager : MonoBehaviour
 
     void Start()
     {
+        UpdateHealthAndMoney();
         CreateRandomOperatorCard();
         GenerateInventory();
         CheckFullHealth();
+    }
+
+    private void UpdateHealthAndMoney()
+    {
+        MoneyText.text = GameManager.instance._playerInventory.money.ToString();
+        HealthSlider.value = GameManager.instance._playerInventory.currentHealth;
     }
 
     private void CreateRandomOperatorCard()
