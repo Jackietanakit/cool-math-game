@@ -12,7 +12,7 @@ public class GridManager : MonoBehaviour
     public List<ArtifactGrid> ArtifactsInGrid;
 
     [SerializeField]
-    GameObject artifacts;
+    ArtifactGrid artifacts;
 
     void Awake()
     {
@@ -30,13 +30,14 @@ public class GridManager : MonoBehaviour
     {
         ShopManager.Instance.IsInBuyShop = false;
         RemoveAllArtifactsFromGrid();
+        ShopManager.Instance.SetArtifactsInSellShop();
         AddArtifactToGrid(ShopManager.Instance.ArtifactsInSellShop);
     }
 
     public void AddArtifactToGrid(Artifact artifact)
     {
-        GameObject artifactGrid = Instantiate(artifacts, ShopGridParent.transform);
-        artifactGrid.GetComponent<ArtifactGrid>().Initialize(artifact);
+        ArtifactGrid artifactGrid = Instantiate(artifacts, ShopGridParent.transform);
+        artifactGrid.Initialize(artifact);
         ArtifactsInGrid.Add(artifactGrid.GetComponent<ArtifactGrid>());
     }
 

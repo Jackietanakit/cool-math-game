@@ -28,6 +28,11 @@ public class InventoryManager : MonoBehaviour
     {
         LoadOperator();
         LoadArtifact();
+        UpdateMoney();
+    }
+
+    public void UpdateMoney()
+    {
         MoneyText.text = GameManager.instance._playerInventory.money.ToString();
     }
 
