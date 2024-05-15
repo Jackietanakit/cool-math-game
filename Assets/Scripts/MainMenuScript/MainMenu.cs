@@ -107,7 +107,7 @@ public class MainMenu : MonoBehaviour
 
     public void Test()
     {
-        PlayerPrefs.SetFloat("HighestDifficulty", 2.1f);
+        PlayerPrefs.SetFloat("HighestDifficulty", 2.0f);
         PlayerPrefs.DeleteKey("Tutorial");
     }
 
@@ -160,7 +160,7 @@ public class MainMenu : MonoBehaviour
     public void Tutorial(string isTutorial)
     {
         PlayerPrefs.SetString("Tutorial", isTutorial);
-        GameManager.instance.InitializePlayerInventory("easy");
+        GameManager.instance.InitializePlayerInventory("Easy");
         GameManager.instance.IsNewGame = true;
         PlayerPrefs.DeleteKey("Map");
         ScenesManager.Instance.LoadNewGame();
