@@ -29,7 +29,6 @@ public class ScenesManager : MonoBehaviour
         CombatScene,
         RestScene,
         ShopScene,
-        TreasureScene,
     }
 
     public void LoadScene(Scene scene)
