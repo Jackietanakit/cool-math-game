@@ -18,6 +18,7 @@ public class DemoButton : MonoBehaviour
     {
         GameManager.instance._playerInventory.SetMoneyTo(amount);
         SetConsole("Money is set to " + amount);
+        InventoryManager.Instance.UpdateMoney();
     }
 
     public void LoadScene(string sceneName)

@@ -35,7 +35,15 @@ public class ArtifactGrid : MonoBehaviour
             StartCoroutine(FadeOutPanel());
         }
 
-        if (GameManager.instance._playerInventory.money > ArtifactInfo.price && !hasInteracted)
+        if (
+            (GameManager.instance._playerInventory.money > ArtifactInfo.price && !hasInteracted)
+            || (
+                !ShopManager.Instance.IsInBuyShop
+                && GameManager.instance._playerInventory.artifacts.Exists(x =>
+                    x.ArtifactName == ArtifactInfo.ArtifactName
+                )
+            )
+        )
         {
             BuyButton.interactable = true;
         }
@@ -75,8 +83,18 @@ public class ArtifactGrid : MonoBehaviour
 
     public void Initialize(Artifact ArtifactInfo)
     {
+        BuyButton.interactable = false;
         this.ArtifactInfo = ArtifactInfo;
         SetArtifact(ArtifactInfo.ArtifactName);
+        //If the player already has the same artifact name, disable the buy button
+        if (
+            GameManager.instance._playerInventory.artifacts.Exists(x =>
+                x.ArtifactName == ArtifactInfo.ArtifactName
+            )
+        )
+        {
+            hasInteracted = true;
+        }
     }
 
     public void SetArtifact(string ArtifactName)

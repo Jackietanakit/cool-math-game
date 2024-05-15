@@ -53,7 +53,7 @@ public class ShopManager : MonoBehaviour
         List<Artifact> artifactsInBuyShop = new List<Artifact>();
 
         while (
-            artifactsInBuyShop.Count < 3
+            artifactsInBuyShop.Count < 4
             && artifactsInBuyShop.Count + playerArtifacts.Count < availableArtifacts.Count
         )
         {
@@ -70,14 +70,14 @@ public class ShopManager : MonoBehaviour
         ArtifactsInBuyShop = artifactsInBuyShop;
     }
 
-    void SetArtifactsInSellShop()
+    public void SetArtifactsInSellShop()
     {
         //Get a random list of 3 artifacts from the player's inventory
         List<Artifact> playerArtifacts = GameManager.instance._playerInventory.artifacts;
 
         List<Artifact> artifactsInSellShop = new List<Artifact>();
 
-        while (artifactsInSellShop.Count < 2 && artifactsInSellShop.Count < playerArtifacts.Count)
+        while (artifactsInSellShop.Count < playerArtifacts.Count)
         {
             Artifact randomArtifact = playerArtifacts[Random.Range(0, playerArtifacts.Count)];
             if (!artifactsInSellShop.Contains(randomArtifact))

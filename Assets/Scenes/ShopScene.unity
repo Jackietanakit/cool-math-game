@@ -2082,7 +2082,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShopGridParent: {fileID: 1279260449}
   ArtifactsInGrid: []
-  artifacts: {fileID: 3319927071250181426, guid: acb4e271b3b0a0b47a3939527b12a0b8,
+  artifacts: {fileID: 3319927071250181429, guid: acb4e271b3b0a0b47a3939527b12a0b8,
     type: 3}
 --- !u!1 &469410968
 GameObject:

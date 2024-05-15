@@ -1509,12 +1509,21 @@ MonoBehaviour:
     order: 8
   - maskPosition: {x: 0, y: 0}
     maskScale: {x: 0, y: 0}
+    panelPosition: {x: 0, y: 0}
+    tutorialType: 1
+    tutorialTitle: Perfect
+    tutorialText: Using all number blocks and killing an enemy with an exact damage
+      will result in "Perfect".
+    needMask: 1
+    order: 9
+  - maskPosition: {x: 0, y: 0}
+    maskScale: {x: 0, y: 0}
     panelPosition: {x: -6.2, y: 4.76}
     tutorialType: 1
     tutorialTitle: End of the tutorial
     tutorialText: Defeat all enemies to finish the tutorial
     needMask: 0
-    order: 9
+    order: 10
   AskCombatTutorialPanel: {fileID: 0}
   TutorialEnemyInfos:
   - {fileID: 11400000, guid: ad4ecdcf9e017c447b02ae41c3a23246, type: 2}
