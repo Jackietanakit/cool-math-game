@@ -392,6 +392,8 @@ public class CombatManager : MonoBehaviour
         int coinGained = finalcombatInfo.enemiesDefeated * 10 + finalcombatInfo.perfect * 10;
         finalcombatInfo.coinGained = coinGained;
         GameManager.instance._playerInventory.money += coinGained;
+
+        GameManager.instance._playerInventory.currentHealth = PlayerHealth;
     }
 
     //FOR DEMO PURPOSE ONLY
